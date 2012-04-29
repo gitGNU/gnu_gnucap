@@ -26,6 +26,8 @@
 #include "globals.h"
 #include "e_elemnt.h"
 /*--------------------------------------------------------------------------*/
+using namespace std;
+/*--------------------------------------------------------------------------*/
 namespace {
 /*--------------------------------------------------------------------------*/
 class DEV_VS : public ELEMENT {
@@ -36,6 +38,7 @@ public:
 private: // override virtual
   char	   id_letter()const	{return 'V';}
   std::string value_name()const {return "dc";}
+  void set_param_by_name(string, string);
   std::string dev_type()const	{return "vsource";}
   int	   max_nodes()const	{return 2;}
   int	   min_nodes()const	{return 2;}
@@ -69,6 +72,12 @@ private: // override virtual
   }
 };
 /*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+void DEV_VS::set_param_by_name(string Name, string Value)
+{
+  if (Umatch (Name,"dc|u")) { _value = Value; }
+  else{ ELEMENT::set_param_by_name(Name,Value); }
+}
 /*--------------------------------------------------------------------------*/
 void DEV_VS::precalc_last()
 {
