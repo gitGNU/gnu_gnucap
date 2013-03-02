@@ -28,6 +28,7 @@
 #include "l_compar.h"
 #include "u_opt.h"
 #include "m_matrix.h"
+#include <stack>
 /*--------------------------------------------------------------------------*/
 // external
 class WAVE;
@@ -46,6 +47,7 @@ struct INTERFACE SIM_DATA {
   bool   _bypass_ok;	/* flag: ok to bypass model evaluation */
   bool	_fulldamp; 	/* flag: big iter. jump. use full (min) damp */
   double _last_time;	/* time at which "volts" is valid */
+public:
   bool _freezetime;	/* flag: don't advance stored time */
   int _iter[iCOUNT];
   int _user_nodes;
@@ -67,7 +69,7 @@ struct INTERFACE SIM_DATA {
 			/*  used to restore after rejected step	*/
   COMPLEX *_ac;		/* ac right side			*/
   LOGIC_NODE* _nstat;	/* digital data				*/
-  double *_vdc;		/* saved dc voltages			*/
+  std::stack<double*> _vdcstack;
   BSMATRIX<double> _aa;	/* raw matrix for DC & tran */
   BSMATRIX<double> _lu;	/* decomposed matrix for DC & tran */
   BSMATRIX<COMPLEX> _acx;/* raw & decomposed matrix for AC */
@@ -91,8 +93,9 @@ struct INTERFACE SIM_DATA {
   void set_limit();  /* s__aux.cc */
   void set_limit(double v);
   void clear_limit();
-  void keep_voltages();
-  void restore_voltages();
+  void keep_voltages(bool push=false);
+  void restore_voltages(bool pop=false);
+  void pop_voltages();
   void zero_voltages();
   void map__nodes();		/* s__map.cc */
   void order_reverse();
