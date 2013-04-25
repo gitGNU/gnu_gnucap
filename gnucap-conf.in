@@ -1,0 +1,28 @@
+#!/bin/bash
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+
+case $1 in
+	"--cppflags")
+		echo -I@includedir@
+	;;
+	"--ldflags")
+		echo -L@libdir@ -lgnucap
+	;;
+	"--includedir")
+		echo @includedir@
+	;;
+	"--libdir")
+		echo @libdir@
+	;;
+	"--data")
+		echo @datarootdir@
+	;;
+	*)
+	echo $0 --cppflags
+	echo $0 --ldflags
+	echo $0 --libdir
+	echo $0 --data
+esac
+

@@ -148,6 +148,8 @@ LDFLAGS="$LDFLAGS -rdynamic"
 #	src/Makefile
 #	])
 
+AC_CONFIG_FILES([gnucap-conf], [chmod +x gnucap-conf])
+
 AC_OUTPUT([
 	GNUmakefile
 	apps/Makefile
@@ -156,6 +158,7 @@ AC_OUTPUT([
 	main/Makefile
 	modelgen/Makefile
 	])
+
 
 AC_MSG_RESULT([
 ** Configuration summary for $PACKAGE $VERSION:

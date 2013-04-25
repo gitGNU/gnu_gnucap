@@ -6,3 +6,4 @@ SUBDIRS=	include lib modelgen main apps
 
 EXTRA_DIST=	autogen.sh Makefile.template configure.old
 
+dist_bin_SCRIPTS = gnucap-conf
