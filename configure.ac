@@ -21,7 +21,7 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #  02110-1301, USA.
 
-AC_PREREQ(2.69)
+AC_PREREQ(2.64)
 # this is any file in the source directory
 # used as a check to be sure we found it
 
