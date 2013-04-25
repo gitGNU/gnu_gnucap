@@ -15,6 +15,9 @@ aclocal $ACLOCAL_FLAGS || exit 1
 echo "Running autoheader..."
 autoheader || exit 1
 
+echo "Running libtoolize"
+libtoolize || exit 1
+
 echo "Running automake..."
 automake -a -c --gnu || exit 1
 

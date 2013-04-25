@@ -21,15 +21,14 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 #  02110-1301, USA.
 
-AC_PREREQ(2.59)
-AC_INIT([src/main.cc])
+AC_PREREQ(2.69)
 # this is any file in the source directory
 # used as a check to be sure we found it
 
-AM_INIT_AUTOMAKE(gnucap, 2009-12-07)
+AC_INIT([gnucap], [2013-04-23])
+AM_INIT_AUTOMAKE([-Wno-portability])
 AM_CONFIG_HEADER([config.h])
-
-AM_MAINTAINER_MODE
+LT_INIT()
 
 AC_MSG_CHECKING([if debug code should be compiled in])
 AC_ARG_ENABLE([debug],
@@ -150,11 +149,12 @@ LDFLAGS="$LDFLAGS -rdynamic"
 #	])
 
 AC_OUTPUT([
-	Makefile
-	doc/Makefile
-	examples/Makefile
+	GNUmakefile
+	apps/Makefile
+	include/Makefile
+	lib/Makefile
+	main/Makefile
 	modelgen/Makefile
-	src/Makefile
 	])
 
 AC_MSG_RESULT([
