@@ -2,7 +2,7 @@
 ##
 ## Top level automake file for gnucap
 
-SUBDIRS=	include lib modelgen main apps
+SUBDIRS=	include lib modelgen main apps tests
 
 EXTRA_DIST=	autogen.sh Makefile.template configure.old
 

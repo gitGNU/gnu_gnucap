@@ -157,6 +157,7 @@ AC_OUTPUT([
 	lib/Makefile
 	main/Makefile
 	modelgen/Makefile
+	tests/Makefile
 	])
 
 
