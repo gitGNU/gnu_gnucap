@@ -24,7 +24,7 @@
 ##  02110-1301, USA.
 
 lib_LTLIBRARIES = libgnucap.la
-libgnucap_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(top_srcdir)/include
+libgnucap_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(top_srcdir)/include -I$(top_builddir)/include
 libgnucap_la_SOURCES = \
 m_expression_dump.cc m_expression_in.cc m_expression_reduce.cc \
 m_base_in.cc m_base_math.cc m_fft.cc  m_spline.cc \

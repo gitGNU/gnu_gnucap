@@ -81,17 +81,19 @@ $(C_SRCS) \
 $(S_SRCS) \
 $(LANG_SRCS) \
 $(FUNC_SRCS) \
-$(OTHER_SRCS)
+$(OTHER_SRCS) \
+$(MODELS)
 #------------------------------------------------------------------------
 RAW = $(RAW_HDRS) $(RAW_SRCS) $(RAW_OTHER) $(MODELS)
 #------------------------------------------------------------------------
 libgnucap_default_plugins_la_SOURCES = $(RAW_SRCS)
-libgnucap_default_plugins_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(top_srcdir)/include
+libgnucap_default_plugins_la_CPPFLAGS = $(AM_CPPFLAGS) \
+    -I$(top_srcdir)/include -I$(top_builddir)/include
 #------------------------------------------------------------------------
 #------------------------------------------------------------------------
 #------------------------------------------------------------------------
 #------------------------------------------------------------------------
-DISTFILES = $(RAW) $(GENERATED_DIST) $(IMPORTED_DIST)
+# DISTFILES = $(RAW) $(GENERATED_DIST) $(IMPORTED_DIST)
 #------------------------------------------------------------------------
 #------------------------------------------------------------------------
 SRCS = $(IMPORTED_SRCS) $(GENERATED_SRCS) $(RAW_SRCS)
@@ -100,19 +102,29 @@ OBJS = ${SRCS:.cc=.o}
 TARGET_DEPENDS = $(OBJS) $(RAW) $(MODELS)
 #------------------------------------------------------------------------
 #------------------------------------------------------------------------
-MOSTLYCLEANFILES = $(OBJS) $(GENERATED)
-CLEANFILES = $(MOSTLYCLEANFILES)
-DISTCLEANFILES = $(CLEANFILES)
-MAINTAINERCLEANFILES = $(DISTCLEANFILES)
-#------------------------------------------------------------------------
-#------------------------------------------------------------------------
 LIBPATH = $(top_builddir)/lib/.libs
 MODELGEN = $(top_builddir)/modelgen/gnucap-modelgen
 #------------------------------------------------------------------------
-%.h : %.model
-	LD_LIBRARY_PATH=$(LIBPATH) $(MODELGEN) -h $<
+.model.cc:
+
+%.cc %.h: %.model
+	LD_LIBRARY_PATH=$(LIBPATH) $(MODELGEN) $<
+
+d_mos.cc: d_mos_base.h
+d_mos1.cc: d_mos123.h
+d_mos2.cc: d_mos123.h
+d_mos3.cc: d_mos123.h
+d_mos4.cc: d_mos_base.h
+d_mos5.cc: d_mos_base.h
+d_mos6.cc: d_mos123.h
+d_mos7.cc: d_mos_base.h
+d_mos8.cc: d_mos_base.h
+d_mos123.h: d_mos_base.h
+d_mos123.cc: d_mos_base.h
+d_mos_base.h: d_mos.h
+d_mos.h: d_diode.h
+
+CLEANFILES = $(MODELS:%.model=%.h) \
+             $(MODELS:%.model=%.cc)
 #------------------------------------------------------------------------
-%.cc : %.model
-	LD_LIBRARY_PATH=$(LIBPATH) $(MODELGEN) -cc $<
-#-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------

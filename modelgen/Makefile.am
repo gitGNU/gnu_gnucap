@@ -28,19 +28,15 @@
 bin_PROGRAMS= gnucap-modelgen
 #------------------------------------------------------------------------
 RAW_SRCS = \
+mg_out.h mg_.h \
 mg_main.cc mg_error.cc mg_in.cc mg_out_h.cc mg_out_dump.cc \
 mg_out_common.cc mg_out_dev.cc mg_out_lib.cc mg_out_model.cc mg_out_root.cc
 #------------------------------------------------------------------------
 
 gnucap_modelgen_SOURCES = $(RAW_SRCS)
 gnucap_modelgen_LDADD = -L$(top_builddir)/lib/.libs -lgnucap
-gnucap_modelgen_CPPFLAGS = $(AM_CPPFLAGS) -I$(top_srcdir)/include
+gnucap_modelgen_CPPFLAGS = $(AM_CPPFLAGS) -I$(top_srcdir)/include -I$(top_builddir)/include
 
 
 EXTRA_DIST= \
- Make1 Make3 Make.depend Make2.g++ Make2.Debug Make2.mingw32 \
- configure.old Makefile.template
-
-
-INCLUDES=	-I$(top_srcdir)/src
-
+ Make1 Make.depend Make2.g++ Make2.Debug Make2.mingw32
