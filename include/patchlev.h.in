@@ -1,0 +1,11 @@
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#else
+# define PACKAGE_VERSION "2013.04.23 RCS 26.138"
+#endif
+
+#ifdef HAVE_GIT_REPO
+#  define PATCHLEVEL "gnucap-" "@GIT_BRANCH@" "-" "@GIT_COMMIT@"
+#else
+#  define PATCHLEVEL PACKAGE_VERSION
+#endif

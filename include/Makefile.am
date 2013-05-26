@@ -76,3 +76,24 @@ DISTCLEANFILES = $(CLEANFILES)
 MAINTAINERCLEANFILES = $(DISTCLEANFILES)
 #------------------------------------------------------------------------
 #------------------------------------------------------------------------
+EXTRA_DIST = patchlev.h
+CLEANFILES+= patchlev.h
+if HAVE_GIT_REPO
+# the values for GIT_BRANCH and GIT_COMMIT are unknown to configure, so this is
+# done manually (for now). see config.status for a more portable way.
+#
+# don't touch patchlev.h if it's not necessary, to prevent rebuilds.
+#
+patchlev.h: $(srcdir)/patchlev.h.in $(top_srcdir)/.git
+	@echo "// this file has been created from patchlev.h.in, don't edit" > patchlev.tmp
+	@sed -e "s/@GIT_BRANCH@/`git rev-parse --abbrev-ref HEAD`/" \
+	     -e "s/@GIT_COMMIT@/`git rev-parse HEAD`/" $< >> patchlev.tmp
+	@if diff patchlev.tmp patchlev.h &>/dev/null; then \
+	  echo git revision unchanged; \
+	  rm patchlev.tmp; \
+	else \
+	  echo updating $@; \
+	  mv patchlev.tmp $@; \
+	fi;
+# else patchlev.h is already there
+endif

@@ -215,6 +215,7 @@ AC_MSG_RESULT([
    LDFLAGS:                  $LDFLAGS
    LIBS:                     $LIBS
    externals:              $subdirs
+   have_git_repo:            $have_git_repo
 
 ])
 
