@@ -26,4 +26,7 @@ echo "" >>Make2
 
 cat Make1 Make2 ../Make3 >Makefile
 
+#incomplete
+cp patchlev.h.in patchlev.h
+
 exit 0
