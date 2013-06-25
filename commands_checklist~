@@ -1,6 +1,5 @@
 Commands Checklist
 ======================================================
-Updated On: 27/06/2013
 
 1.ALIAS
 Purpose:Creates an alias for command
@@ -60,21 +59,7 @@ Status:Not implemented
 
 15.STRCMP
 Purpose:Compares two string
-Status:Implemented
-Syntax:
-      strcmp string1 string2
-      strcmp --help
-
-Comments:
-
-Compare two strings and outputs 0 if the two strings are equal otherwise output is the difference of the first non-matching character in string1 and string2.
-Strings may be passed with or without " ".
-
-Example:
-      strcmp "hello" hello evaluates to true(flag=0)
-      strcmp hello hello also evaluates to true.
-      strcmp --help prints the usage of the command. 
-
+Status:Not implemented
 
 16.SYSINFO
 Purpose:Command returns the system information
