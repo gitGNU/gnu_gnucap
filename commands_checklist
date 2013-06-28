@@ -1,6 +1,7 @@
 Commands Checklist
 ======================================================
-Updated On: 28/06/2013
+Updated On: 1/07/2013
+Check
 
 1.ALIAS
 Purpose:Creates an alias for command
@@ -20,7 +21,22 @@ Status:Not implemented
 
 5.HISTORY
 Purpose:Review the previous commands
-Status:Not implemented
+Status:Implemented
+Syntax:
+    history
+    history -t 
+    history -s
+
+Comments:
+Command prints the history of commands that has been executed after enabling the history track mode. Commands tracking can be stopped by disabling the history mode.
+
+Example:
+      gnucap>history -t  starts tracking history
+      gnucap>history     prints the history
+      gnucap>history -s  stops tracking history
+
+
+
 
 6.IC
 Purpose:Sets the initial condition for a circuit
@@ -46,9 +62,23 @@ Status:Not implemented
 Purpose:Sets the value of a variable
 Status:Not implemented
 
+
 12.SHELL
 Purpose:Calls command interpreter of operating system
-Status:Not implemented
+Status:Implemented
+Syntax:
+       shell
+
+Comments:
+Run 'exit' command to return to gnucap command interpreter.
+
+Example:
+     gnucap> shell
+     itsrishre@rishabh-laptop:~$
+When you are done with the shell,you can type exit to return to gnucap interpreter.
+     itsrishre@rishabh-laptop:~$ exit
+     gnucap>
+
 
 13.SHOWMOD
 Purpose:Lists model parameter values
