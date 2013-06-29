@@ -1,7 +1,6 @@
 Commands Checklist
 ======================================================
 Updated On: 1/07/2013
-Check
 
 1.ALIAS
 Purpose:Creates an alias for command
@@ -155,4 +154,5 @@ Purpose:Identifies troublesome node or device
 Status:Not implemented
 
 *Commands's Syntax,Details and Examples will be added after the command is implemented.
+Check http://gnucap.org/dokuwiki/doku.php?id=gnucap:user:command_plugins
 
