@@ -1,10 +1,26 @@
 Commands Checklist
 ======================================================
-Updated On: 1/07/2013
+Updated on: 5/07/2013
 
 1.ALIAS
 Purpose:Creates an alias for command
-Status:Not implemented
+Status:Implemented
+
+Syntax:
+      alias [word] [command]
+
+Comments:
+Command creates an alias for ''command'' with the name ''word''.
+
+Example:
+       gnucap>alias info sysinfo
+       gnucap>info
+       Model name	  : Intel(R) Core(TM) i5-2450M CPU @ 2.50GHz
+       OS Description     :"Ubuntu 12.04 LTS"
+       CPU MHz	          : 2494.409
+       RAM Available      :1012348kB
+       RAM Free           :132372kB
+
 
 2.ALTERMOD
 Purpose:Altermod Command is used to change the model parameters
