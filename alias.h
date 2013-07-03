@@ -39,7 +39,8 @@ public:
   void uninstall(){
    delete this->dispatcher_ptr;
    delete this;
-   id--;
+   if (id>=1){ 
+     objects_ptr[--id]='\0';}
   }
 };
 
