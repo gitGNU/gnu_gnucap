@@ -1,4 +1,4 @@
-/*$Id: c_testing.cc,v 26.133 2013/07/06 23:06:04 al Exp $ -*- C++ -*-
+/*$Id: c_alias_unalias.cc,v 26.133 2013/07/06 23:06:04 al Exp $ -*- C++ -*-
  * Copyright (C) 2013 Rishabh Yadav
  * Author: Rishabh Yadav <rishabh.ece.iitbhu@gmail.com>
  *
@@ -50,6 +50,19 @@ private:
 public:
      void do_it(CS& Cmd,CARD_LIST* Scope){
         alias_name = Cmd.tail();
+        if(alias_name == "-a"){
+              char ch;
+              IO::mstdout<<"are you sure you want to remove all aliases?y/n:";
+              std::cin >> ch;
+              if(ch=='y' || ch =='Y'){
+              	 for(int i=0;objects_ptr[i]!='\0';i++){
+               		objects_ptr[i]->uninstall();
+                }
+              throw Exception("all aliases removed");
+  	     }
+             else if(ch=='n' || ch=='N'){throw Exception("");}
+             else throw Exception("Wrong Input!");
+          }
         flag=1;
         for(int i=0;objects_ptr[i]!='\0';i++)
         {
@@ -61,11 +74,9 @@ public:
          }  
 
          if (flag){
-          IO::mstdout << "No such aliased name exists\n";
+          IO::mstdout << "No such aliased word exists\n";
          }  
 }
 }unalias_command;
 DISPATCHER<CMD>::INSTALL d1(&command_dispatcher,"unalias",&unalias_command);
-
-/*----------------------------------------------------------------------------*/
 
