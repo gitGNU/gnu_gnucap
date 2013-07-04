@@ -36,12 +36,23 @@ public:
      this->dispatcher_ptr=p;
   }
 
-  void uninstall(){
+  void uninstall(int index){
+   if (id>=1){ 
+     for(int i=index;objects_ptr[i]!='\0';i++){
+         objects_ptr[i]=objects_ptr[i+1];
+    }
+    id--;
+   }
    delete this->dispatcher_ptr;
    delete this;
-   if (id>=1){ 
-     objects_ptr[--id]='\0';}
+   
   }
+  void uninstall_all(){
+    id=0;
+    objects_ptr[id]='\0';
+    delete this->dispatcher_ptr;
+    delete this; 
+    }
 };
 
 #endif
