@@ -34,6 +34,9 @@ public:
   void do_it(CS& Cmd, CARD_LIST* Scope) {
     int i;
     std::string alias_name = Cmd.ctos();
+    if (alias_name == ""){
+	throw Exception("Usage: alias [word] [command]");
+	}
     CMD_EXEC* new_command = new CMD_EXEC(Cmd.tail());
     DISPATCHER<CMD>::INSTALL* install_ref = new DISPATCHER<CMD>::INSTALL(&command_dispatcher, alias_name, new_command); 
     new_command->set_aliasname(alias_name,install_ref);
@@ -50,13 +53,14 @@ private:
 public:
      void do_it(CS& Cmd,CARD_LIST* Scope){
         alias_name = Cmd.tail();
+	
         if(alias_name == "-a"){
               char ch;
-              IO::mstdout<<"are you sure you want to remove all aliases?y/n:";
+              IO::mstdout << "are you sure you want to remove all aliases?y/n:";
               std::cin >> ch;
               if(ch=='y' || ch =='Y'){
               	 for(int i=0;objects_ptr[i]!='\0';i++){
-               		objects_ptr[i]->uninstall();
+               		objects_ptr[i]->uninstall_all();
                 }
               throw Exception("all aliases removed");
   	     }
@@ -67,7 +71,7 @@ public:
         for(int i=0;objects_ptr[i]!='\0';i++)
         {
           if (objects_ptr[i]->get_aliasname() == alias_name){
-               objects_ptr[i]->uninstall();
+               objects_ptr[i]->uninstall(i);
                flag=0;
                break;
             }
