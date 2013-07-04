@@ -146,18 +146,23 @@ Purpose:Trace command traces nodes
 Status:Not implemented
 
 18.UNALIAS
-Purpose:Removes any aliases present for the words
+Purpose:Removes any aliases present for the commands
 Status:Implemented
 
 Syntax:
      unalias [word]
+     unalias all
 
 Comments:
-'word' is the aliased name of the command.
+word is the aliased name of the command. all option removes all the specified aliases.
 
 Example:
 If info is the aliased name of sysinfo then it can be unaliased like
-     gnucap>unalias info
+
+     gnucap>unalias info  Removes the alias for sysinfo
+     gnucap>unalias all   Removes all aliases
+     are you sure you want to remove all aliases?y/n:y
+     all aliases removed
 
 19.VERSION
 Purpose:Prints the version of gnucap
