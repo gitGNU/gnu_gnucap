@@ -27,7 +27,7 @@
 
 /*--------------------------------------------------------------------------*/
 
-class CMD_ALIAS : public CMD {
+class CMD_QUIT : public CMD {
 public:
   void do_it(CS& Cmd, CARD_LIST* Scope) {
    int status=0;

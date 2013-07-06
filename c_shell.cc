@@ -28,7 +28,7 @@
 
 /*--------------------------------------------------------------------------*/
 
-class CMD_STATUS : public CMD {
+class CMD_SHELL : public CMD {
 public:
   void do_it(CS& cmd, CARD_LIST* Scope)
   {itested();
