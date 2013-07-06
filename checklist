@@ -30,11 +30,8 @@ Status:Not implemented
 Purpose:Reads circuit(.ckt) files line by line
 Status:Not implemented
 
-4.DEVHELP
-Purpose:The command displays the available devices in the gnucap
-Status:Not implemented
 
-5.HISTORY
+4.HISTORY
 Purpose:Review the previous commands
 Status:Implemented
 Syntax:
@@ -53,17 +50,35 @@ Example:
 
 
 
-6.IC
+5.IC
 Purpose:Sets the initial condition for a circuit
 Status:Not implemented
 
-7.MDUMP
+6.MDUMP
 Purpose:Dumps the matrix values to a file
 Status:Not implemented
 
-8.PRE
+7.PRE
 Purpose:Executes command prior to parsing the circuit
 Status:Not implemented
+
+
+8.QUIT
+Purpose:Terminates the gnucap interpreter
+Status:Implemeted
+
+Syntax:
+    quit
+    quit [status]
+
+Comments:
+ This quit command is the modified form of the current quit command.status(integer)can be passed as a parameter which signals the success or failure of the termination process to the Operating System.Non-zero status indicates unsuccessful termination to the Operating System.
+
+Example:
+     gnucap>quit 0       returns a success value to the Operating system
+     Make sure you have saved everything you wanted to.
+     Are you sure you want to quit?y/n:
+
 
 9.RMCIRC
 Purpose:Removes the current circuit from the list of circuits sourced into gnucap
