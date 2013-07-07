@@ -2,7 +2,7 @@
 #define ALIAS_H
 #include "c_comand.h"
 #include "globals.h"
-#define SIZE 30 //no. of commands
+#define SIZE 50 
 
 /*--------------------------------------------------------------------------*/
 class CMD_EXEC;
@@ -46,8 +46,6 @@ public:
    
   }
   void uninstall_all(){
-    id=0;
-    objects_ptr[id]='\0';
     delete this->dispatcher_ptr;
     delete this; 
     }

@@ -198,7 +198,26 @@ If info is the aliased name of sysinfo then it can be unaliased like
      are you sure you want to remove all aliases?y/n:y
      all aliases removed
 
-19.VERSION
+
+19.UNDEF
+Purpose:Command removes the the user-defined functions.
+Status:Implemented
+
+Syntax:
+    undef [function_name]
+    undef all
+
+Comments:
+all flag removes all the user defined functions.
+
+Example:
+     gnucap>undef max    Removes the ''max'' function
+     gnucap>unalias all   Removes all function definitions
+     are you sure you want to remove all function definitions?y/n:y
+     all functions removed.
+
+
+20.VERSION
 Purpose:Prints the version of gnucap
 Status:Implemented
 
@@ -214,9 +233,6 @@ Example:
         Gnucap Version: 2009.12.07 RCS 26.136
 
 
-20.WHERE
-Purpose:Identifies troublesome node or device
-Status:Not implemented
 
 *Commands's Syntax,Details and Examples will be added after the command is implemented.
 Check http://gnucap.org/dokuwiki/doku.php?id=gnucap:user:command_plugins
