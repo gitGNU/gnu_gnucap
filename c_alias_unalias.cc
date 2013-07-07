@@ -54,15 +54,17 @@ public:
      void do_it(CS& Cmd,CARD_LIST* Scope){
         alias_name = Cmd.tail();
 	
-        if(alias_name == "-a"){
+        if(alias_name == "all"){
               char ch;
               IO::mstdout << "are you sure you want to remove all aliases?y/n:";
               std::cin >> ch;
               if(ch=='y' || ch =='Y'){
-              	 for(int i=0;objects_ptr[i]!='\0';i++){
-               		objects_ptr[i]->uninstall_all();
-                }
-              throw Exception("all aliases removed");
+              	   for(int i=0;objects_ptr[i]!='\0';i++){
+                		objects_ptr[i]->uninstall_all();
+                    }
+		   id=0;
+                   objects_ptr[id]='\0';
+                   throw Exception("all aliases removed");
   	     }
              else if(ch=='n' || ch=='N'){throw Exception("");}
              else throw Exception("Wrong Input!");
