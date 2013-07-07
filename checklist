@@ -1,6 +1,6 @@
 Commands Checklist
 ======================================================
-Updated on: 5/07/2013
+Updated on: 12/07/2013
 
 1.ALIAS
 Purpose:Creates an alias for command
@@ -31,7 +31,29 @@ Purpose:Reads circuit(.ckt) files line by line
 Status:Not implemented
 
 
-4.HISTORY
+4.DEF
+Purpose:Command is used to define a function.
+Status:Implemented
+Syntax:
+    def [function_name]
+
+Comments: Maximum three arguments can be provided which can be of type int or float.Variables are named x,y,z by default and only they should be used in the expression.
+
+Example:
+      gnucap>def f
+      >x*2+y*2+z*2
+      gnucap>f(1,2,3)
+      12.
+      gnucap>f(1.0,2.2,3.4)
+      13.2
+      gnucap>def max
+      >(x>y)*x+(x<=y)*y
+      gnucap>max(3.0,4.0)
+      4.0
+
+
+
+5.HISTORY
 Purpose:Review the previous commands
 Status:Implemented
 Syntax:
@@ -50,9 +72,6 @@ Example:
 
 
 
-5.IC
-Purpose:Sets the initial condition for a circuit
-Status:Not implemented
 
 6.MDUMP
 Purpose:Dumps the matrix values to a file
