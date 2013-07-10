@@ -22,16 +22,12 @@ Example:
        RAM Free           :132372kB
 
 
-2.ALTERMOD
-Purpose:Altermod Command is used to change the model parameters
-Status:Not implemented
-
-3.CIRCBYLINE
+2.CIRCBYLINE
 Purpose:Reads circuit(.ckt) files line by line
 Status:Not implemented
 
 
-4.DEF
+3.DEF
 Purpose:Command is used to define a function.
 Status:Implemented
 Syntax:
@@ -51,6 +47,24 @@ Example:
       gnucap>max(3.0,4.0)
       4.0
 
+4.ECHO
+Purpose:Prints the text
+Status:Implemented
+
+Syntax:
+     echo [text]
+
+Comments:
+Command echoes the text in the interpreter.
+
+Example:
+     gnucap> echo
+     Usage: echo [text]
+     gnucap>echo "Hello"
+     "Hello"
+     gnucap>echo Hello World!
+     Hello World!
+     gnucap>
 
 
 5.HISTORY
