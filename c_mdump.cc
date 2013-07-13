@@ -28,7 +28,7 @@
 #include "u_sim_data.h"
 
 /*--------------------------------------------------------------------------*/
-class CMD_AA : public CMD {
+class CMD_MDUMP : public CMD {
 public:
   void do_it(CS& cmd, CARD_LIST* )
   {

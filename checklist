@@ -84,12 +84,8 @@ Example:
       gnucap>history -s  stops tracking history
 
 
-
-
-
 6.MDUMP
 Purpose:Dumps the matrix values to a file
-Status:Implemented
 Status:Implemented
 
 Syntax:
