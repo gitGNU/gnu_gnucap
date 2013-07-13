@@ -89,7 +89,44 @@ Example:
 
 6.MDUMP
 Purpose:Dumps the matrix values to a file
-Status:Not implemented
+Status:Implemented
+Status:Implemented
+
+Syntax:
+     mdump
+     mdump filename
+
+Comments:
+Command dumps the dc-tran matrix into the console,if the filename is specified then output is redirected to the file.Two matrices one before the lu decomposition and one after the lu decomposition is dumped.
+
+Example:
+     gnucap>mdump
+     DC-Tran matrix before LU decomposition:
+     0.    0.    0.    0.   
+     0.    0.02776   -0.005802   -0.02186   
+     0.   -0.02738    0.01161    0.01578   
+     0.   -273.8u   -0.005802    0.006157   
+     DC-Tran matrix after LU decomposition:
+     0.    0.    0.    0.   
+     0.    0.02776   -0.209   -0.7874   
+     0.   -0.02738    0.00589   -0.9816   
+     0.   -273.8u   -0.005859    190.1u  
+     gnucap>
+    
+     gnucap>mdump matrix.txt
+     gnucap>!cat matrix.txt
+     DC-Tran matrix before LU decomposition:
+     0.0000 	    0.0000 	  0.0000 	0.0000 	
+     0.0000 	    0.0278 	 -0.0058       -0.0219 	
+     0.0000 	   -0.0274 	  0.0116 	0.0158 	
+     0.0000 	   -0.0003 	 -0.0058 	0.0062 	
+     DC-Tran matrix after LU decomposition:
+     0.0000 	    0.0000 	  0.0000 	0.0000 	
+     0.0000 	    0.0278 	 -0.2090       -0.7874 	
+     0.0000 	   -0.0274 	  0.0059       -0.9816 	
+     0.0000 	   -0.0003 	 -0.0059 	0.0002   
+     gnucap> 
+    
 
 7.PRE
 Purpose:Executes command prior to parsing the circuit
