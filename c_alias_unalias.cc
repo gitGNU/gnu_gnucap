@@ -47,7 +47,7 @@ public:
   }
 
   void do_it(CS& Cmd, CARD_LIST* Scope) {
-    command(_command_string + Cmd.tail(), Scope);
+    command(_command_string +" "+Cmd.tail(), Scope);
   }
 
   std::string get_aliasname(){
