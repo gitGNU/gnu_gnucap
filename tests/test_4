@@ -1,0 +1,6 @@
+*requirement:modified quit and version shared object files should be loaded
+echo _____________test quit and version command______________
+version
+quit 0
+
+

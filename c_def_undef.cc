@@ -119,7 +119,7 @@ class CMD_UNDEF : public CMD{
 
  public:
        void do_it(CS& Cmd,CARD_LIST* Scope){
-        std::string func_name = Cmd.tail();	
+        std::string func_name = Cmd.ctos();	
         if(func_name == "-a"){
               char ch;
               IO::mstdout << "are you sure you want to remove all defined functions?y/n:";

@@ -1,0 +1,14 @@
+*requirement:
+load ./history.so
+load ./echo.so
+echo ________________testing history command_______________
+history -t
+echo enabled history tracking mode....
+history
+echo tracking history....
+history -s
+echo stopped tracking history...
+history
+
+
+

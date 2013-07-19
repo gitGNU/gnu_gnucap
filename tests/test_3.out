@@ -1,0 +1,9 @@
+Gnucap Version: 2009.12.07 RCS 26.136
+gnucap>: ver;echo "Hello World!"
+Gnucap Version: 2009.12.07 RCS 26.136
+Hello World!
+gnucap>: strcmp "Hello" Hello;def f;shell
+flag=0
+>x^2+y^2
+itsrishre@rishabh-laptop:~$
+      

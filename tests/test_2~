@@ -1,0 +1,12 @@
+load ./def.so
+echo __________________testing def and undef command__________________
+def f
+*define a function like x^2+y^2
+f(2,3)
+f(100,345)
+f(0.002,0.12)
+def g
+*define a function like x*y+(y^2)*z+x*x*z
+g(1,2,3)
+undef f
+undef -a

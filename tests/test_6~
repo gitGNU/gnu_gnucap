@@ -1,0 +1,3 @@
+load ./sysinfo.so
+echo ______________test sysinfo command______________
+sysinfo

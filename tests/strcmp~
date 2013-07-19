@@ -1,0 +1,8 @@
+load ./strcmp.so
+echo _______________test strcmp_____________
+strcmp "Hello" "Hello"
+strcmp "hello" hello
+strcmp "Hello" hello
+strcmp hello world
+strcmp string1 string2
+strcmp --hello
