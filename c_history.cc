@@ -33,13 +33,13 @@ class CMD_HISTORY : public CMD {
 public:
   void do_it(CS& cmd, CARD_LIST* Scope)
   {
-   untested();
+   itested();
    std::string track;
    FILE *fptr;
    cmd >> track;
+   fptr=fopen("history.txt","r+");
    if (track==""){
    itested();
-       fptr=fopen("history.txt","r");
        	if(fptr!=NULL){itested();
        		system("cat history.txt");}
        	else
@@ -55,21 +55,17 @@ public:
    }
    
    else if (track == "-t"){
-   itested();
-   	if (fptr!=NULL)
-       		IO::mstdout << "history mode is already enabled!\n";
-        else
-		CMD::command("log >> history.txt ",Scope); 
+   	itested();
+	CMD::command("log >> history.txt ",Scope); 
    }
  
-   else if(track == "-s"){
-        itested();
-   	if (fptr!=NULL);
-        else
-          OS::system("rm history.txt");
+   else if(track == "-s" && fptr!=NULL){
+        OS::system("rm history.txt");
+        fclose(fptr);
     }      
-  }
+}
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher, "history", &p);
+
 
 

@@ -1,0 +1,6 @@
+*requirement:version,echo,:,strcmp,def shared object files should be loaded
+echo ______________test : command________________
+: ver
+: ver;echo "Hello World!"
+: echo "calling multiple commands";strcmp "Hello" Hello;def f;system
+      

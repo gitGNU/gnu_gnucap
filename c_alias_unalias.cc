@@ -101,7 +101,7 @@ private:
      int flag;
 public:
      void do_it(CS& Cmd,CARD_LIST* Scope){
-        alias_name = Cmd.tail();
+        alias_name = Cmd.ctos();
 	
         if(alias_name == "all"){
               char ch;

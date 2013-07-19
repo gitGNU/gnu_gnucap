@@ -1,0 +1,10 @@
+*Load version,echo,:,strcmp,def shared object files
+load ./:.so
+load ./version.so
+load ./echo.so
+load ./strcmp.so
+echo ______________test : command________________
+: ver
+: ver;echo "Hello World!"
+: echo "calling multiple commands";strcmp "Hello" Hello;def f;system
+      
