@@ -34,6 +34,7 @@ public:
   {
     std::string mode,filename;
     cmd >> filename;
+    assert(_sim);
     unsigned size_aa = _sim->_aa.size();
     unsigned size_lu = _sim->_lu.size();
     if(!size_aa) throw Exception(".");
