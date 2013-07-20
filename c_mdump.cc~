@@ -24,6 +24,7 @@
 
 #include "c_comand.h"
 #include "globals.h"
+#include "e_base.h"
 #include "u_sim_data.h"
 
 /*--------------------------------------------------------------------------*/
