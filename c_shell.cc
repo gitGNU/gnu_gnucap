@@ -22,7 +22,6 @@
  *Calls the command interpreter of OS.
  */
 
-#include "u_status.h"
 #include "c_comand.h"
 #include "globals.h"
 
@@ -32,7 +31,14 @@ class CMD_SHELL : public CMD {
 public:
   void do_it(CS& cmd, CARD_LIST* Scope)
   {itested();
-   OS::system(SHELL);
+    if (cmd.more())
+     {
+       itested();
+       OS::system(cmd.tail());
+    }
+    else{
+      OS::system(SHELL);
+    }
   }
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher, "shell", &p);
