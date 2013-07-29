@@ -62,7 +62,7 @@ public:
        IO::mstdout << "DC-Tran matrix before LU decomposition:\n";
        for(unsigned i=0;i<size_aa;i++){
              for(unsigned j=0;j<size_aa;j++)              
-                IO::mstdout <<(_sim->_aa).s(i,j)<<"\t\t\t";
+                IO::mstdout << (_sim->_aa).s(i,j)<<"\t\t\t";
            IO::mstdout<<"\n";
        }
 
