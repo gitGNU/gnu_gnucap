@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  *------------------------------------------------------------------
- * Compares two string and outputs 0 if the two strings are equal otherwise output is the difference of the first non-matching character in string1 by string2.
+ * Compares two string and outputs 0 if the two strings are equal otherwise output is the difference of the first non-matching character in   string1 by string2.
  */
 
 #include <gnucap/c_comand.h>
