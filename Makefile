@@ -19,10 +19,6 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301, USA.
 #------------------------------------------------------------------------
-# In most cases you can just type "make" to build it.
-# Generally, you will want "make your-system".
-
-#------------------------------------------------------------------------
 
 CC=g++ 
 CFLAGS=-shared -fPIC -o
