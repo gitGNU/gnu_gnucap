@@ -22,8 +22,9 @@
  *Calls the command interpreter of OS.
  */
 
-#include <gnucap/c_comand.h>
-#include <gnucap/globals.h>
+#include "gnucap/c_comand.h"
+#include "gnucap/globals.h"
+
 /*--------------------------------------------------------------------------*/
 
 class CMD_SHELL : public CMD {

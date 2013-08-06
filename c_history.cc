@@ -23,9 +23,8 @@
  * Note:This command doesn't works on Windows.
  */
 
-#include "u_status.h"
-#include "c_comand.h"
-#include "globals.h"
+#include <gnucap/c_comand.h>
+#include <gnucap/globals.h>
 
 /*--------------------------------------------------------------------------*/
 
