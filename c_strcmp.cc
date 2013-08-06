@@ -22,9 +22,9 @@
  * Compares two string and outputs 0 if the two strings are equal otherwise output is the difference of the first non-matching character in string1 by string2.
  */
 
-#include "u_status.h"
-#include "c_comand.h"
-#include "globals.h"
+#include <gnucap/c_comand.h>
+#include <gnucap/globals.h>
+
 /*--------------------------------------------------------------------------*/
 class CMD_STRCMP : public CMD {
 public:
@@ -35,7 +35,7 @@ public:
     cmd >> s1 >> s2;
     if((s1== "" or s2== "") || (s1=="--help" && s2==""))
     {
-	throw Exception("Usage: strcmp string1 string2\nOutput Value:output variable flag is 0 if the two strings are equal otherwise output is the difference of the first non-matching character in string1 and string2");
+	throw Exception("Usage: strcmp string1 string2\n");
     }
     int i=0;
     while(s1[i]!='\0' || s2[i]!='\0')

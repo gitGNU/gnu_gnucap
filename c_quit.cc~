@@ -1,4 +1,4 @@
-/*$Id: c_shell.cc,v 26.133 2013/07/01 06:00:04 al Exp $ -*- C++ -*-
+/*$Id: c_quit.cc,v 26.133 2013/07/10 20:06:04 al Exp $ -*- C++ -*-
  * Copyright (C) 2013 Rishabh Yadav
  * Author: Rishabh Yadav <rishabh.ece.iitbhu@gmail.com>
  *
@@ -19,27 +19,35 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  *------------------------------------------------------------------
- *Calls the command interpreter of OS.
+ * Modified quit command.
  */
 
-#include <gnucap/c_comand.h>
-#include <gnucap/globals.h>
+#include "gnucap/c_comand.h"
+#include "gnucap/globals.h"
+
 /*--------------------------------------------------------------------------*/
 
-class CMD_SHELL : public CMD {
+class CMD_QUIT : public CMD {
 public:
-  void do_it(CS& cmd, CARD_LIST* Scope)
-  {itested();
-    if (cmd.more())
-     {
-       itested();
-       OS::system(cmd.tail());
+  void do_it(CS& Cmd, CARD_LIST* Scope) {
+   int status=0;
+   char confirm;
+   Cmd << status;
+   IO::mstdout << "Make sure you have saved everything you wanted to.\nAre you sure you want to quit?y/n:";
+   std::cin >> confirm;
+   if (confirm=='y' || confirm =='Y'){
+   	switch (ENV::run_mode) {
+    	 case rPRE_MAIN:	unreachable(); break;
+    	 case rINTERACTIVE:	
+    	 case rSCRIPT:	
+    	 case rBATCH:	command("clear", Scope); exit(status);break;
+    	 case rPRESET:	untested(); /*nothing*/ break;
     }
-    else{
-      OS::system(SHELL);
-    }
+   }
   }
 }p;
-DISPATCHER<CMD>::INSTALL d(&command_dispatcher, "shell", &p);
+DISPATCHER<CMD>::INSTALL d(&command_dispatcher,"quit",&p);
+
+
 
 

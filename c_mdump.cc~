@@ -22,9 +22,9 @@
  * mdump commands prints the dc-tran matrix into the console.if the filename is specified then output is redirected to the file.
  */
 
-#include <gnucap/c_comand.h>
-#include <gnucap/globals.h>
-#include <gnucap/u_sim_data.h>
+#include "gnucap/c_comand.h"
+#include "gnucap/globals.h"
+#include "u_sim_data.h"
 
 /*--------------------------------------------------------------------------*/
 class CMD_MDUMP : public CMD {

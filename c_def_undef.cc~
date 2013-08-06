@@ -23,14 +23,11 @@
  * undef:undef command removes the the user defined functions.
  */
 
-/*----------------------------------------------------------------------*/
 #include <gnucap/c_comand.h>
 #include <gnucap/globals.h>
-
+#include "u_status.h"
 #include "exprtk.hpp"
 #define SIZE 20
-
-/*-----------------------------------------------------------------------*/
 class CMD_FUNC;
 CMD_FUNC* objects_ptr[SIZE];
 int id=0;

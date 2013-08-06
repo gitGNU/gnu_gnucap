@@ -21,15 +21,15 @@
  * 02110-1301, USA.
  */
 //testing=script 2007.07.13
-#include <gnucap/u_status.h>
-#include <gnucap/c_comand.h>
-#include <gnucap/d_dot.h>
-#include <gnucap/d_coment.h>
-#include <gnucap/d_subckt.h>
-#include <gnucap/u_lang.h>
+#include "u_status.h"
+#include "c_comand.h"
+#include "d_dot.h"
+#include "d_coment.h"
+#include "d_subckt.h"
+#include "u_lang.h"
 // header hack
-#include <gnucap/d_logic.h>
-#include <gnucap/bm.h>
+#include "d_logic.h"
+#include "bm.h"
 /*--------------------------------------------------------------------------*/
 namespace {
 /*--------------------------------------------------------------------------*/

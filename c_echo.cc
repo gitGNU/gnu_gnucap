@@ -22,8 +22,8 @@
  * echo:prints the text
  */
 
-#include "c_comand.h"
-#include "globals.h"
+#include <gnucap/c_comand.h>
+#include <gnucap/globals.h>
 
 /*--------------------------------------------------------------------*/
 class CMD_ECHO : public CMD {
