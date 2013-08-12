@@ -60,6 +60,9 @@ c_quit.so : c_quit.cc
 c_rmcirc.so : c_rmcirc.cc
 	$(CC) $(CFLAGS) c_rmcirc.so c_rmcirc.cc
 
+c_set.so : c_set.cc
+	$(CC) $(CFLAGS) c_set.so c_set.cc
+
 c_shell.so : c_shell.cc
 	$(CC) $(CFLAGS) c_shell.so c_shell.cc
 
