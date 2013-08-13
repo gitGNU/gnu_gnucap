@@ -1,6 +1,6 @@
 Commands Checklist
 ======================================================
-Updated on: 25/08/2013
+Updated on: 24/08/2013
 
 1.ALIAS
 Purpose:Creates an alias for command
@@ -192,7 +192,7 @@ When you are done with the shell,you can type exit to return to gnucap interpret
 
 13.SHOWMOD
 Purpose:Lists model parameter values
-Status:Done
+Status:Not implemented
 
 14.SOURCE
 Purpose:Reads a gnucap input file
