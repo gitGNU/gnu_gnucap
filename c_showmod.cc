@@ -21,9 +21,9 @@
  *------------------------------------------------------------------
  */
 
-#include "c_comand.h"
-#include "u_parameter.h"
-#include "globals.h"
+#include <gnucap/c_comand.h>
+#include <gnucap/u_parameter.h>
+#include <gnucap/globals.h>
 
 /*--------------------------------------------------------------------------*/
 namespace {
@@ -33,12 +33,8 @@ public:
   void do_it(CS& cmd, CARD_LIST* Scope)
   {
     PARAM_LIST* pl = Scope->params();
-    if (cmd.is_end()) {
-      pl->print(IO::mstdout, OPT::language);
-      IO::mstdout << '\n';
-    }else{
-      pl->parse(cmd);
-    }
+    pl->print(IO::mstdout, OPT::language);
+    IO::mstdout << '\n';
   }
 } p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher, "showmod", &p);

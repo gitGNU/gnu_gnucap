@@ -23,8 +23,6 @@
  * unalias:removes the aliases for the given name
  */
 
-//#include "c_comand.h"
-//#include "globals.h"
 #include <gnucap/c_comand.h>
 #include <gnucap/globals.h>
 #define SIZE 50 
