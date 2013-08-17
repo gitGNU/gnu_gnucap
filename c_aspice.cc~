@@ -23,7 +23,7 @@
 #include "globals.h"
 #include "c_comand.h"
 
-//THIS CODE IS NOT READY.WORK IS IN PROGRESS
+//THIS CODE IS NOT READY.WORK IN PROGRESS
 
 /*-------------------------------------------------------------------*/
 class CMD_ASPICE : public CMD {
