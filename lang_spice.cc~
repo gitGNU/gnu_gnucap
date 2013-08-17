@@ -1087,7 +1087,7 @@ public:
     getmerge(cmd, SKIP_HEADER, Scope);
   }
 } p5;
-DISPATCHER<CMD>::INSTALL d5(&command_dispatcher, "< | run", &p5);
+DISPATCHER<CMD>::INSTALL d5(&command_dispatcher, "<", &p5);
 /*--------------------------------------------------------------------------*/
 /* cmd_get: get command
  * get circuit from a file, after clearing the old one
