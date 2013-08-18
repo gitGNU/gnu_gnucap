@@ -40,12 +40,35 @@ and to modify the resitances say R1 and R2
      gnucap>alter R1=5k R2=100
      gnucap>
 
+3.ASPICE
+Purpose:Start an asynchronous run and loads the data to specified output file.
 
-3.CIRCBYLINE
+Status:Implemented
+
+
+Syntax:
+    aspice input_file output_file
+
+
+Comments: 
+input_file is a file which is to be run in batch mode and output_file corresponds to the file on which data will be loaded.If output_file already exists then the contents of the file are overwritten by the current output.
+
+
+Example: 
+Suppose my script file contains an instruction to execute the version command.Then,command to load the output of the script into another file say, version.txt is
+
+    gnucap>aspice script version.txt
+    Gnucap
+    Main version: 2009.12.07 RCS 26.136
+    gnucap>
+Now,version.txt contains the output of version command. 
+
+
+4.CIRCBYLINE
 Purpose:Enter a circuit line by line
 Status:Done
 
-4.DEF
+5.DEF
 Purpose:Command is used to define a function.
 Status:Implemented
 Syntax:
@@ -65,7 +88,7 @@ Example:
       gnucap>max(3.0,4.0)
       4.0
 
-5.ECHO
+6.ECHO
 Purpose:Prints the text
 Status:Implemented
 
@@ -85,7 +108,7 @@ Example:
      gnucap>
 
 
-6.HISTORY
+7.HISTORY
 Purpose:Review the previous commands
 Status:Implemented
 Syntax:
@@ -102,7 +125,7 @@ Example:
       gnucap>history -s  stops tracking history
 
 
-7.MDUMP
+8.MDUMP
 Purpose:Dumps the matrix values to a file
 Status:Implemented
 
@@ -143,7 +166,7 @@ Example:
    
 
 
-8.QUIT
+9.QUIT
 Purpose:Terminates the gnucap interpreter
 Status:Implemeted
 
@@ -160,19 +183,19 @@ Example:
      Are you sure you want to quit?y/n:
 
 
-9.REMCIRC
+10.REMCIRC
 Purpose:Removes the current circuit from the list of circuits sourced into gnucap
 Status:Done
 
-10.RESET
+11.RESET
 Purpose:Reset command re-parses the input file.The circuit can then be re-run from its initial state
 Status:Done
 
-11.RUN
+12.RUN
 Purpose:Run the silumation as specified in the input file.
 Status:Done
 
-12.SET
+13.SET
 Purpose:Sets the value of a variable
 Status:Implemented
 
@@ -193,7 +216,7 @@ Example:
     
 
 
-13.SHELL
+14.SHELL
 Purpose:Calls command interpreter of operating system
 Status:Implemented
 Syntax:
@@ -210,15 +233,15 @@ When you are done with the shell,you can type exit to return to gnucap interpret
      gnucap>
 
 
-14.SHOWMOD
+15.SHOWMOD
 Purpose:Lists model parameter values
 Status:Done
 
-15.SOURCE
+16.SOURCE
 Purpose:Reads a gnucap input file
 Status:Done
 
-16.STRCMP
+17.STRCMP
 Purpose:Compares two string
 Status:Implemented
 Syntax:
@@ -236,7 +259,7 @@ Example:
       gnucap> strcmp --help          prints the usage of the command. 
 
 
-17.SYSINFO
+18.SYSINFO
 Purpose:Command prints the system information
 Status:Implemented
 Syntax:
@@ -256,11 +279,11 @@ Example:
 	RAM Free        :145640kB
 
 
-18.TRACE
+19.TRACE
 Purpose:Trace command traces nodes
 Status:Not implemented
 
-19.UNALIAS
+20.UNALIAS
 Purpose:Removes any aliases present for the commands
 Status:Implemented
 
@@ -280,7 +303,7 @@ If info is the aliased name of sysinfo then it can be unaliased like
      all aliases removed
 
 
-20.UNDEF
+21.UNDEF
 Purpose:Command removes the the user-defined functions.
 Status:Implemented
 
@@ -298,7 +321,7 @@ Example:
      all functions removed.
 
 
-21.VERSION
+22.VERSION
 Purpose:Prints the version of gnucap
 Status:Implemented
 
@@ -313,7 +336,7 @@ Example:
 	gnucap> version
         Gnucap Version: 2009.12.07 RCS 26.136
 
-22. : Command
+23. : Command
 
 Purpose: command '':'' issued with multiple commands separated by semi-colon runs each command one by one.
 

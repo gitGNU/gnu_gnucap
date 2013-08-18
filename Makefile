@@ -25,6 +25,7 @@ CFLAGS=-shared -fPIC -o
 
 all:c_alias_unalias.so \
         c_alter.so \
+        c_aspice.so \
 	c_def_undef.so \
 	c_echo.so \
 	c_history.so \
@@ -46,6 +47,9 @@ c_alias_unalias.so : c_alias_unalias.cc
 c_alter.so : c_alter.cc
 	$(CC) $(CFLAGS) c_alter.so c_alter.cc
 
+c_aspice.so : c_aspice.cc
+	$(CC) $(CFLAGS) c_aspice.so c_aspice.cc
+ 
 c_def_undef.so : c_def_undef.cc
 	$(CC) $(CFLAGS) c_def_undef.so c_def_undef.cc
 
