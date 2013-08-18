@@ -1,4 +1,4 @@
-/*$Id: c_aspice.cc.cc,v 26.138 2013/08/29 01:40:53 al Exp $ -*- C++ -*-
+/*$Id: c_aspice.cc,v 26.138 2013/08/29 01:40:53 al Exp $ -*- C++ -*-
  * Copyright (C) 2013 Rishabh Yadav
  * Author: Rishabh Yadav <rishabh.ece.iitbhu@gmail.com>
  *
@@ -23,21 +23,19 @@
 #include "globals.h"
 #include "c_comand.h"
 
-//THIS CODE IS NOT READY.WORK IS IN PROGRESS
-
 /*-------------------------------------------------------------------*/
 class CMD_ASPICE : public CMD {
 public:
-  void do_it(CS& cmd, CARD_LIST* Scope) {untested();
+  void do_it(CS& cmd, CARD_LIST* Scope) {itested();
       std::string input_file,output_file,mode,operation;
       cmd >>input_file >>output_file;
-      if(input_file=="" or output_file ==""){untested();
-             throw Exception("Usage: aspice input_file output_file");}
-      char *x = new char[std::max(output_file.length(),input_file.length())+2+1];//2+1 for length of ">>" and space.
-      sprintf(x,">>%s",output_file.c_str());
+      if(input_file=="" or output_file =="")
+             throw Exception("Usage: aspice input_file output_file");
+      char *x = new char[std::max(output_file.length(),input_file.length())+1+1];//1+1 for length of ">" and space.
+      sprintf(x,"> %s",output_file.c_str());
       operation = x;
       CMD::command(operation,Scope);
-      sprintf(x,"<< %s",input_file.c_str());
+      sprintf(x,"< %s",input_file.c_str());
       operation = x;
       CMD::command(operation,Scope);
       CMD::command(">",Scope);
