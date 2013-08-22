@@ -43,15 +43,15 @@ public:
       fptr = fopen(filename.c_str(),"a+");
       if (!fptr) throw Exception("Unable to open or create file.");
       fprintf(fptr,"DC-Tran matrix before LU decomposition:\n");
-      for(unsigned i=0;i<size_aa;i++){
-          for(unsigned j=0;j<size_aa;j++)              
+      for(unsigned i=1;i<=size_aa;i++){
+          for(unsigned j=1;j<=size_aa;j++)              
                 fprintf(fptr,"%8.6f \t",(_sim->_aa).s(i,j));
            fprintf(fptr,"\n");
        }
 
       fprintf(fptr,"DC-Tran matrix after LU decomposition:\n");
-      for(unsigned i=0;i<size_lu;i++){ 
-           for(unsigned j=0;j<size_lu;j++)
+      for(unsigned i=1;i<=size_lu;i++){ 
+           for(unsigned j=1;j<=size_lu;j++)
                 fprintf(fptr,"%8.6f \t",(_sim->_lu).s(i,j));
            fprintf(fptr,"\n");
        }       
@@ -60,15 +60,15 @@ public:
  
     else{
        IO::mstdout << "DC-Tran matrix before LU decomposition:\n";
-       for(unsigned i=0;i<size_aa;i++){
-             for(unsigned j=0;j<size_aa;j++)              
+       for(unsigned i=1;i<=size_aa;i++){
+             for(unsigned j=1;j<=size_aa;j++)              
                 IO::mstdout << (_sim->_aa).s(i,j)<<"\t\t\t";
            IO::mstdout<<"\n";
        }
 
      IO::mstdout << "DC-Tran matrix after LU decomposition:\n";
-     for(unsigned i=0;i<size_lu;i++){ 
-           for(unsigned j=0;j<size_lu;j++)
+     for(unsigned i=1;i<=size_lu;i++){ 
+           for(unsigned j=1;j<=size_lu;j++)
                 IO::mstdout << (_sim->_lu).s(i,j) <<"\t\t\t";
            IO::mstdout<<"\n";
        }       
