@@ -27,19 +27,15 @@
 class CMD_ASPICE : public CMD {
 public:
   void do_it(CS& cmd, CARD_LIST* Scope) {itested();
-      std::string input_file,output_file,mode,operation;
+      std::string input_file,output_file;
       cmd >>input_file >>output_file;
       if(input_file=="" or output_file =="")
              throw Exception("Usage: aspice input_file output_file");
-      char *x = new char[std::max(output_file.length(),input_file.length())+1+1];//1+1 for length of ">" and space.
-      sprintf(x,"> %s",output_file.c_str());
-      operation = x;
-      CMD::command(operation,Scope);
-      sprintf(x,"< %s",input_file.c_str());
-      operation = x;
-      CMD::command(operation,Scope);
+      output_file.insert(0,std::string("> "));
+      CMD::command(output_file,Scope);
+      input_file.insert(0,std::string("< "));
+      CMD::command(input_file,Scope);
       CMD::command(">",Scope);
-      delete[] x;
      }
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher,"aspice",&p);
