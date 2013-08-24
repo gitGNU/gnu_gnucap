@@ -1,6 +1,6 @@
 Commands Checklist
 ======================================================
-Updated on: 29/08/2013
+Updated on: 06/09/2013
 
 1.ALIAS
 Purpose:Creates an alias for command
@@ -68,7 +68,30 @@ Now,version.txt contains the output of version command.
 Purpose:Enter a circuit line by line
 Status:Done
 
-5.DEF
+5.CLS
+Purpose:Clears the gnucap interpreter
+Status:Implemented
+
+Syntax:
+      cls
+      cls [command]
+
+Comments:
+A command can be issued with cls,it first clears the interpreter and then run th command.
+A bare cls simply clears the interpreter.
+
+Example:
+Following command first clears the screen and then runs the command 'sysinfo'.
+
+       gnucap>cls sysinfo
+       Model name	  : Intel(R) Core(TM) i5-2450M CPU @ 2.50GHz
+       OS Description     :"Ubuntu 12.04 LTS"
+       CPU MHz	          : 2494.409
+       RAM Available      : 1012348kB
+       RAM Free           : 132372kB
+       gnucap>
+
+6.DEF
 Purpose:Command is used to define a function.
 Status:Implemented
 Syntax:
@@ -88,7 +111,7 @@ Example:
       gnucap>max(3.0,4.0)
       4.0
 
-6.ECHO
+7.ECHO
 Purpose:Prints the text
 Status:Implemented
 
@@ -108,7 +131,7 @@ Example:
      gnucap>
 
 
-7.HISTORY
+8.HISTORY
 Purpose:Review the previous commands
 Status:Implemented
 Syntax:
@@ -125,7 +148,7 @@ Example:
       gnucap>history -s  stops tracking history
 
 
-8.MDUMP
+9.MDUMP
 Purpose:Dumps the matrix values to a file
 Status:Implemented
 
@@ -166,7 +189,7 @@ Example:
    
 
 
-9.QUIT
+10.QUIT
 Purpose:Terminates the gnucap interpreter
 Status:Implemeted
 
@@ -183,19 +206,19 @@ Example:
      Are you sure you want to quit?y/n:
 
 
-10.REMCIRC
+11.REMCIRC
 Purpose:Removes the current circuit from the list of circuits sourced into gnucap
 Status:Done
 
-11.RESET
+12.RESET
 Purpose:Reset command re-parses the input file.The circuit can then be re-run from its initial state
 Status:Done
 
-12.RUN
+13.RUN
 Purpose:Run the silumation as specified in the input file.
 Status:Done
 
-13.SET
+14.SET
 Purpose:Sets the value of a variable
 Status:Implemented
 
@@ -216,7 +239,7 @@ Example:
     
 
 
-14.SHELL
+15.SHELL
 Purpose:Calls command interpreter of operating system
 Status:Implemented
 Syntax:
@@ -233,15 +256,15 @@ When you are done with the shell,you can type exit to return to gnucap interpret
      gnucap>
 
 
-15.SHOWMOD
+16.SHOWMOD
 Purpose:Lists model parameter values
 Status:Done
 
-16.SOURCE
+17.SOURCE
 Purpose:Reads a gnucap input file
 Status:Done
 
-17.STRCMP
+18.STRCMP
 Purpose:Compares two string
 Status:Implemented
 Syntax:
@@ -259,7 +282,7 @@ Example:
       gnucap> strcmp --help          prints the usage of the command. 
 
 
-18.SYSINFO
+19.SYSINFO
 Purpose:Command prints the system information
 Status:Implemented
 Syntax:
@@ -279,11 +302,11 @@ Example:
 	RAM Free        :145640kB
 
 
-19.TRACE
+20.TRACE
 Purpose:Trace command traces nodes
 Status:Not implemented
 
-20.UNALIAS
+21.UNALIAS
 Purpose:Removes any aliases present for the commands
 Status:Implemented
 
@@ -303,7 +326,7 @@ If info is the aliased name of sysinfo then it can be unaliased like
      all aliases removed
 
 
-21.UNDEF
+22.UNDEF
 Purpose:Command removes the the user-defined functions.
 Status:Implemented
 
@@ -321,7 +344,7 @@ Example:
      all functions removed.
 
 
-22.VERSION
+23.VERSION
 Purpose:Prints the version of gnucap
 Status:Implemented
 
@@ -336,7 +359,7 @@ Example:
 	gnucap> version
         Gnucap Version: 2009.12.07 RCS 26.136
 
-23. : Command
+24. : Command
 
 Purpose: command '':'' issued with multiple commands separated by semi-colon runs each command one by one.
 
