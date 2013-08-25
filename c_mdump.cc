@@ -22,9 +22,9 @@
  * mdump commands prints the dc-tran matrix into the console.if the filename is specified then output is redirected to the file.
  */
 
-#include "c_comand.h"
-#include "globals.h"
-#include "u_sim_data.h"
+#include "gnucap/c_comand.h"
+#include "gnucap/globals.h"
+#include "gnucap/u_sim_data.h"
 
 using namespace std;
 /*--------------------------------------------------------------------------*/
@@ -42,18 +42,18 @@ public:
     if (filename!= ""){
       FILE *fptr;
       fptr = fopen(filename.c_str(),"a+");
-      if (!fptr) {fclose(fptr);throw Exception("Unable to open or create file.");}
+      if (!fptr) throw Exception("Unable to open or create file.");
       fprintf(fptr,"DC-Tran matrix before LU decomposition:\n");
       for(unsigned i=1;i<=size_aa;i++){
           for(unsigned j=1;j<=size_aa;j++)              
-                fprintf(fptr,"%8.4f \t",(_sim->_aa).s(i,j));
+                fprintf(fptr,"%8.6f \t",(_sim->_aa).s(i,j));
            fprintf(fptr,"\n");
        }
 
       fprintf(fptr,"DC-Tran matrix after LU decomposition:\n");
       for(unsigned i=1;i<=size_lu;i++){ 
            for(unsigned j=1;j<=size_lu;j++)
-                fprintf(fptr,"%8.4f \t",(_sim->_lu).s(i,j));
+                fprintf(fptr,"%8.6f \t",(_sim->_lu).s(i,j));
            fprintf(fptr,"\n");
        }       
       fclose(fptr);
