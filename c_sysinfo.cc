@@ -25,23 +25,23 @@
 
 #include <gnucap/c_comand.h>
 #include <gnucap/globals.h>
-
+/*--------------------------------------------------------------------------*/
+namespace {
 /*--------------------------------------------------------------------------*/
 
 class CMD_SYSINFO : public CMD {
 public:
-  void do_it(CS& cmd, CARD_LIST*)
-  { 
+  void do_it(CS& cmd, CARD_LIST*){ 
     //Take information from the shell and format the output
     std::system("cat /proc/cpuinfo  |  grep 'model name'  |  sed 's/m/M/' ");
     std::system("cat /etc/*release*  |  grep 'DISTRIB_DESCRIPTION'  |   sed 's/DISTRIB_DESCRIPTION=/OS Description  :/' ");
     std::system("cat /proc/cpuinfo  |  grep 'cpu MHz'   |   sed 's/cpu/CPU/' ");
     std::system("cat /proc/meminfo  |  grep 'MemTotal'  | awk '{print $1 $2 $3}' |   sed 's/MemTotal:/RAM Available   :/'");
     std::system("cat /proc/meminfo  |  grep 'MemFree'   | awk '{print $1 $2 $3}' |   sed 's/MemFree:/RAM Free        :/'");
-    
-
-}
+  }
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher, "sysinfo", &p);
+/*-------------------------------------------------------------------------*/
+}
 
 

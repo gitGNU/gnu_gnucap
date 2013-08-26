@@ -20,19 +20,19 @@
  * 02110-1301, USA.
  *------------------------------------------------------------------*/
 //Outputs the current version of gnucap
-
 #include <gnucap/patchlev.h>
 #include <gnucap/c_comand.h>
 #include <gnucap/globals.h>
-
+/*-------------------------------------------------------------------*/
+namespace {
 /*-------------------------------------------------------------------*/
 class CMD_VERSION : public CMD {
 public:
   void do_it(CS&, CARD_LIST* Scope) {
-  	IO::mstdout <<
-	"Gnucap Version: " PATCHLEVEL "\n";
+    IO::mstdout <<
+    "Gnucap Version: " PATCHLEVEL "\n";
   }
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher,"version|ver",&p);
-
 /*-------------------------------------------------------------------*/
+}

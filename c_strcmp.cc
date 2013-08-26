@@ -26,33 +26,32 @@
 #include <gnucap/globals.h>
 #include <gnucap/u_parameter.h>
 #include <sstream>
-
+/*--------------------------------------------------------------------------*/
+namespace {
 /*--------------------------------------------------------------------------*/
 class CMD_STRCMP : public CMD {
 public:
-  void do_it(CS& cmd, CARD_LIST*Scope)
-  { 
+  void do_it(CS& cmd, CARD_LIST*Scope){ 
     static int flag;
     std::string s1,s2;
     cmd >> s1 >> s2;
-    if((s1== "" or s2== "") || (s1=="--help" && s2==""))
-    {
-	throw Exception("Usage: strcmp string1 string2\n");
+    if((s1== "" or s2== "") || (s1=="--help" && s2=="")){
+      throw Exception("Usage: strcmp string1 string2\n");
+    }else{
     }
     int i=0;
-    while(s1[i]!='\0' || s2[i]!='\0')
-    {
-          flag=s1[i]-s2[i++];
-          if(flag)
-             break;
-      
+    while(s1[i]!='\0' || s2[i]!='\0'){
+      flag=s1[i]-s2[i++];
+      if(flag)
+        break;  
     }
     IO::mstdout<<"flag="<<flag<<"\n";
     PARAM_LIST* pl = Scope->params();
     pl->set("flag",static_cast<std::ostringstream*>( &(std::ostringstream() << flag) )->str());
-
-}
+  }
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher, "strcmp", &p);
+/*---------------------------------------------------------------------------*/
+}
 
 

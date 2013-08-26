@@ -30,15 +30,13 @@ namespace {
 /*--------------------------------------------------------------------------*/
 class CMD_SHOWMOD : public CMD {
 public:
-  void do_it(CS& cmd, CARD_LIST* Scope)
-  {
+  void do_it(CS& cmd, CARD_LIST* Scope){
     PARAM_LIST* pl = Scope->params();
     pl->print(IO::mstdout, OPT::language);
     IO::mstdout << '\n';
   }
-} p;
+}p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher, "showmod", &p);
 /*--------------------------------------------------------------------------*/
 }
-/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

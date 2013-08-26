@@ -24,30 +24,29 @@
 
 #include <gnucap/c_comand.h>
 #include <gnucap/globals.h>
-
+/*--------------------------------------------------------------------------*/
+namespace {
 /*--------------------------------------------------------------------------*/
 
 class CMD_QUIT : public CMD {
 public:
   void do_it(CS& Cmd, CARD_LIST* Scope) {
-   int status=0;
-   char confirm;
-   Cmd << status;
-   IO::mstdout << "Make sure you have saved everything you wanted to.\nAre you sure you want to quit?y/n:";
-   std::cin >> confirm;
-   if (confirm=='y' || confirm =='Y'){
-   	switch (ENV::run_mode) {
-    	 case rPRE_MAIN:	unreachable(); break;
-    	 case rINTERACTIVE:	
-    	 case rSCRIPT:	
-    	 case rBATCH:	command("clear", Scope); exit(status);break;
-    	 case rPRESET:	untested(); /*nothing*/ break;
+    int status=0;
+    char confirm;
+    Cmd << status;
+    IO::mstdout << "Make sure you have saved everything you wanted to.\nAre you sure you want to quit?y/n:";
+    std::cin >> confirm;
+    if (confirm=='y' || confirm =='Y'){
+      switch (ENV::run_mode) {
+        case rPRE_MAIN:	unreachable(); break;
+    	case rINTERACTIVE:	
+    	case rSCRIPT:	
+    	case rBATCH:	command("clear", Scope); exit(status);break;
+    	case rPRESET:	untested(); /*nothing*/ break;
+      }
     }
-   }
   }
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher,"quit",&p);
-
-
-
-
+/*--------------------------------------------------------------------------*/
+}
