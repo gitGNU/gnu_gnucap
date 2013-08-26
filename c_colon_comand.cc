@@ -27,26 +27,27 @@
 #include <gnucap/globals.h>
 #include <iostream>
 #include <string>
-
+/*----------------------------------------------------------------------------------*/
+namespace {
 /*----------------------------------------------------------------------------------*/
 class CMD_SYSTEM : public CMD
 {
 public:
-     void do_it(CS& cmd,CARD_LIST* Scope){
-     std::string commands;
-     commands = cmd.tail();
-     std::string delim = ";";
-     int start = 0U;
-     int end = commands.find(delim);
-     while (end != std::string::npos)
-     {
-         CMD::command(commands.substr(start, end - start),Scope);
-         start = end + delim.length();
-         end = commands.find(delim, start);
-     }
-     CMD::command(commands.substr(start, end),Scope);
-     }
+  void do_it(CS& cmd,CARD_LIST* Scope){
+    std::string commands;
+    commands = cmd.tail();
+    std::string delim = ";";
+    int start = 0U;
+    int end = commands.find(delim);
+    while (end != std::string::npos){
+      CMD::command(commands.substr(start, end - start),Scope);
+      start = end + delim.length();
+      end = commands.find(delim, start);
+    }
+    CMD::command(commands.substr(start, end),Scope);
+  }
 }p;
 DISPATCHER<CMD>::INSTALL d3(&command_dispatcher, ":", &p);
 
 /*-------------------------------------------------------------------*/
+}

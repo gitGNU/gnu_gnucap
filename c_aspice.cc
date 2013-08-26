@@ -18,26 +18,29 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
- *------------------------------------------------------------------*/
-
-#include "globals.h"
-#include "c_comand.h"
-
+ *------------------------------------------------------------------
+ */
+#include <gnucap/globals.h>
+#include <gnucap/c_comand.h>
+/*-------------------------------------------------------------------*/
+namespace {
 /*-------------------------------------------------------------------*/
 class CMD_ASPICE : public CMD {
 public:
   void do_it(CS& cmd, CARD_LIST* Scope) {itested();
-      std::string input_file,output_file;
-      cmd >>input_file >>output_file;
-      if(input_file=="" or output_file =="")
-             throw Exception("Usage: aspice input_file output_file");
-      output_file.insert(0,std::string("> "));
-      CMD::command(output_file,Scope);
-      input_file.insert(0,std::string("< "));
-      CMD::command(input_file,Scope);
-      CMD::command(">",Scope);
-     }
+    std::string input_file,output_file;
+    cmd >>input_file >>output_file;
+    if(input_file=="" or output_file ==""){
+      throw Exception("Usage: aspice input_file output_file");
+    }else{
+    }
+    output_file.insert(0,std::string("> "));
+    CMD::command(output_file,Scope);
+    input_file.insert(0,std::string("< "));
+    CMD::command(input_file,Scope);
+    CMD::command(">",Scope);
+  }
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher,"aspice",&p);
-
 /*-------------------------------------------------------------------*/
+}

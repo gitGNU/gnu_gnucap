@@ -24,20 +24,22 @@
 
 #include <gnucap/c_comand.h>
 #include <gnucap/globals.h>
-
+/*--------------------------------------------------------------------*/
+namespace {
 /*--------------------------------------------------------------------*/
 class CMD_ECHO : public CMD {
         
 public:
-  void do_it(CS& cmd, CARD_LIST* Scope)
-  {
-     if (cmd.more()){itested();
-     	IO::mstdout << cmd.tail() << "\n";
-     }
-     else{itested();
-        IO::mstdout << "Usage: echo [text]\n"; 
-     }
+  void do_it(CS& cmd, CARD_LIST* Scope){
+    if(cmd.more()){itested();
+      IO::mstdout << cmd.tail() << "\n";
+    }
+    else{itested();
+      IO::mstdout << "Usage: echo [text]\n"; 
+    }
   }
-} p;
+}p;
 DISPATCHER<CMD>::INSTALL d1002(&command_dispatcher, "echo", &p);
+/*----------------------------------------------------------------------*/
+}
 

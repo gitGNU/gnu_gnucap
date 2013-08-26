@@ -25,46 +25,42 @@
 
 #include <gnucap/c_comand.h>
 #include <gnucap/globals.h>
-
+/*--------------------------------------------------------------------------*/
+namespace {
 /*--------------------------------------------------------------------------*/
 
 class CMD_HISTORY : public CMD {
 public:
-  void do_it(CS& cmd, CARD_LIST* Scope)
-  {
-   itested();
-   std::string track;
-   FILE *fptr;
-   cmd >> track;
-   fptr=fopen("history.txt","r+");
-   if (track==""){
-   itested();
-       	if(fptr!=NULL){itested();
-       		system("cat history.txt");}
-       	else
-       		throw Exception("You haven't enabled the history mode to track the commands.\nUsage:history [mode]\n"
+  void do_it(CS& cmd, CARD_LIST* Scope){
+    itested();
+    std::string track;
+    FILE *fptr;
+    cmd >> track;
+    fptr=fopen("history.txt","r+");
+    if(track==""){itested();
+      if(fptr!=NULL){itested();
+        system("cat history.txt");
+      }else{
+        throw Exception("You haven't enabled the history mode to track the commands.\nUsage:history [mode]\n"
    				"-t        Start tracking\n"
    				"-s        Stop tracking");
+      }
     }
-   else if (track!= "-t" && track!= "-s") {
-   itested();
-   IO::mstdout<<"Usage:history [mode]\n"
-   "-t        Start tracking\n"
-   "-s        Stop tracking\n";
-   }
-   
-   else if (track == "-t"){
-   	itested();
-	CMD::command("log >> history.txt ",Scope); 
-   }
- 
-   else if(track == "-s" && fptr!=NULL){
-        OS::system("rm history.txt");
-        fclose(fptr);
+    else if (track!= "-t" && track!= "-s"){itested();
+      IO::mstdout<<"Usage:history [mode]\n"
+      "-t        Start tracking\n"
+      "-s        Stop tracking\n";
+      }   
+    else if (track == "-t"){
+      itested();
+      CMD::command("log >> history.txt ",Scope); 
+    }
+    else if(track == "-s" && fptr!=NULL){
+      OS::system("rm history.txt");
+      fclose(fptr);
     }      
-}
+  }
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher, "history", &p);
-
-
-
+/*---------------------------------------------------------------*/
+}

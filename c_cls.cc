@@ -19,23 +19,22 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  *------------------------------------------------------------------*/
-
-#include "c_comand.h"
-#include "globals.h"
-
+#include <gnucap/c_comand.h>
+#include <gnucap/globals.h>
+/*-------------------------------------------------------------------*/
+namespace {
 /*------------------------------------------------------------------*/
-
 class CMD_CLS : public CMD {
 public:
-  void do_it(CS& cmd, CARD_LIST* Scope)
-  {
+  void do_it(CS& cmd, CARD_LIST* Scope){
     OS::system("clear");
     if(cmd.more()){itested();
-       command(cmd.tail(),Scope);
-     }
+      command(cmd.tail(),Scope);
+    }else{
+    }
   }
-} p;
+}p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher, "cls", &p);
-
-
+/*------------------------------------------------------------------*/
+}
 

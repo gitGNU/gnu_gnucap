@@ -26,7 +26,8 @@
 #include <gnucap/c_comand.h>
 #include <gnucap/globals.h>
 #define SIZE 50 
-
+/*--------------------------------------------------------------------------*/
+namespace{
 /*--------------------------------------------------------------------------*/
 class CMD_EXEC;
 CMD_EXEC* objects_ptr[SIZE];
@@ -36,8 +37,8 @@ class CMD_EXEC :public CMD {
 
 private:
   std::string _command_string;
-  std::string alias_name;
-  DISPATCHER<CMD>::INSTALL* dispatcher_ptr;
+  std::string _alias_name;
+  DISPATCHER<CMD>::INSTALL* _dispatcher_ptr;
 
 public:
   CMD_EXEC(std::string s)
@@ -51,12 +52,12 @@ public:
   }
 
   std::string get_aliasname(){
-    return alias_name;
+    return _alias_name;
   }
 
   void set_aliasname(std::string s,DISPATCHER<CMD>::INSTALL* p){
-     alias_name=s;
-     this->dispatcher_ptr=p;
+    _alias_name=s;
+    this->_dispatcher_ptr=p;
   }
 
   void uninstall(int index){
@@ -64,12 +65,12 @@ public:
      objects_ptr[index]=objects_ptr[--id];
      objects_ptr[id]='\0';
    }
-   delete this->dispatcher_ptr;
+   delete this->_dispatcher_ptr;
    delete this;
    
   }
   void uninstall_all(){
-    delete this->dispatcher_ptr;
+    delete this->_dispatcher_ptr;
     delete this; 
     }
 };
@@ -82,13 +83,14 @@ class CMD_ALIAS : public CMD {
 public:
   void do_it(CS& Cmd, CARD_LIST* Scope) {
     int i;
-    std::string alias_name = Cmd.ctos();
-    if (alias_name == ""){
-	throw Exception("Usage: alias [word] [command]");
-	}
+    std::string _alias_name = Cmd.ctos();
+    if(_alias_name == ""){
+      throw Exception("Usage: alias [word] [command]");
+    }else{
+    }
     CMD_EXEC* new_command = new CMD_EXEC(Cmd.tail());
-    DISPATCHER<CMD>::INSTALL* install_ref = new DISPATCHER<CMD>::INSTALL(&command_dispatcher, alias_name, new_command); 
-    new_command->set_aliasname(alias_name,install_ref);
+    DISPATCHER<CMD>::INSTALL* install_ref = new DISPATCHER<CMD>::INSTALL(&command_dispatcher, _alias_name, new_command); 
+    new_command->set_aliasname(_alias_name,install_ref);
   }
 }alias_command;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher,"alias",&alias_command);
@@ -97,41 +99,43 @@ DISPATCHER<CMD>::INSTALL d(&command_dispatcher,"alias",&alias_command);
 
 class CMD_UNALIAS : public CMD {
 private:
-     std::string alias_name;
-     int flag;
+     std::string _alias_name;
+     int _flag;
 public:
      void do_it(CS& Cmd,CARD_LIST* Scope){
-        alias_name = Cmd.ctos();
-	
-        if(alias_name == "all"){
-              char ch;
-              IO::mstdout << "are you sure you want to remove all aliases?y/n:";
-              std::cin >> ch;
-              if(ch=='y' || ch =='Y'){
-              	   for(int i=0;objects_ptr[i]!='\0';i++){
-                		objects_ptr[i]->uninstall_all();
-                    }
-		   id=0;
-                   objects_ptr[id]='\0';
-                   throw Exception("all aliases removed");
-  	     }
-             else if(ch=='n' || ch=='N'){throw Exception("");}
-             else throw Exception("Wrong Input!");
-          }
-        flag=1;
-        for(int i=0;objects_ptr[i]!='\0';i++)
-        {
-          if (objects_ptr[i]->get_aliasname() == alias_name){
-               objects_ptr[i]->uninstall(i);
-               flag=0;
-               break;
-            }
-         }  
-
-         if (flag){
-          IO::mstdout << "No such aliased word exists\n";
-         }  
+       _alias_name = Cmd.ctos();
+       if(_alias_name == "all"){
+         char ch;
+         IO::mstdout << "are you sure you want to remove all aliases?y/n:";
+         std::cin >> ch;
+         if(ch=='y' || ch =='Y'){
+           for(int i=0;objects_ptr[i]!='\0';i++){
+             objects_ptr[i]->uninstall_all();
+           }
+           id=0;
+           objects_ptr[id]='\0';
+           throw Exception("all aliases removed");
+  	 }
+         else if(ch=='n' || ch=='N'){throw Exception("");}
+         else throw Exception("Wrong Input!");
+       }else{
+       }
+       _flag=1;
+       for(int i=0;objects_ptr[i]!='\0';i++){
+         if (objects_ptr[i]->get_aliasname() == _alias_name){
+           objects_ptr[i]->uninstall(i);
+           _flag=0;
+           break;
+         }else{
+         }
+       }  
+       if (_flag){
+         IO::mstdout << "No such aliased word exists\n";
+       }else{
+       }
 }
 }unalias_command;
 DISPATCHER<CMD>::INSTALL d1(&command_dispatcher,"unalias",&unalias_command);
+/*----------------------------------------------------------------------------*/
+}
 
