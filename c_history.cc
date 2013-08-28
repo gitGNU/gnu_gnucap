@@ -40,22 +40,21 @@ public:
     if(track==""){itested();
       if(fptr!=NULL){itested();
         system("cat history.txt");
-      }else{
+      }else{untested();
         throw Exception("You haven't enabled the history mode to track the commands.\nUsage:history [mode]\n"
    				"-t        Start tracking\n"
    				"-s        Stop tracking");
       }
     }
-    else if (track!= "-t" && track!= "-s"){itested();
+    else if (track!= "-t" && track!= "-s"){untested();
       IO::mstdout<<"Usage:history [mode]\n"
       "-t        Start tracking\n"
       "-s        Stop tracking\n";
       }   
-    else if (track == "-t"){
-      itested();
+    else if (track == "-t"){untested();
       CMD::command("log >> history.txt ",Scope); 
     }
-    else if(track == "-s" && fptr!=NULL){
+    else if(track == "-s" && fptr!=NULL){untested();
       OS::system("rm history.txt");
       fclose(fptr);
     }      

@@ -31,9 +31,9 @@ public:
   void do_it(CS& cmd, CARD_LIST* Scope) {
     std::string assign_to,value;
     cmd >> assign_to >> "=" >> value;
-    if(assign_to=="" or value==""){
+    if(assign_to=="" or value==""){untested();
       throw Exception("Usage:set assign_to = value");
-    }else{
+    }else{untested();
     }
     PARAM_LIST* pl = Scope->params();
     pl->set(assign_to, value);  
