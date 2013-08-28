@@ -19,13 +19,15 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  *------------------------------------------------------------------
- * Compares two string and outputs 0 if the two strings are equal otherwise output is the difference of the first non-matching character in   string1 by string2.
+ * Compares two string and outputs 0 if the two strings are equal otherwise output is the difference of the first non-matching character     
+ * string1 by string2.
  */
-
+//testing=script 2013.09.10
 #include <gnucap/c_comand.h>
 #include <gnucap/globals.h>
 #include <gnucap/u_parameter.h>
 #include <sstream>
+
 /*--------------------------------------------------------------------------*/
 namespace {
 /*--------------------------------------------------------------------------*/
@@ -35,15 +37,17 @@ public:
     static int flag;
     std::string s1,s2;
     cmd >> s1 >> s2;
-    if((s1== "" or s2== "") || (s1=="--help" && s2=="")){
-      throw Exception("Usage: strcmp string1 string2\n");
-    }else{
+    if((s1== "" or s2== "") || (s1=="--help" && s2=="")){untested();
+      throw Exception("Usage: strcmp string1 string2.");
+    }else{untested();
     }
-    int i=0;
-    while(s1[i]!='\0' || s2[i]!='\0'){
-      flag=s1[i]-s2[i++];
-      if(flag)
-        break;  
+    long unsigned int i=0;
+    while(s1[i]!='\0' || s2[i]!='\0'){untested();
+      flag=s1[i]-s2[i];
+      i++;
+      if(flag){untested();
+        break; 
+      } 
     }
     IO::mstdout<<"flag="<<flag<<"\n";
     PARAM_LIST* pl = Scope->params();

@@ -51,16 +51,16 @@ public:
     command(_command_string +" "+Cmd.tail(), Scope);
   }
 
-  std::string get_aliasname(){
+  std::string get_aliasname(){untested();
     return _alias_name;
   }
 
-  void set_aliasname(std::string s,DISPATCHER<CMD>::INSTALL* p){
+  void set_aliasname(std::string s,DISPATCHER<CMD>::INSTALL* p){untested();
     _alias_name=s;
     this->_dispatcher_ptr=p;
   }
 
-  void uninstall(int index){
+  void uninstall(int index){untested();
    if (id>0){ 
      objects_ptr[index]=objects_ptr[--id];
      objects_ptr[id]='\0';
@@ -69,7 +69,7 @@ public:
    delete this;
    
   }
-  void uninstall_all(){
+  void uninstall_all(){untested();
     delete this->_dispatcher_ptr;
     delete this; 
     }
@@ -81,10 +81,9 @@ public:
 
 class CMD_ALIAS : public CMD {
 public:
-  void do_it(CS& Cmd, CARD_LIST* Scope) {
-    int i;
+  void do_it(CS& Cmd, CARD_LIST*) {
     std::string _alias_name = Cmd.ctos();
-    if(_alias_name == ""){
+    if(_alias_name == ""){untested();
       throw Exception("Usage: alias [word] [command]");
     }else{
     }
@@ -102,13 +101,13 @@ private:
      std::string _alias_name;
      int _flag;
 public:
-     void do_it(CS& Cmd,CARD_LIST* Scope){
+     void do_it(CS& Cmd,CARD_LIST*){
        _alias_name = Cmd.ctos();
-       if(_alias_name == "all"){
+       if(_alias_name == "all"){untested();
          char ch;
          IO::mstdout << "are you sure you want to remove all aliases?y/n:";
          std::cin >> ch;
-         if(ch=='y' || ch =='Y'){
+         if(ch=='y' || ch =='Y'){untested();
            for(int i=0;objects_ptr[i]!='\0';i++){
              objects_ptr[i]->uninstall_all();
            }
@@ -116,22 +115,26 @@ public:
            objects_ptr[id]='\0';
            throw Exception("all aliases removed");
   	 }
-         else if(ch=='n' || ch=='N'){throw Exception("");}
-         else throw Exception("Wrong Input!");
-       }else{
+         else if(ch=='n' || ch=='N'){untested();
+           throw Exception("");
+         }
+         else{untested();
+           throw Exception("Wrong Input!");
+         }
+       }else{untested();
        }
        _flag=1;
        for(int i=0;objects_ptr[i]!='\0';i++){
-         if (objects_ptr[i]->get_aliasname() == _alias_name){
+         if (objects_ptr[i]->get_aliasname() == _alias_name){untested();
            objects_ptr[i]->uninstall(i);
            _flag=0;
            break;
-         }else{
+         }else{untested();
          }
        }  
-       if (_flag){
+       if (_flag){untested();
          IO::mstdout << "No such aliased word exists\n";
-       }else{
+       }else{untested();
        }
 }
 }unalias_command;

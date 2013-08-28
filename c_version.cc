@@ -1,4 +1,4 @@
-/*$Id: version.cc,v 26.138 2013/06/22 03:32:53 al Exp $ -*- C++ -*-
+/*$Id: c_version.cc,v 26.138 2013/06/22 03:32:53 al Exp $ -*- C++ -*-
  * Copyright (C) 2013 Rishabh Yadav
  * Author: Rishabh Yadav <rishabh.ece.iitbhu@gmail.com>
  *
@@ -20,6 +20,8 @@
  * 02110-1301, USA.
  *------------------------------------------------------------------*/
 //Outputs the current version of gnucap
+//testing=script 2013.09.10
+
 #include <gnucap/patchlev.h>
 #include <gnucap/c_comand.h>
 #include <gnucap/globals.h>
@@ -28,7 +30,7 @@ namespace {
 /*-------------------------------------------------------------------*/
 class CMD_VERSION : public CMD {
 public:
-  void do_it(CS&, CARD_LIST* Scope) {
+  void do_it(CS&, CARD_LIST*) {itested();
     IO::mstdout <<
     "Gnucap Version: " PATCHLEVEL "\n";
   }

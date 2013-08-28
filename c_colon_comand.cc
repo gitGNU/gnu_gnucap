@@ -30,16 +30,16 @@
 /*----------------------------------------------------------------------------------*/
 namespace {
 /*----------------------------------------------------------------------------------*/
-class CMD_SYSTEM : public CMD
+class CMD_COLON : public CMD
 {
 public:
   void do_it(CS& cmd,CARD_LIST* Scope){
     std::string commands;
     commands = cmd.tail();
     std::string delim = ";";
-    int start = 0U;
-    int end = commands.find(delim);
-    while (end != std::string::npos){
+    long unsigned int start = 0U;
+    long unsigned int end = commands.find(delim);
+    while (end != std::string::npos){untested();
       CMD::command(commands.substr(start, end - start),Scope);
       start = end + delim.length();
       end = commands.find(delim, start);

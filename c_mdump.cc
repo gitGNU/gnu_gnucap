@@ -34,39 +34,41 @@ public:
     std::string mode,filename;
     cmd >> filename;
     assert(_sim);
-    unsigned size_aa = _sim->_aa.size();//size of matrix before lu decomposition
-    unsigned size_lu = _sim->_lu.size();//size of matrix after lu decomposition
-    if(!size_aa){ 
+    int size_aa = _sim->_aa.size();//size of matrix before lu decomposition
+    int size_lu = _sim->_lu.size();//size of matrix after lu decomposition
+    if(!size_aa){untested();
       throw Exception(".");
-    }else{
+    }else{untested();
     }
     IO::mstdout.setfloatwidth(4);
-    if (filename!= ""){
+    if (filename!= ""){untested();
       FILE *fptr;
       fptr = fopen(filename.c_str(),"a+");
-      if (!fptr){
+      if (!fptr){untested();
         throw Exception("Unable to open or create file.");
-      }else{
+      }else{untested();
       }
       fprintf(fptr,"DC-Tran matrix before LU decomposition:\n");
-      for(unsigned i=1;i<=size_aa;i++){
-          for(unsigned j=1;j<=size_aa;j++)              
+      for(int i=1;i<=size_aa;i++){untested();
+          for(int j=1;j<=size_aa;j++){             
                 fprintf(fptr,"%8.6f \t",(_sim->_aa).s(i,j));
+          }
           fprintf(fptr,"\n");
       }
       fprintf(fptr,"DC-Tran matrix after LU decomposition:\n");
-      for(unsigned i=1;i<=size_lu;i++){ 
-        for(unsigned j=1;j<=size_lu;j++)
+      for(int i=1;i<=size_lu;i++){untested(); 
+        for(int j=1;j<=size_lu;j++){
           fprintf(fptr,"%8.6f \t",(_sim->_lu).s(i,j));
+        }
         fprintf(fptr,"\n");
       }       
       fclose(fptr);
     }
-    else{
+    else{untested();
       IO::mstdout << "DC-Tran matrix before LU decomposition:\n";
       std::string io_s; //formatted string to be printed at console
-      for(unsigned i=1;i<=size_aa;i++){
-        for(unsigned j=1;j<=size_aa;j++) {     
+      for(int i=1;i<=size_aa;i++){untested();
+        for(int j=1;j<=size_aa;j++) {     
           io_s = to_string(_sim->_aa.s(i,j));
           io_s.resize(10,' ');     
           IO::mstdout << io_s <<"\t\t\t";
@@ -74,8 +76,8 @@ public:
         IO::mstdout<<"\n";
       }
       IO::mstdout << "DC-Tran matrix after LU decomposition:\n";
-      for(unsigned i=1;i<=size_lu;i++){ 
-        for(unsigned j=1;j<=size_lu;j++){
+      for(int i=1;i<=size_lu;i++){untested();
+        for(int j=1;j<=size_lu;j++){
           io_s = to_string(_sim->_lu.s(i,j));
           io_s.resize(10,' ');
           IO::mstdout << io_s<<"\t\t\t";

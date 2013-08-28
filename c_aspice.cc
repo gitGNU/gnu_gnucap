@@ -27,10 +27,10 @@ namespace {
 /*-------------------------------------------------------------------*/
 class CMD_ASPICE : public CMD {
 public:
-  void do_it(CS& cmd, CARD_LIST* Scope) {itested();
+  void do_it(CS& cmd, CARD_LIST* Scope){
     std::string input_file,output_file;
     cmd >>input_file >>output_file;
-    if(input_file=="" or output_file ==""){
+    if(input_file=="" or output_file ==""){untested();
       throw Exception("Usage: aspice input_file output_file");
     }else{
     }
