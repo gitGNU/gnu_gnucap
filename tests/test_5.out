@@ -1,9 +1,0 @@
-_______________test strcmp command_____________
-flag=0
-flag=0
-flag=-32
-flag=-15
-flag=-1
-Usage: strcmp string1 string2
-Output Value:output variable flag is 0 if the two strings are equal otherwise output is the difference of the first non-matching character in string1 and string2
-
