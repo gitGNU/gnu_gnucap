@@ -1,3 +1,0 @@
-*requirement:sysinfo shared object file should be loaded. 
-echo ______________test sysinfo command______________
-sysinfo
