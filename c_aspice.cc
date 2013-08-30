@@ -20,6 +20,7 @@
  * 02110-1301, USA.
  *------------------------------------------------------------------
  */
+//testing = script 2013.09.12
 #include <gnucap/globals.h>
 #include <gnucap/c_comand.h>
 /*-------------------------------------------------------------------*/
@@ -30,7 +31,7 @@ public:
   void do_it(CS& cmd, CARD_LIST* Scope){
     std::string input_file,output_file;
     cmd >>input_file >>output_file;
-    if(input_file=="" or output_file ==""){untested();
+    if(input_file=="" or output_file ==""){
       throw Exception("Usage: aspice input_file output_file");
     }else{
     }

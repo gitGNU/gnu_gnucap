@@ -22,7 +22,7 @@
  * This command prints the System Information which may help users to send bug report to the gnucap developers community.
  * Note:This command doesn't works on Windows.
  */
-
+//testing script = 2013.09.12
 #include <gnucap/c_comand.h>
 #include <gnucap/globals.h>
 /*--------------------------------------------------------------------------*/
@@ -37,8 +37,8 @@ public:
     FILE *fptr;
     cmd >> track;
     fptr=fopen("history.txt","r+");
-    if(track==""){itested();
-      if(fptr!=NULL){itested();
+    if(track==""){
+      if(fptr!=NULL){
         system("cat history.txt");
       }else{untested();
         throw Exception("You haven't enabled the history mode to track the commands.\nUsage:history [mode]\n"
@@ -46,15 +46,15 @@ public:
    				"-s        Stop tracking");
       }
     }
-    else if (track!= "-t" && track!= "-s"){untested();
+    else if (track!= "-t" && track!= "-s"){
       IO::mstdout<<"Usage:history [mode]\n"
       "-t        Start tracking\n"
       "-s        Stop tracking\n";
       }   
-    else if (track == "-t"){untested();
+    else if (track == "-t"){
       CMD::command("log >> history.txt ",Scope); 
     }
-    else if(track == "-s" && fptr!=NULL){untested();
+    else if(track == "-s" && fptr!=NULL){
       OS::system("rm history.txt");
       fclose(fptr);
     }      

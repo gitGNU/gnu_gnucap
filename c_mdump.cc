@@ -21,7 +21,7 @@
  *--------------------------------------------------------------------------
  * mdump commands prints the dc-tran matrix into the console.if the filename is specified then output is redirected to the file.
  */
-
+//testing = script 2013.09.12
 #include "gnucap/c_comand.h"
 #include "gnucap/globals.h"
 #include "gnucap/u_sim_data.h"
@@ -36,12 +36,12 @@ public:
     assert(_sim);
     int size_aa = _sim->_aa.size();//size of matrix before lu decomposition
     int size_lu = _sim->_lu.size();//size of matrix after lu decomposition
-    if(!size_aa){untested();
+    if(!size_aa){
       throw Exception(".");
-    }else{untested();
+    }else{
     }
     IO::mstdout.setfloatwidth(4);
-    if (filename!= ""){untested();
+    if (filename!= ""){
       FILE *fptr;
       fptr = fopen(filename.c_str(),"a+");
       if (!fptr){untested();
@@ -49,14 +49,14 @@ public:
       }else{untested();
       }
       fprintf(fptr,"DC-Tran matrix before LU decomposition:\n");
-      for(int i=1;i<=size_aa;i++){untested();
+      for(int i=1;i<=size_aa;i++){
           for(int j=1;j<=size_aa;j++){             
                 fprintf(fptr,"%8.6f \t",(_sim->_aa).s(i,j));
           }
           fprintf(fptr,"\n");
       }
       fprintf(fptr,"DC-Tran matrix after LU decomposition:\n");
-      for(int i=1;i<=size_lu;i++){untested(); 
+      for(int i=1;i<=size_lu;i++){ 
         for(int j=1;j<=size_lu;j++){
           fprintf(fptr,"%8.6f \t",(_sim->_lu).s(i,j));
         }
@@ -64,10 +64,10 @@ public:
       }       
       fclose(fptr);
     }
-    else{untested();
+    else{
       IO::mstdout << "DC-Tran matrix before LU decomposition:\n";
       std::string io_s; //formatted string to be printed at console
-      for(int i=1;i<=size_aa;i++){untested();
+      for(int i=1;i<=size_aa;i++){
         for(int j=1;j<=size_aa;j++) {     
           io_s = to_string(_sim->_aa.s(i,j));
           io_s.resize(10,' ');     
@@ -76,7 +76,7 @@ public:
         IO::mstdout<<"\n";
       }
       IO::mstdout << "DC-Tran matrix after LU decomposition:\n";
-      for(int i=1;i<=size_lu;i++){untested();
+      for(int i=1;i<=size_lu;i++){
         for(int j=1;j<=size_lu;j++){
           io_s = to_string(_sim->_lu.s(i,j));
           io_s.resize(10,' ');

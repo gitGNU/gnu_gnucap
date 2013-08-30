@@ -20,6 +20,7 @@
  * 02110-1301, USA.
  *------------------------------------------------------------------
  */
+//testing script = 2013.09.11
 #include <gnucap/c_comand.h>
 #include <gnucap/u_parameter.h>
 #include <gnucap/globals.h>

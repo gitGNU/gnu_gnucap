@@ -22,7 +22,7 @@
  * ":" issued with multiple commands separated by semi-colon runs the commands one by one.
  */
 
-/*---------------------------------------------------------------------------------*/
+//testing = script 2013.09.12
 #include <gnucap/c_comand.h>
 #include <gnucap/globals.h>
 #include <iostream>
@@ -39,7 +39,7 @@ public:
     std::string delim = ";";
     long unsigned int start = 0U;
     long unsigned int end = commands.find(delim);
-    while (end != std::string::npos){untested();
+    while (end != std::string::npos){
       CMD::command(commands.substr(start, end - start),Scope);
       start = end + delim.length();
       end = commands.find(delim, start);

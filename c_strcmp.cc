@@ -37,15 +37,15 @@ public:
     static int flag;
     std::string s1,s2;
     cmd >> s1 >> s2;
-    if((s1== "" or s2== "") || (s1=="--help" && s2=="")){untested();
+    if((s1== "" or s2== "") || (s1=="--help" && s2=="")){
       throw Exception("Usage: strcmp string1 string2.");
-    }else{untested();
+    }else{
     }
     long unsigned int i=0;
-    while(s1[i]!='\0' || s2[i]!='\0'){untested();
+    while(s1[i]!='\0' || s2[i]!='\0'){
       flag=s1[i]-s2[i];
       i++;
-      if(flag){untested();
+      if(flag){
         break; 
       } 
     }

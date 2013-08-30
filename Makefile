@@ -27,14 +27,13 @@ all:c_alias_unalias.so \
         c_alter.so \
         c_aspice.so \
         c_cls.so \
-	c_def_undef.so \
 	c_echo.so \
 	c_history.so \
 	c_mdump.so \
 	c_colon_comand.so \
 	c_quit.so \
 	c_rmcirc.so \
-        c_set.so \
+        c_setv.so \
         c_showmod.so \
 	c_shell.so \
 	c_strcmp.so \
@@ -54,8 +53,8 @@ c_aspice.so : c_aspice.cc
 c_cls.so : c_cls.cc
 	$(CC) $(CFLAGS) c_cls.so c_cls.cc
 
-c_def_undef.so : c_def_undef.cc
-	$(CC) $(CFLAGS) c_def_undef.so c_def_undef.cc
+#c_def_undef.so : c_def_undef.cc
+#	$(CC) $(CFLAGS) c_def_undef.so c_def_undef.cc     include c_def_undef.so in all
 
 c_echo.so : c_echo.cc
 	$(CC) $(CFLAGS) c_echo.so c_echo.cc
@@ -75,8 +74,8 @@ c_quit.so : c_quit.cc
 c_rmcirc.so : c_rmcirc.cc
 	$(CC) $(CFLAGS) c_rmcirc.so c_rmcirc.cc
 
-c_set.so : c_set.cc
-	$(CC) $(CFLAGS) c_set.so c_set.cc
+c_setv.so : c_setv.cc
+	$(CC) $(CFLAGS) c_setv.so c_setv.cc
 
 c_shell.so : c_shell.cc
 	$(CC) $(CFLAGS) c_shell.so c_shell.cc

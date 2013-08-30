@@ -20,8 +20,8 @@
  * 02110-1301, USA.
  *------------------------------------------------------------------*/
 //Outputs the current version of gnucap
-//testing=script 2013.09.10
 
+//testing=script 2013.09.10
 #include <gnucap/patchlev.h>
 #include <gnucap/c_comand.h>
 #include <gnucap/globals.h>

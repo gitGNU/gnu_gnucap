@@ -20,7 +20,6 @@
  * 02110-1301, USA.
  *------------------------------------------------------------------
  */
-
 #include <gnucap/c_comand.h>
 #include <gnucap/globals.h>
 #include <gnucap/u_parameter.h>
@@ -33,10 +32,10 @@ public:
   void do_it(CS& cmd, CARD_LIST* Scope)
   {
     PARAM_LIST* pl = Scope->params();
-    if (cmd.is_end()) {untested();
+    if (cmd.is_end()) {itested();
       pl->print(IO::mstdout, OPT::language);
       IO::mstdout << '\n';
-    }else{untested();
+    }else{itested();
       pl->parse(cmd);
     }
   }
