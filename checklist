@@ -1,6 +1,6 @@
 Commands Checklist
 ======================================================
-Updated on: 06/09/2013
+Updated on: 12/09/2013
 
 1.ALIAS
 Purpose:Creates an alias for command
@@ -218,22 +218,22 @@ Status:Done
 Purpose:Run the silumation as specified in the input file.
 Status:Done
 
-14.SET
+14.SETV
 Purpose:Sets the value of a variable
 Status:Implemented
 
 Syntax:
-    set assign_to = value
-    set assign_to value
+    setv assign_to = value
+    setv assign_to value
 
 Comments:
 Commands sets the value of “assign_to” variable to “value”.These values can be accessed via a show command.
 
 Example:
-     gnucap>set
-     Usage:set assign_to = value
-     gnucap>set a = 3
-     gnucap>set show
+     gnucap>setv
+     Usage:setv assign_to = value
+     gnucap>setv a = 3
+     gnucap>showmod
      a=3
      gnucap>
     

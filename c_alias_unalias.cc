@@ -22,10 +22,10 @@
  * alias:creates an alias for a command
  * unalias:removes the aliases for the given name
  */
-
+//testing = script 2013.09.12
 #include <gnucap/c_comand.h>
 #include <gnucap/globals.h>
-#define SIZE 50 
+#define SIZE 50
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
@@ -43,24 +43,28 @@ private:
 public:
   CMD_EXEC(std::string s)
         : _command_string(s) {
-        objects_ptr[id++]=this;  //Stores the address of objects of this class
-        objects_ptr[id]='\0';    //Signifies the end of array
+        if(id<=SIZE-2){
+          objects_ptr[id++]=this;  //Stores the address of objects of this class
+          objects_ptr[id]='\0';    //Signifies the end of array
+        }else{
+        throw Exception("No more aliases can be made.Unalias some commands."); 
+        }             
   }
 
   void do_it(CS& Cmd, CARD_LIST* Scope) {
     command(_command_string +" "+Cmd.tail(), Scope);
   }
 
-  std::string get_aliasname(){untested();
+  std::string get_aliasname(){
     return _alias_name;
   }
 
-  void set_aliasname(std::string s,DISPATCHER<CMD>::INSTALL* p){untested();
+  void set_aliasname(std::string s,DISPATCHER<CMD>::INSTALL* p){
     _alias_name=s;
     this->_dispatcher_ptr=p;
   }
 
-  void uninstall(int index){untested();
+  void uninstall(int index){
    if (id>0){ 
      objects_ptr[index]=objects_ptr[--id];
      objects_ptr[id]='\0';
@@ -69,7 +73,7 @@ public:
    delete this;
    
   }
-  void uninstall_all(){untested();
+  void uninstall_all(){
     delete this->_dispatcher_ptr;
     delete this; 
     }
@@ -83,7 +87,7 @@ class CMD_ALIAS : public CMD {
 public:
   void do_it(CS& Cmd, CARD_LIST*) {
     std::string _alias_name = Cmd.ctos();
-    if(_alias_name == ""){untested();
+    if(_alias_name == "" || Cmd.tail()==""){
       throw Exception("Usage: alias [word] [command]");
     }else{
     }
@@ -103,11 +107,11 @@ private:
 public:
      void do_it(CS& Cmd,CARD_LIST*){
        _alias_name = Cmd.ctos();
-       if(_alias_name == "all"){untested();
+       if(_alias_name == "all"){
          char ch;
          IO::mstdout << "are you sure you want to remove all aliases?y/n:";
          std::cin >> ch;
-         if(ch=='y' || ch =='Y'){untested();
+         if(ch=='y' || ch =='Y'){
            for(int i=0;objects_ptr[i]!='\0';i++){
              objects_ptr[i]->uninstall_all();
            }
@@ -115,26 +119,25 @@ public:
            objects_ptr[id]='\0';
            throw Exception("all aliases removed");
   	 }
-         else if(ch=='n' || ch=='N'){untested();
+         else if(ch=='n' || ch=='N'){
            throw Exception("");
          }
-         else{untested();
+         else{
            throw Exception("Wrong Input!");
          }
-       }else{untested();
+       }else{
        }
        _flag=1;
        for(int i=0;objects_ptr[i]!='\0';i++){
-         if (objects_ptr[i]->get_aliasname() == _alias_name){untested();
+         if (objects_ptr[i]->get_aliasname() == _alias_name){
            objects_ptr[i]->uninstall(i);
            _flag=0;
            break;
-         }else{untested();
          }
        }  
-       if (_flag){untested();
+       if (_flag){
          IO::mstdout << "No such aliased word exists\n";
-       }else{untested();
+       }else{
        }
 }
 }unalias_command;
