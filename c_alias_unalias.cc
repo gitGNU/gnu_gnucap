@@ -25,16 +25,15 @@
 //testing = script 2013.09.12
 #include <gnucap/c_comand.h>
 #include <gnucap/globals.h>
-#define SIZE 50
+#include <vector>
 /*--------------------------------------------------------------------------*/
 namespace{
 /*--------------------------------------------------------------------------*/
 class CMD_EXEC;
-CMD_EXEC* objects_ptr[SIZE];
+std::vector<CMD_EXEC*> objects_ptr(2);
 int id=0;
 
 class CMD_EXEC :public CMD {
-
 private:
   std::string _command_string;
   std::string _alias_name;
@@ -43,12 +42,12 @@ private:
 public:
   CMD_EXEC(std::string s)
         : _command_string(s) {
-        if(id<=SIZE-2){
-          objects_ptr[id++]=this;  //Stores the address of objects of this class
-          objects_ptr[id]='\0';    //Signifies the end of array
+        if(id<=objects_ptr.size()-2){
+          objects_ptr.resize(objects_ptr.size()+5);
         }else{
-        throw Exception("No more aliases can be made.Unalias some commands."); 
-        }             
+        }
+          objects_ptr[id++]=this;// //Stores the address of objects of this class
+          objects_ptr[id]='\0';    //Signifies the end of array             
   }
 
   void do_it(CS& Cmd, CARD_LIST* Scope) {
