@@ -30,7 +30,7 @@
 namespace{
 /*--------------------------------------------------------------------------*/
 class CMD_EXEC;
-std::vector<CMD_EXEC*> objects_ptr(2);
+std::vector<CMD_EXEC*> objects_ptr(2);//vector to store the address of aliased objects.
 int id=0;
 
 class CMD_EXEC :public CMD {
@@ -42,15 +42,15 @@ private:
 public:
   CMD_EXEC(std::string s)
         : _command_string(s) {
-        if(id<=objects_ptr.size()-2){
+        if(id<=objects_ptr.size()-2){//vector bound checking
           objects_ptr.resize(objects_ptr.size()+5);
-        }else{
+        }else{//resize vector
         }
           objects_ptr[id++]=this;// //Stores the address of objects of this class
           objects_ptr[id]='\0';    //Signifies the end of array             
   }
 
-  void do_it(CS& Cmd, CARD_LIST* Scope) {
+  void do_it(CS& Cmd, CARD_LIST* Scope) {//do_it method invoked on the aliased object
     command(_command_string +" "+Cmd.tail(), Scope);
   }
 
@@ -63,7 +63,7 @@ public:
     this->_dispatcher_ptr=p;
   }
 
-  void uninstall(int index){
+  void uninstall(int index){//used to unalias.
    if (id>0){ 
      objects_ptr[index]=objects_ptr[--id];
      objects_ptr[id]='\0';
@@ -72,7 +72,7 @@ public:
    delete this;
    
   }
-  void uninstall_all(){
+  void uninstall_all(){//unalias all objects.
     delete this->_dispatcher_ptr;
     delete this; 
     }
@@ -90,9 +90,10 @@ public:
       throw Exception("Usage: alias [word] [command]");
     }else{
     }
+    //Install aliased object.
     CMD_EXEC* new_command = new CMD_EXEC(Cmd.tail());
     DISPATCHER<CMD>::INSTALL* install_ref = new DISPATCHER<CMD>::INSTALL(&command_dispatcher, _alias_name, new_command); 
-    new_command->set_aliasname(_alias_name,install_ref);
+    new_command->set_aliasname(_alias_name,install_ref);//Will be used in unalias
   }
 }alias_command;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher,"alias",&alias_command);
@@ -102,7 +103,7 @@ DISPATCHER<CMD>::INSTALL d(&command_dispatcher,"alias",&alias_command);
 class CMD_UNALIAS : public CMD {
 private:
      std::string _alias_name;
-     int _flag;
+     int _flag;//flag to tell whether the object to be unaliased exists or not.
 public:
      void do_it(CS& Cmd,CARD_LIST*){
        _alias_name = Cmd.ctos();
@@ -111,6 +112,7 @@ public:
          IO::mstdout << "are you sure you want to remove all aliases?y/n:";
          std::cin >> ch;
          if(ch=='y' || ch =='Y'){
+           //Remove all aliases.
            for(int i=0;objects_ptr[i]!='\0';i++){
              objects_ptr[i]->uninstall_all();
            }
@@ -127,6 +129,7 @@ public:
        }else{
        }
        _flag=1;
+       //Remove the "alias" object.
        for(int i=0;objects_ptr[i]!='\0';i++){
          if (objects_ptr[i]->get_aliasname() == _alias_name){
            objects_ptr[i]->uninstall(i);

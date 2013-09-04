@@ -36,12 +36,12 @@ public:
   void do_it(CS& cmd,CARD_LIST* Scope){
     std::string commands;
     commands = cmd.tail();
-    std::string delim = ";";
-    long unsigned int start = 0U;
-    long unsigned int end = commands.find(delim);
+    std::string delim = ";";//delimiter used to separate multiple commands/
+    long unsigned int start = 0U;//starting index
+    long unsigned int end = commands.find(delim);//find a string upto the next delimiter.
     while (end != std::string::npos){
-      CMD::command(commands.substr(start, end - start),Scope);
-      start = end + delim.length();
+      CMD::command(commands.substr(start, end - start),Scope);//Pass the parsed command to the interpreter.
+      start = end + delim.length();//Search for next command
       end = commands.find(delim, start);
     }
     CMD::command(commands.substr(start, end),Scope);

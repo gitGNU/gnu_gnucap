@@ -32,7 +32,7 @@ class CMD_VERSION : public CMD {
 public:
   void do_it(CS&, CARD_LIST*) {itested();
     IO::mstdout <<
-    "Gnucap Version: " PATCHLEVEL "\n";
+    "Gnucap Version: " PATCHLEVEL "\n";//Prints the version defined in patchlev.h
   }
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher,"version|ver",&p);

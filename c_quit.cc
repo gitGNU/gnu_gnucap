@@ -31,7 +31,7 @@ namespace {
 class CMD_QUIT : public CMD {
 public:
   void do_it(CS& Cmd, CARD_LIST* Scope) {
-    int _status=0;
+    int _status=0;//deafult exit status is 0.
     char confirm;
     Cmd << _status;
     IO::mstdout << "Make sure you have saved everything you wanted to.\nAre you sure you want to quit?y/n:";
@@ -41,7 +41,7 @@ public:
         case rPRE_MAIN:	unreachable(); break;
     	case rINTERACTIVE:	
     	case rSCRIPT:	
-    	case rBATCH:	command("clear", Scope); exit(_status);break;
+    	case rBATCH:	command("clear", Scope); exit(_status);break;//exit with supplied status.
     	case rPRESET:	untested(); /*nothing*/ break;
       }
     }
