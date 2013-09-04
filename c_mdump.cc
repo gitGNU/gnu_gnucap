@@ -41,6 +41,7 @@ public:
     }else{
     }
     IO::mstdout.setfloatwidth(4);
+    // This section prints the output to the given filename.
     if (filename!= ""){
       FILE *fptr;
       fptr = fopen(filename.c_str(),"a+");
@@ -49,6 +50,7 @@ public:
       }else{untested();
       }
       fprintf(fptr,"DC-Tran matrix before LU decomposition:\n");
+      //Iterate over the matrix.
       for(int i=1;i<=size_aa;i++){
           for(int j=1;j<=size_aa;j++){             
                 fprintf(fptr,"%8.6f \t",(_sim->_aa).s(i,j));
@@ -64,13 +66,14 @@ public:
       }       
       fclose(fptr);
     }
+    //This section prints the mdump output at the console.
     else{
       IO::mstdout << "DC-Tran matrix before LU decomposition:\n";
       std::string io_s; //formatted string to be printed at console
       for(int i=1;i<=size_aa;i++){
         for(int j=1;j<=size_aa;j++) {     
           io_s = to_string(_sim->_aa.s(i,j));
-          io_s.resize(10,' ');     
+          io_s.resize(10,' ');//setting the width of output.     
           IO::mstdout << io_s <<"\t\t\t";
         }
         IO::mstdout<<"\n";

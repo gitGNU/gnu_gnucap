@@ -31,9 +31,9 @@ class CMD_SHELL : public CMD {
 public:
   void do_it(CS& cmd, CARD_LIST*){
     if (cmd.more()){itested();
-      OS::system(cmd.tail());
+      OS::system(cmd.tail());//Pass command to the shell.
     }else{
-      OS::system(SHELL);
+      OS::system(SHELL);//Call shell
     }
   }
 }p;
