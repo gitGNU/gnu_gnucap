@@ -29,7 +29,7 @@ class CMD_CLS : public CMD {
 public:
   void do_it(CS& cmd, CARD_LIST* Scope){
     OS::system("clear");//pass the "clear" command to OS.
-    if(cmd.more()){//Run the command,if supplied 
+    if(cmd.more()){//if some command is passed run it. 
       command(cmd.tail(),Scope);
     }else{
     }

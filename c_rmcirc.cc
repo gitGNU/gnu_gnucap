@@ -28,7 +28,7 @@
 namespace {
 /*--------------------------------------------------------------------------*/
 /* cmd_rmcirc: clear the whole circuit, including faults, etc
- *   equivalent to unfault; unkeep; delete all; title = (blank)
+ * equivalent to unfault; unkeep; delete all; title = (blank)
  */
 class CMD_RMCIRC : public CMD {
 public:

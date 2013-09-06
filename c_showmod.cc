@@ -32,7 +32,7 @@ class CMD_SHOWMOD : public CMD {
 public:
   void do_it(CS&, CARD_LIST* Scope){
     PARAM_LIST* pl = Scope->params();
-    pl->print(IO::mstdout, OPT::language);
+    pl->print(IO::mstdout, OPT::language);//prints list of parameters
     IO::mstdout << '\n';
   }
 }p;

@@ -36,7 +36,7 @@ public:
     }else{
     }
     PARAM_LIST* pl = Scope->params();
-    pl->set(assign_to, value);  
+    pl->set(assign_to, value); //set the value of variables
   }
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher,"setv",&p);

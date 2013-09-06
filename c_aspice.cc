@@ -35,11 +35,11 @@ public:
       throw Exception("Usage: aspice input_file output_file");
     }else{
     }
-    output_file.insert(0,std::string("> "));
+    output_file.insert(0,std::string("> "));//direct the output to file.
     CMD::command(output_file,Scope);
-    input_file.insert(0,std::string("< "));
+    input_file.insert(0,std::string("< "));//execute the command.
     CMD::command(input_file,Scope);
-    CMD::command(">",Scope);
+    CMD::command(">",Scope);//end file redirection.
   }
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher,"aspice",&p);
