@@ -31,8 +31,6 @@
 #include "m_expression.h"
 #include "e_cardlist.h"
 /*--------------------------------------------------------------------------*/
-using namespace std;
-/*--------------------------------------------------------------------------*/
 class LANGUAGE;
 /*--------------------------------------------------------------------------*/
 class PARA_BASE {
@@ -43,7 +41,7 @@ class PARA_BASE {
     PARA_BASE( ): _s(){}
     PARA_BASE(const PARA_BASE& p );
 
-    PARA_BASE( const string s ): _s(s){}
+    PARA_BASE( const std::string s ): _s(s){}
     virtual ~PARA_BASE(){}
 
     bool has_hard_value()const {return (_s != "");}
