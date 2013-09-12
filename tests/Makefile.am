@@ -1,8 +1,8 @@
-GNUCAP = LD_LIBRARY_PATH=$(top_builddir)/lib/.libs:$(top_builddir)/apps/.libs $(top_builddir)/main/gnucap
+# this file is part of gnucap
+# (c) 2013 Felix Salfelder
+# License: GPLv3
+#
 
-check: gnucap-run
-
-gnucap-run:
-	echo end | $(GNUCAP)
-
-.PHONY: check
+AM_TESTS_ENVIRONMENT = PATH='../main:$(PATH)'; export PATH;
+TESTS = \
+    gnucap_run.sh
