@@ -26,7 +26,7 @@
 bin_PROGRAMS = gnucap
 
 gnucap_SOURCES = main.cc
-gnucap_LDADD = -L$(top_builddir)/lib/.libs -lgnucap
-gnucap_CPPFLAGS = $(AM_CPPFLAGS) -I$(top_srcdir)/include -I$(top_builddir)/include
+gnucap_LDADD = ../lib/libgnucap.la
+gnucap_CPPFLAGS = -I$(top_builddir)/include -I$(top_srcdir)/include $(AM_CPPFLAGS)
 
 gnucap_LDFLAGS = -rpath ${pkglibdir}
