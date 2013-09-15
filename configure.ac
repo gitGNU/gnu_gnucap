@@ -84,6 +84,8 @@ AS_IF([test yes = $have_git_repo],
 # AC_SUBST(GIT_BRANCH, $git_branch)
 # AC_SUBST(GIT_TAG, $git_tag)
 
+AM_CONDITIONAL([VPATH_BUILD], [test ! x$srcdir = "x."])
+
 # If we are cross compiling, then we need to search for a
 # gnucap-modelgen program to use for our build.  This can
 # either be an installed modelgen or it can be specified
