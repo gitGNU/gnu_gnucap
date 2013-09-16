@@ -1,0 +1,12 @@
+spice
+
+V1 n1 0 1
+V2 n2 0 1
+V3 n3 0 1
+
+.print dc v(V*)
+.store dc v(nodes)
+
+*.dc V1 0 2 1 V2 0 2 1 V3 0 1 1 trace=v
+.dc V1 0 1.5 1 V2 0 2 1 V3 0 1 1 trace=v
+.end

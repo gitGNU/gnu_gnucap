@@ -1,0 +1,34 @@
+spice
+
+V1 n1 0 2
+V2 n2 0 2
+
+.print dc v(V*)
+.store dc v(nodes)
+
+*.echo dc V1 .1 1 .1
+.dc V1 0.1 1 .1
+.measure vv1 at(probe="v(n1)" x=0.45)
+
+*.echo mul
+.dc V1 1 5 * 2
+*.echo mulreverse
+.dc V1 1 5 * 2 reverse
+
+*.echo dcA
+.dc V1 0 1 1 V2 0 1 1
+*.echo dcB
+.dc V1 0 1 1 V2 1 0 -1
+
+*.echo twice reverse
+.dc V1 0 1.5 1 V2 0 1 1 reverse
+
+*.echo loop
+.print dc v(V1)
+*control(0)
+.dc V1 0 1 1 loop
+
+*.echo reverse
+.dc V1 0.5 2 1 reverse
+
+.end
