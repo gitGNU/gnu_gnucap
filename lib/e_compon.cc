@@ -313,7 +313,7 @@ void COMMON_COMPONENT::set_param_by_name(std::string Name, std::string Value)
     }else{untested();
     }
   }else{
-    untested();
+    incomplete();
   }
 }
 /*--------------------------------------------------------------------------*/

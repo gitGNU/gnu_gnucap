@@ -74,7 +74,7 @@ private: // override virtual
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 void DEV_VS::set_param_by_name(string Name, string Value)
-{
+{untested();
   if (Umatch (Name,"dc|u")) { _value = Value; }
   else{ ELEMENT::set_param_by_name(Name,Value); }
 }

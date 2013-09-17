@@ -191,8 +191,7 @@ map<string, PARA_BASE EVAL_BM_ACTION_BASE::*> EVAL_BM_ACTION_BASE::param_dict =
   ("ic",       (PARA_BASE EVAL_BM_ACTION_BASE::*) &EVAL_BM_ACTION_BASE::_ic);
 /*--------------------------------------------------------------------------*/
 void EVAL_BM_ACTION_BASE::set_param_by_name(string Name, string Value)
-{
-  untested();
+{ untested();
   PARA_BASE EVAL_BM_ACTION_BASE::* x = param_dict[Name];
   if(x) {
     PARA_BASE* p = &(this->*x);

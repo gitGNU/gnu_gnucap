@@ -215,8 +215,7 @@ map<string, PARA_BASE EVAL_BM_FIT::*> EVAL_BM_FIT::param_dict =
     ("smooth",(PARA_BASE EVAL_BM_FIT::*) &EVAL_BM_FIT::_smooth);
 /*--------------------------------------------------------------------------*/
 void EVAL_BM_FIT::set_param_by_name(string Name, string Value)
-{
-  untested();
+{ untested();
   PARA_BASE EVAL_BM_FIT::* x = (param_dict[Name]);
   if(x) {
     PARA_BASE* p = &(this->*x);

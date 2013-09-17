@@ -124,7 +124,7 @@ map<string, PARA_BASE EVAL_BM_EXP::*> EVAL_BM_EXP::param_dict =
     ("period",(PARA_BASE EVAL_BM_EXP::*) &EVAL_BM_EXP::_period);
 /*--------------------------------------------------------------------------*/
 void EVAL_BM_EXP::set_param_by_name(std::string Name, std::string Value)
-{
+{ untested();
   PARA_BASE EVAL_BM_EXP::* x = (param_dict[Name]);
   if(x) {
     PARA_BASE* p = &(this->*x);
