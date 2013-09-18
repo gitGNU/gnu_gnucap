@@ -510,6 +510,12 @@ bm_sffm.3.sh: PREDIFF+= '467,500·s/-20\.74./-20\.74X/g'
 # permit different control values
 d_logic_tr_%.out: POSTDIFF+= '3·s/[01]\.········$$/X.········/'
 
+$(CKT_TESTS:%.sh=%.out): %.out: %.ckt
+	$(AM_V_at)GNUCAP_DEFAULT_PLUGINS='../apps/.libs/gnucap_default_plugins.so' \
+	    ../main/gnucap $(GNUCAP_PLUGINS:%=-a ../plugins/.libs/%) $(GNUCAP_ARGS) -b $< | \
+	    sed $(subst ·, ,$(PREDIFF:%=-e %)) \
+	    $(if $(POSTDIFF),| sed) $(subst ·, ,$(POSTDIFF:%=-e %)) > $*.out
+
 define testgen
 	@echo "#!/bin/sh" > $@
 	@echo "set -e" >> $@
