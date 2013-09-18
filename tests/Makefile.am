@@ -3,6 +3,7 @@
 # License: GPLv3
 #
 
+# needed for gnucap-run.sh
 AM_TESTS_ENVIRONMENT = \
     export PATH='../main:$(PATH)' \
            GNUCAP_DEFAULT_PLUGINS='../apps/.libs/gnucap_default_plugins.so';
@@ -11,11 +12,6 @@ TEST_EXTENSIONS = .sh
 TESTS = \
     gnucap_run.sh \
 	 $(CKT_TESTS)
-
-gnucap_run.log: gnucap.rc
-gnucap.rc:
-	echo > $@
-	echo ".load $(abs_top_builddir)/apps/.libs/gnucap_default_plugins.so" >> $@
 
 REF = ==out
 
@@ -171,7 +167,6 @@ CKT_TESTS = \
     d_coil.error5.sh \
     d_coil.m3a.sh \
     d_coil.m3.sh \
-    dcsweep.sh \
     d_diode.10a.sh \
     d_diode.10.sh \
     d_diode.11a.sh \
@@ -425,6 +420,7 @@ CKT_TESTS = \
     d_vcr.4.sh \
     d_vcr.5.sh \
     d_vcvs.1.sh \
+    dcsweep.sh \
     e_ccsrc.1.sh \
     e_ccsrc.2.sh \
     e_node_probes.sh \
@@ -492,13 +488,17 @@ CKT_TESTS = \
     trcurve.sh \
     trcurves.sh
 
+.PHONY: $(CKT_TESTS:%.sh=%.out)
+
+$(CKT_TESTS): %.sh: %.out
+
 # try this first
 $(CKT_TESTS:%.sh:%.log): gnucap_run.log
 
 # this will trigger a warning in autogen.sh
 # (apparently this warning is s bug)
-c_getckt.sh: | $(PWD)/d_cccs.1.ckt
-c_lib.1.sh: | $(PWD)/c_lib.1.ckt
+c_getckt.log: | $(PWD)/d_cccs.1.ckt
+c_lib.1.log: | $(PWD)/c_lib.1.ckt
 
 PREDIFF= \
    '1,/^default·plugins/d' \
@@ -520,14 +520,12 @@ define testgen
 	@echo "#!/bin/sh" > $@
 	@echo "set -e" >> $@
 	@echo "exec 2>&9" >> $@
-	@echo "gnucap \$$GNUCAP_ARGS -b $< | \
-	           sed $(subst ·, ,$(PREDIFF:%=-e %)) > $*.out" >> $@
-	@echo "diff -rup $(lastword $+) $*.out || exit 1" >> $@
+	@echo "diff -rup $< $*.out || exit 1" >> $@
 	@echo "rm $*.out" >> $@
 	@chmod +x $@
 endef
 
-%.sh: %.ckt $(REF)/%.ckt.out
+%.sh: $(REF)/%.ckt.out
 	$(testgen)
 
 CLEANFILES = *.out $(CKT_TESTS)
