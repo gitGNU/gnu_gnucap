@@ -21,6 +21,8 @@
  */
 //testing=script 2006.11.01
 #include "mg_out.h"
+
+using std::string;
 /*--------------------------------------------------------------------------*/
 static void make_common_default_constructor(std::ofstream& out,const Device& d)
 {
@@ -125,6 +127,73 @@ static void make_common_operator_equal(std::ofstream& out, const Device& d)
   out << 
     "    && _sdp == p->_sdp\n"
     "    && COMMON_COMPONENT::operator==(x));\n"
+    "}\n"
+    "/*--------------------------------------------------------------------------*/\n";
+}
+/*--------------------------------------------------------------------------*/
+void make_common_param_names(std::ofstream& out, const Device& d)
+{
+  make_tag();
+  out <<
+    "map<string, PARA_BASE COMMON_" << d.name() << "::*> COMMON_" << d.name() << "::param_dict\n"
+    "  = boost::assign::map_list_of\n";
+  for (Parameter_List::const_iterator
+       p = d.common().override().begin();
+       p != d.common().override().end();
+       ++p) {
+    if (!((**p).user_name().empty())) {
+      out << "(\"" << (*p)->user_name() << "\", (PARA_BASE COMMON_" << d.name() << "::*)  (&COMMON_" << d.name() << "::" << (*p)->code_name() << "))\n";
+    }else{unreachable();
+    }
+  }
+  assert(i == d.common().override().size());
+  for (Parameter_List::const_iterator
+       p = d.common().raw().begin();
+       p != d.common().raw().end();
+       ++p) {
+    if (!((**p).user_name().empty())) {
+      out << "(\"" << (*p)->user_name() << "\", (PARA_BASE COMMON_" << d.name() << "::*)  (&COMMON_" << d.name() << "::" << (*p)->code_name() << "))\n";
+    }else{unreachable();
+    }
+  }
+  out << ";";
+  out <<
+    "map<string, PARA_BASE COMMON_" << d.name() << "::*> COMMON_" << d.name() << "::param_dict_low\n"
+    "  = boost::assign::map_list_of\n";
+  for (Parameter_List::const_iterator
+       p = d.common().override().begin();
+       p != d.common().override().end();
+       ++p) {
+    if (!((**p).user_name().empty())) {
+      out << "(\"" << toLower((*p)->user_name()) << "\", (PARA_BASE COMMON_" << d.name() << "::*)  (&COMMON_" << d.name() << "::" << (*p)->code_name() << "))\n";
+    }else{unreachable();
+    }
+  }
+  assert(i == d.common().override().size());
+  for (Parameter_List::const_iterator
+       p = d.common().raw().begin();
+       p != d.common().raw().end();
+       ++p) {
+    if (!((**p).user_name().empty())) {
+      out << "(\"" << toLower((*p)->user_name()) << "\", (PARA_BASE COMMON_" << d.name() << "::*)  (&COMMON_" << d.name() << "::" << (*p)->code_name() << "))\n";
+    }else{unreachable();
+    }
+  }
+  out <<
+    ";\n"
+    "/*--------------------------------------------------------------------------*/\n";
+}
+/*--------------------------------------------------------------------------*/
+void make_common_set_param_by_name(std::ofstream& out, const Device& d)
+{
+  make_tag();
+  out <<
+    "void COMMON_" << d.name() << "::set_param_by_name(string Name, string Value)\n"
+    "{\n"
+    "  PARA_BASE COMMON_" << d.name() << "::* x = (OPT::case_insensitive)?\n"
+    "     (param_dict_low[to_lower(Name)]) : (param_dict[Name]);\n"
+    "  if(x) { PARA_BASE* p = &(this->*x); *p = Value; return; }\n"
+    "  COMMON_COMPONENT::set_param_by_name(Name, Value);\n"
     "}\n"
     "/*--------------------------------------------------------------------------*/\n";
 }
@@ -427,6 +496,8 @@ void make_cc_common(std::ofstream& out, const Device& d)
   make_common_copy_constructor(out, d);
   make_common_destructor(out, d);
   make_common_operator_equal(out, d);
+  make_common_param_names(out, d);
+  make_common_set_param_by_name(out, d);
   make_common_set_param_by_index(out, d);
   make_common_param_is_printable(out, d);
   make_common_param_name(out, d);
@@ -437,3 +508,4 @@ void make_cc_common(std::ofstream& out, const Device& d)
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
+// vim:ts=8:sw=2:noet:

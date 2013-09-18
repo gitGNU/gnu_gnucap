@@ -34,6 +34,8 @@ static void make_header(std::ofstream& out, const File& in,
     "#include \"e_node.h\"\n"
     "#include \"e_subckt.h\"\n"
     "#include \"e_model.h\"\n"
+    "#include <boost/assign.hpp>\n"
+    "#include <boost/algorithm/string.hpp>\n"
     "/*--------------------------------------"
     "------------------------------------*/\n";
 }
@@ -171,6 +173,7 @@ static void make_common(std::ofstream& out, const Device& d)
     "  bool     operator==(const COMMON_COMPONENT&)const;\n"
     "  COMMON_COMPONENT* clone()const {return new "<<class_name<<"(*this);}\n"
     "  void     set_param_by_index(int, std::string&, int);\n"
+    "  void     set_param_by_name(std::string, std::string);\n"
     "  bool     param_is_printable(int)const;\n"
     "  std::string param_name(int)const;\n"
     "  std::string param_name(int,int)const;\n"
@@ -186,6 +189,8 @@ static void make_common(std::ofstream& out, const Device& d)
     "  bool     has_sdp()const {untested();return _sdp;}\n"
     "  static int  count() {return _count;}\n"
     "private: // strictly internal\n"
+	 "  static map<std::string, PARA_BASE " << class_name << "::*> param_dict;\n"
+    "  static map<std::string, PARA_BASE " << class_name << "::*> param_dict_low;\n"
     "  static int _count;\n"
     "public: // input parameters\n";
   for (Parameter_List::const_iterator

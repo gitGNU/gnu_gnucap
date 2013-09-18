@@ -32,6 +32,8 @@ static void make_header(std::ofstream& out, const File& in,
     "#include \"globals.h\"\n"
     "#include \"e_elemnt.h\"\n"
     "#include \"" << dump_name << ".h\"\n"
+    "#include \"l_stlextra.h\"\n"
+    "using notstd::to_lower;\n"
     "/*--------------------------------------"
     "------------------------------------*/\n"
     "const double NA(NOT_INPUT);\n"
