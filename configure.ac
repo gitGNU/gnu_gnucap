@@ -26,9 +26,10 @@ AC_PREREQ(2.64)
 # used as a check to be sure we found it
 
 AC_INIT([gnucap], [2013-04-23])
-AM_INIT_AUTOMAKE([-Wno-portability -Wall])
+AM_INIT_AUTOMAKE([-Wno-portability -Wall silent-rules])
 AC_CONFIG_MACRO_DIR([m4])
 AM_CONFIG_HEADER([config.h])
+AM_SILENT_RULES([yes])
 
 AM_PROG_AR
 LT_INIT([disable-static])
