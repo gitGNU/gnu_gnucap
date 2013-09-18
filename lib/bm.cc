@@ -178,7 +178,7 @@ void EVAL_BM_ACTION_BASE::ac_eval(ELEMENT* d)const
   ac_final_adjust(&(d->_ev));
 }
 /*--------------------------------------------------------------------------*/
-map<string, PARA_BASE EVAL_BM_ACTION_BASE::*> EVAL_BM_ACTION_BASE::param_dict = 
+map<string, PARA_BASE EVAL_BM_ACTION_BASE::*> EVAL_BM_ACTION_BASE::param_dict =
   boost::assign::map_list_of
   ("bandwidth",(PARA_BASE EVAL_BM_ACTION_BASE::*) &EVAL_BM_ACTION_BASE::_bandwidth)
   ("delay",    (PARA_BASE EVAL_BM_ACTION_BASE::*) &EVAL_BM_ACTION_BASE::_delay)
@@ -191,12 +191,12 @@ map<string, PARA_BASE EVAL_BM_ACTION_BASE::*> EVAL_BM_ACTION_BASE::param_dict =
   ("ic",       (PARA_BASE EVAL_BM_ACTION_BASE::*) &EVAL_BM_ACTION_BASE::_ic);
 /*--------------------------------------------------------------------------*/
 void EVAL_BM_ACTION_BASE::set_param_by_name(string Name, string Value)
-{ untested();
+{
   PARA_BASE EVAL_BM_ACTION_BASE::* x = param_dict[Name];
-  if(x) {
+  if(x) { untested();
     PARA_BASE* p = &(this->*x);
     *p = Value;
-  } else {
+  } else { untested();
     COMMON_COMPONENT::set_param_by_name(Name, Value);
   }
 }

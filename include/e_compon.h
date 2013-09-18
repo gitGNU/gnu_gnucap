@@ -28,6 +28,8 @@
 #include "u_time_pair.h"
 #include "u_parameter.h"
 #include "e_card.h"
+#include <boost/assign.hpp>
+#include <boost/algorithm/string.hpp>
 /*--------------------------------------------------------------------------*/
 // this file
 class COMMON_COMPONENT;
@@ -66,6 +68,7 @@ private:
   std::string	_modelname;
   mutable const MODEL_CARD* _model;
   int		_attach_count;
+  static map<std::string, PARA_BASE COMMON_COMPONENT::*> param_dict;
 public:
   static void attach_common(COMMON_COMPONENT* c, COMMON_COMPONENT** to);
   static void detach_common(COMMON_COMPONENT** from);

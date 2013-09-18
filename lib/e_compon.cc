@@ -26,6 +26,9 @@
 #include "e_model.h"
 #include "e_elemnt.h"
 /*--------------------------------------------------------------------------*/
+using notstd::to_lower;
+using std::string;
+/*--------------------------------------------------------------------------*/
 COMMON_COMPONENT::COMMON_COMPONENT(const COMMON_COMPONENT& p)
   :_tnom_c(p._tnom_c),
    _dtemp(p._dtemp),
@@ -302,9 +305,24 @@ bool COMMON_COMPONENT::operator==(const COMMON_COMPONENT& x)const
 	  && _value == x._value);
 }
 /*--------------------------------------------------------------------------*/
+map<string, PARA_BASE COMMON_COMPONENT::*> COMMON_COMPONENT::param_dict
+  = boost::assign::map_list_of
+("tnom", (PARA_BASE COMMON_COMPONENT::*)  (&COMMON_COMPONENT::_tnom_c))
+("dtemp", (PARA_BASE COMMON_COMPONENT::*)  (&COMMON_COMPONENT::_dtemp))
+("temp", (PARA_BASE COMMON_COMPONENT::*)  (&COMMON_COMPONENT::_temp_c))
+("m", (PARA_BASE COMMON_COMPONENT::*)  (&COMMON_COMPONENT::_mfactor));
+/*--------------------------------------------------------------------------*/
 void COMMON_COMPONENT::set_param_by_name(std::string Name, std::string Value)
 {
-  if (has_parse_params_obsolete_callback()) {untested();
+  PARA_BASE COMMON_COMPONENT::* x = (OPT::case_insensitive)?
+     (param_dict[to_lower(Name)]) : (param_dict[Name]);
+  if(x) {
+    PARA_BASE* p = &(this->*x);
+    *p = Value;
+    return;
+  }
+
+  if (has_parse_params_obsolete_callback()) { incomplete();
     std::string args(Name + "=" + Value);
     CS cmd(CS::_STRING, args); //obsolete_callback
     bool ok = parse_params_obsolete_callback(cmd); //BUG//callback
@@ -323,7 +341,7 @@ void COMMON_COMPONENT::set_param_by_name(std::string Name, std::string Value)
 void COMMON_COMPONENT::Set_param_by_name(std::string Name, std::string Value)
 {
   assert(!has_parse_params_obsolete_callback());
-  
+
   //BUG// ugly linear search
   for (int i = COMMON_COMPONENT::param_count() - 1;  i >= 0;  --i) {
     for (int j = 0;  COMMON_COMPONENT::param_name(i,j) != "";  ++j) {

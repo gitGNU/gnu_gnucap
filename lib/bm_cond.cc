@@ -35,6 +35,8 @@ static EVAL_BM_VALUE func_zero(CC_STATIC);
 class EVAL_BM_COND : public EVAL_BM_BASE {
 private:
   COMMON_COMPONENT* _func[sCOUNT];
+  // static map<string, PARA_BASE EVAL_BM_SIN::*> param_dict;
+  void set_param_by_name(string Name, string Value){incomplete();}
   bool _set[sCOUNT];
   explicit	EVAL_BM_COND(const EVAL_BM_COND& p);
 public:

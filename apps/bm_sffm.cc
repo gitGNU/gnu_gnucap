@@ -50,6 +50,8 @@ private:
   PARAMETER<double> _samples;
   PARAMETER<bool>   _zero;
   PARAMETER<bool>   _peak;
+  // static map<string, PARA_BASE EVAL_BM_SIN::*> param_dict;
+  void set_param_by_name(string Name, string Value){incomplete();}
   explicit	EVAL_BM_SFFM(const EVAL_BM_SFFM& p);
 public:
   explicit      EVAL_BM_SFFM(int c=0);

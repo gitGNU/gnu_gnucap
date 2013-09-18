@@ -41,6 +41,7 @@ private:
   PARAMETER<double> td;		/* delay time */
   PARAMETER<double> f;		/* specification frequency */
   PARAMETER<double> nl;		/* length (wavelengths) at f */
+  static map<string, PARA_BASE COMMON_TRANSLINE::*> param_dict;
   double   ic[NUM_INIT_COND];	/* initial conditions: v1, i1, v2, i2 */
   int	   icset;		/* flag: initial condition set */
 public:
@@ -57,6 +58,7 @@ public:
   bool		param_is_printable(int)const;
   std::string	param_name(int)const;
   std::string	param_name(int,int)const;
+  void set_param_by_name(string Name, string Value);
   std::string	param_value(int)const;
   int param_count()const {return (9 + COMMON_COMPONENT::param_count());}
 public:
@@ -292,6 +294,34 @@ std::string COMMON_TRANSLINE::param_name(int I, int j)const
     return COMMON_COMPONENT::param_name(I, j);
   }
   //BUG// does not print IC
+}
+/*--------------------------------------------------------------------------*/
+map<string, PARA_BASE COMMON_TRANSLINE::*> COMMON_TRANSLINE::param_dict =
+  boost::assign::map_list_of
+  ("len",  (PARA_BASE COMMON_TRANSLINE::*) &COMMON_TRANSLINE::len)
+  ("r",    (PARA_BASE COMMON_TRANSLINE::*) &COMMON_TRANSLINE::R)
+  ("l",    (PARA_BASE COMMON_TRANSLINE::*) &COMMON_TRANSLINE::L)
+  ("g",    (PARA_BASE COMMON_TRANSLINE::*) &COMMON_TRANSLINE::G)
+  ("c",    (PARA_BASE COMMON_TRANSLINE::*) &COMMON_TRANSLINE::C)
+  ("z0",   (PARA_BASE COMMON_TRANSLINE::*) &COMMON_TRANSLINE::z0)
+  ("z",    (PARA_BASE COMMON_TRANSLINE::*) &COMMON_TRANSLINE::z0)
+  ("z0",   (PARA_BASE COMMON_TRANSLINE::*) &COMMON_TRANSLINE::z0)
+  ("td",   (PARA_BASE COMMON_TRANSLINE::*) &COMMON_TRANSLINE::td)
+  ("d",    (PARA_BASE COMMON_TRANSLINE::*) &COMMON_TRANSLINE::td)
+  ("delay",(PARA_BASE COMMON_TRANSLINE::*) &COMMON_TRANSLINE::td)
+  ("f",    (PARA_BASE COMMON_TRANSLINE::*) &COMMON_TRANSLINE::f)
+  ("freq", (PARA_BASE COMMON_TRANSLINE::*) &COMMON_TRANSLINE::f)
+  ("nl",   (PARA_BASE COMMON_TRANSLINE::*) &COMMON_TRANSLINE::nl);
+/*--------------------------------------------------------------------------*/
+void COMMON_TRANSLINE::set_param_by_name(string Name, string Value)
+{
+  PARA_BASE COMMON_TRANSLINE::* x = param_dict[Name];
+  if(x) { untested();
+    PARA_BASE* p = &(this->*x);
+    *p = Value;
+  } else { untested();
+    COMMON_COMPONENT::set_param_by_name(Name, Value);
+  }
 }
 /*--------------------------------------------------------------------------*/
 std::string COMMON_TRANSLINE::param_value(int I)const

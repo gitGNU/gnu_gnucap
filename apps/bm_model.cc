@@ -33,6 +33,8 @@ class EVAL_BM_MODEL : public EVAL_BM_ACTION_BASE {
 private:
   std::string	_arglist;
   COMMON_COMPONENT* _func;
+  // static map<string, PARA_BASE EVAL_BM_SIN::*> param_dict;
+  void set_param_by_name(string Name, string Value){incomplete();}
   explicit	EVAL_BM_MODEL(const EVAL_BM_MODEL& p);
 public:
   explicit      EVAL_BM_MODEL(int c=0);

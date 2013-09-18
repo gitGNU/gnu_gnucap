@@ -32,6 +32,8 @@ namespace {
 class EVAL_BM_COMPLEX : public EVAL_BM_ACTION_BASE {
 private:
   COMPLEX _value;
+  void          set_param_by_name(string Name, string Value){incomplete();}
+  // static map<string, PARA_BASE EVAL_BM_SIN::*> param_dict;
   explicit	EVAL_BM_COMPLEX(const EVAL_BM_COMPLEX& p);
 public:
   explicit      EVAL_BM_COMPLEX(int c=0);

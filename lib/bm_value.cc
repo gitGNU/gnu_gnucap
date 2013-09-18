@@ -84,6 +84,10 @@ bool EVAL_BM_VALUE::parse_numlist(CS& cmd)
   }
 }
 /*--------------------------------------------------------------------------*/
+void EVAL_BM_VALUE::set_param_by_name(string Name, string Value){
+  incomplete();
+}
+/*--------------------------------------------------------------------------*/
 bool EVAL_BM_VALUE::parse_params_obsolete_callback(CS& cmd)
 {
   return ONE_OF

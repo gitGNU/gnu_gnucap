@@ -245,7 +245,7 @@ map<string, PARA_BASE EVAL_BM_SIN::*> EVAL_BM_SIN::param_dict =
     ("pe",       (PARA_BASE EVAL_BM_SIN::*) &EVAL_BM_SIN::_peak);
 /*--------------------------------------------------------------------------*/
 void EVAL_BM_SIN::set_param_by_name(std::string Name, std::string Value)
-{
+{ untested();
   PARA_BASE EVAL_BM_SIN::* x = (param_dict[Name]);
   if(x) {
     PARA_BASE* p = &(this->*x);
