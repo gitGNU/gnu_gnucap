@@ -56,6 +56,13 @@ inline void to_lower(std::string* s)
   }
 }
 /*--------------------------------------------------------------------------*/
+inline std::string to_lower(const std::string s)
+{
+  std::string c(s);
+  to_lower(&c);
+  return c;
+}
+/*--------------------------------------------------------------------------*/
 inline void to_upper(std::string* s)
 {
   assert(s);
