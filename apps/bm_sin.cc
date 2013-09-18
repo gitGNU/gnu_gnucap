@@ -225,7 +225,7 @@ bool EVAL_BM_SIN::parse_params_obsolete_callback(CS& cmd)
     ;
 }
 /*--------------------------------------------------------------------------*/
-map<string, PARA_BASE EVAL_BM_SIN::*> EVAL_BM_SIN::param_dict = 
+map<string, PARA_BASE EVAL_BM_SIN::*> EVAL_BM_SIN::param_dict =
   boost::assign::map_list_of
     ("offset",   (PARA_BASE EVAL_BM_SIN::*) &EVAL_BM_SIN::_offset)
     ("o",        (PARA_BASE EVAL_BM_SIN::*) &EVAL_BM_SIN::_offset)
