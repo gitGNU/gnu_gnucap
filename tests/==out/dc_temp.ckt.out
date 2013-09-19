@@ -1,0 +1,19 @@
+spice 
+#           r(rtemp1)  r(rtemp2)  r(rtemp3)  temp(0)   
+ 0.         3.         6.         10.5       2.        
+#           r(rtemp1)  r(rtemp2)  r(rtemp3)  temp(0)   
+ 0.         3.         6.         10.5       2.        
+#           r(rtemp1)  r(rtemp2)  r(rtemp3)  temp(0)   
+ 0.         4.         8.         15.5       3.        
+rt1= 4.
+rt2= 8.
+rt3= 15.5
+#           r(rtemp1)  r(rtemp2)  r(rtemp3)  temp(0)   
+ 0.         4.         8.         15.5       3.        
+#           r(rtemp1)  r(rtemp2)  r(rtemp3)  temp(0)   
+ 0.         12.        24.        55.5       11.       
+#           r(rtemp1)  r(rtemp2)  r(rtemp3)  temp(0)   
+ 0.         21.        42.        100.5      20.       
+rt1= 21.
+rt2= 42.
+rt3= 100.5

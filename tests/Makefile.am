@@ -420,6 +420,7 @@ CKT_TESTS = \
     d_vcr.4.sh \
     d_vcr.5.sh \
     d_vcvs.1.sh \
+    dc_temp.sh \
     dcsweep.sh \
     e_ccsrc.1.sh \
     e_ccsrc.2.sh \
@@ -435,6 +436,7 @@ CKT_TESTS = \
     eqflat.sh \
     eqmodify.sh \
     e_storag.1.sh \
+    list.1.sh \
     l2.sh \
     l.sh \
     ll1.sh \
@@ -488,9 +490,13 @@ CKT_TESTS = \
     trcurve.sh \
     trcurves.sh
 
-.PHONY: $(CKT_TESTS:%.sh=%.out)
+XFAIL_TESTS = list.1.sh dc_temp.sh
 
-$(CKT_TESTS): %.sh: %.out
+AUTO_TESTS = $(CKT_TESTS) $(XFAIL_TESTS)
+
+.PHONY: $(AUTO_TESTS:%.sh=%.out)
+
+$(CKT_TESTS) $(XFAIL_TESTS): %.sh: %.out
 
 # try this first
 $(CKT_TESTS:%.sh:%.log): gnucap_run.log
@@ -510,7 +516,7 @@ bm_sffm.3.sh: PREDIFF+= '467,500·s/-20\.74./-20\.74X/g'
 # permit different control values
 d_logic_tr_%.out: POSTDIFF+= '3·s/[01]\.········$$/X.········/'
 
-$(CKT_TESTS:%.sh=%.out): %.out: %.ckt
+$(AUTO_TESTS:%.sh=%.out): %.out: %.ckt
 	$(AM_V_at)GNUCAP_DEFAULT_PLUGINS='../apps/.libs/gnucap_default_plugins.so' \
 	    ../main/gnucap $(GNUCAP_PLUGINS:%=-a ../plugins/.libs/%) $(GNUCAP_ARGS) -b $< | \
 	    sed $(subst ·, ,$(PREDIFF:%=-e %)) \
@@ -528,7 +534,7 @@ endef
 %.sh: $(REF)/%.ckt.out
 	$(testgen)
 
-CLEANFILES = *.out $(CKT_TESTS)
+CLEANFILES = *.out $(AUTO_TESTS)
 
 # hmmm.
 if VPATH_BUILD
