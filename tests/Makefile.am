@@ -15,6 +15,8 @@ TESTS = \
 
 REF = ==out
 
+check_PROGRAMS = filter
+
 CKT_TESTS = \
     1lin.sh \
     ap_ctof.2.sh \
@@ -526,13 +528,26 @@ define testgen
 	@echo "#!/bin/sh" > $@
 	@echo "set -e" >> $@
 	@echo "exec 2>&9" >> $@
-	@echo "diff -rup $< $*.out || exit 1" >> $@
+	@echo "./filter $< < $*.out | diff -rup $< - || exit 1" >> $@
 	@echo "rm $*.out" >> $@
 	@chmod +x $@
 endef
 
 %.sh: $(REF)/%.ckt.out
 	$(testgen)
+
+$(GC_TESTS:%.sh=%.out): %.out: %.gc
+	$(AM_V_at)$(GNUCAP) $(GNUCAP_PLUGINS:%=-a ../plugins/.libs/%) $(GNUCAP_ARGS) $< | \
+	    sed $(subst ·, ,$(PREDIFF:%=-e %)) \
+	    $(if $(POSTDIFF),| sed) $(subst ·, ,$(POSTDIFF:%=-e %)) > $*.out
+
+$(GC_TESTS): %.sh: %.ref
+	@echo "#!/bin/sh" > $@
+	@echo "set -e" >> $@
+	@echo "exec 2>&9" >> $@
+	@echo "cat $*.out | diff -rup $< - || exit 1" >> $@
+	@echo "rm $*.out" >> $@
+	@chmod +x $@
 
 CLEANFILES = *.out $(AUTO_TESTS)
 
