@@ -514,7 +514,6 @@ PREDIFF= \
 	'/^@/d' \
 	'/:·already.installed,·replacing/d'
 
-bm_sffm.3.sh: PREDIFF+= '467,500·s/-20\.74./-20\.74X/g'
 # permit different control values
 d_logic_tr_%.out: POSTDIFF+= '3·s/[01]\.········$$/X.········/'
 
