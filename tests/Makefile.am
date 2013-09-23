@@ -517,6 +517,22 @@ PREDIFF= \
 # permit different control values
 d_logic_tr_%.out: POSTDIFF+= '3·s/[01]\.········$$/X.········/'
 
+# close to zero...
+d_vcg.%.out: POSTDIFF+= '27·s/975\.[0-9][0-9]f/0.·····/'
+
+# close enough
+bm_poly.%.out: POSTDIFF+= '30·s/-.\.f/·0.·/g'
+bm_poly.%.out: POSTDIFF+= '30·s/-..\.f/·0.··/g'
+
+# same
+trcurve2.out: POSTDIFF+= 's/·[0-9]\.E-21/·0.····/'
+trcurve2.out: POSTDIFF+= 's/·[0-9][0-9]\.E-21/·0.·····/'
+
+# negative zeroes? nice, but should not be machine dependent
+bm_sffm.%.out: POSTDIFF+= 's/-0\.000\>/·0.000/g'
+
+bm_table.2.4.out: POSTDIFF+= '54·s/[- ][0-9]\.f/·0.·/g'
+
 $(AUTO_TESTS:%.sh=%.out): %.out: %.ckt
 	$(AM_V_at)GNUCAP_DEFAULT_PLUGINS='../apps/.libs/gnucap_default_plugins.so' \
 	    ../main/gnucap $(GNUCAP_PLUGINS:%=-a ../plugins/.libs/%) $(GNUCAP_ARGS) -b $< | \
