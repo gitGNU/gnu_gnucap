@@ -25,6 +25,8 @@ int main(int argc, char * const * argv){
 			data = t;
 			end=' ';
 			s=1;
+		}else if(!s && t=='~' && (data == '-' || data == ' ')){
+			data='~';
 		}else if(t=='~' && '0' <= data && data <= '9'){
 			data='~';
 			s=1;
