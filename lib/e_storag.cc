@@ -1,4 +1,4 @@
-/*$Id: e_storag.cc,v 26.132 2009/11/24 04:26:37 al Exp $ -*- C++ -*-
+/*                                  -*- C++ -*-
  * Copyright (C) 2001 Albert Davis
  * Author: Albert Davis <aldavis@gnu.org>
  *
@@ -21,7 +21,6 @@
  *------------------------------------------------------------------
  * Base class for storage elements of a circuit
  */
-//testing=obsolete,script 2006.06.14 
 #include "e_storag.h"
 /*--------------------------------------------------------------------------*/
 /* table for selecting local integraton method
@@ -97,10 +96,21 @@ void STORAGE::dc_advance()
 void STORAGE::tr_advance()
 {
   ELEMENT::tr_advance();
-  
+
   for (int i=OPT::_keep_time_steps-1; i>0; --i) {
     _i[i] = _i[i-1];
   }
+
+  method_t m = _method_u;
+  if (_n[OUT1]->discont()) { untested();
+    error(bTRACE, "%s,%s: falling back to euler at %g:%g.\n", long_label().c_str(), _n[OUT1]->long_label().c_str(), _time[1], _sim->_time0);
+    m = meEULER;
+  }else if (_n[OUT2]->discont()) { untested();
+    error(bTRACE, "%s,%s: falling back to euler at %g:%g.\n", long_label().c_str(), _n[OUT1]->long_label().c_str(), _time[1], _sim->_time0);
+    m = meEULER;
+  } else { untested();
+  }
+  _method_a = method_select[OPT::method][m];
 }
 /*--------------------------------------------------------------------------*/
 /* tr_needs_eval: check to see if this device needs to be evaluated
@@ -220,4 +230,4 @@ double STORAGE::tr_probe_num(const std::string& x)const
   }
 }
 /*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
+// vim:ts=8:sw=2:noet
