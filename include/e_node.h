@@ -1,4 +1,4 @@
-/*$Id: e_node.h,v 26.133 2009/11/26 04:58:04 al Exp $ -*- C++ -*-
+/*                          -*- C++ -*-
  * Copyright (C) 2001 Albert Davis
  * Author: Albert Davis <aldavis@gnu.org>
  *
@@ -21,13 +21,14 @@
  *------------------------------------------------------------------
  * circuit node class
  */
-//testing=script,sparse 2006.07.11
 #ifndef E_NODE_H
 #define E_NODE_H
 #include "u_sim_data.h"
 #include "e_base.h"
 /*--------------------------------------------------------------------------*/
 class MODEL_LOGIC;
+/*--------------------------------------------------------------------------*/
+typedef unsigned short DISCONT;
 /*--------------------------------------------------------------------------*/
 enum {
   OUT1 = 0,
@@ -130,6 +131,12 @@ public: // virtuals
     assert(m_() <= _sim->_total_nodes);
     return _sim->_ac[m_()];
   }
+private: // analog stuff
+  DISCONT _discont;
+public: // analog stuff
+  DISCONT discont() const {return _discont;};
+  void discont(DISCONT x) {_discont |= x;}
+  void set_discont(DISCONT x=0) {_discont = x;}
 };
 extern NODE ground_node;
 /*--------------------------------------------------------------------------*/
@@ -353,3 +360,4 @@ INTERFACE double volts_limited(const node_t& n1, const node_t& n2);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 #endif
+// vim:ts=8:sw=2:noet
