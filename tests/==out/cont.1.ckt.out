@@ -1,0 +1,99 @@
+Gnucap : The Gnu Circuit Analysis Package
+Never trust any version less than 1.0
+Copyright 1982-2013, Albert Davis
+Gnucap comes with ABSOLUTELY NO WARRANTY
+This is free software, and you are welcome
+to redistribute it under the terms of 
+the GNU General Public License, version 3 or later.
+See the file "COPYING" for details.
+main version: 2013.04.23 RCS 26.138
+core-lib version: 2013.04.23 RCS 26.138
+default plugins: 2013.04.23 RCS 26.138
+#Time       v(n1)      v(n2)      method(c1) disc(n1)   disc(n2)   hidden(0)  event(v1) 
+ 0.         0.         0.         2.         0.         0.         1.         1.        
+ 0.02       0.         0.         2.         0.         0.         1.         1.        
+ 0.04       0.         0.         2.         0.         0.         1.         1.        
+ 0.06       0.         0.         2.         0.         0.         1.         1.        
+ 0.08       0.         0.         2.         0.         0.         1.         1.        
+ 0.1        0.         0.         2.         0.         0.         1.         1.        
+ 1.         0.         0.         2.         2.         0.         1.         1.001     
+ 1.001      0.99999    998.99u    1.         2.         0.         1.         4.001     
+ 1.0778     0.99999    0.072289   1.         0.         0.         1.         4.001     
+ 1.1218     0.99999    0.11215    2.         0.         0.         1.         4.001     
+ 1.1484     0.99999    0.13547    2.         0.         0.         1.         4.001     
+ 1.1654     0.99999    0.15007    2.         0.         0.         1.         4.001     
+ 1.3741     0.99999    0.31065    2.         0.         0.         1.         4.001     
+ 1.5827     0.99999    0.4409     2.         0.         0.         1.         4.001     
+ 1.7914     1.         0.54653    2.         0.         0.         1.         4.001     
+ 2.         1.         0.63221    2.         0.         0.         1.         4.001     
+Gnucap   System status
+command ------ last -- total
+       get     0.00     0.00
+        op     0.00     0.00
+        dc     0.00     0.00
+      tran     0.00     0.00
+   fourier     0.00     0.00
+        ac     0.00     0.00
+function ----- last -- total
+     setup     0.00     0.00
+     order     0.00     0.00
+function ----- last -- total
+   advance     0.00     0.00
+     queue     0.00     0.00
+  evaluate     0.00     0.00
+      load     0.00     0.00
+        lu     0.00     0.00
+      back     0.00     0.00
+    review     0.00     0.00
+    accept     0.00     0.00
+    output     0.00     0.00
+  overhead     0.00     0.00
+     total     0.00     0.00
+iterations: op=0, dc=0, tran=57, fourier=0, total=73
+transient timesteps: accepted=16, rejected=0, total=16
+nodes: user=2, subckt=0, model=0, total=2
+dctran density=100.0%, ac density=100.0%
+#Time       v(n1)      v(n2)      method(c1) disc(n1)   disc(n2)   hidden(0)  event(v1) 
+ 0.         0.         0.         2.         0.         0.         2.         1.        
+ 0.02       0.         0.         2.         0.         0.         1.         1.        
+ 0.04       0.         0.         2.         0.         0.         1.         1.        
+ 0.06       0.         0.         2.         0.         0.         1.         1.        
+ 0.08       0.         0.         2.         0.         0.         1.         1.        
+ 0.1        0.         0.         2.         0.         0.         1.         1.        
+ 1.         0.         0.         2.         2.         0.         1.         1.001     
+ 1.001      0.99999    499.75u    2.         2.         0.         1.         4.001     
+ 1.0232     0.99999    0.022445   2.         0.         0.         1.         4.001     
+ 1.0341     0.99999    0.032997   2.         0.         0.         2.         4.001     
+ 1.0449     0.99999    0.043436   2.         0.         0.         1.         4.001     
+ 1.0516     0.99999    0.049848   2.         0.         0.         1.         4.001     
+ 1.2097     0.99999    0.18903    2.         0.         0.         1.         4.001     
+ 1.3678     0.99999    0.30782    2.         0.         0.         1.         4.001     
+ 1.6839     0.99999    0.49677    2.         0.         0.         1.         4.001     
+ 2.         1.         0.63414    2.         0.         0.         1.         4.001     
+Gnucap   System status
+command ------ last -- total
+       get     0.00     0.00
+        op     0.00     0.00
+        dc     0.00     0.00
+      tran     0.00     0.00
+   fourier     0.00     0.00
+        ac     0.00     0.00
+function ----- last -- total
+     setup     0.00     0.00
+     order     0.00     0.00
+function ----- last -- total
+   advance     0.00     0.00
+     queue     0.00     0.00
+  evaluate     0.00     0.00
+      load     0.00     0.00
+        lu     0.00     0.00
+      back     0.00     0.00
+    review     0.00     0.00
+    accept     0.00     0.00
+    output     0.00     0.00
+  overhead     0.00     0.00
+     total     0.00     0.00
+iterations: op=0, dc=0, tran=61, fourier=0, total=151
+transient timesteps: accepted=32, rejected=1, total=33
+nodes: user=2, subckt=0, model=0, total=2
+dctran density=100.0%, ac density=100.0%
