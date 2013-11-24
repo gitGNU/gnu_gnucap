@@ -149,6 +149,12 @@ void EVAL_BM_PULSE::precalc_first(const CARD_LIST* Scope)
 void EVAL_BM_PULSE::tr_eval(ELEMENT* d)const
 {
   double time = d->_sim->_time0;
+  if( time + d->_sim->_dtmin * .01 > d->_time_by._event ){ untested();
+    error(bTRACE, "%s: setting discont at %g for %g.\n",
+	d->long_label().c_str(), d->_sim->_time0, d->_time_by._event);
+    d->_discont = 2;
+    d->q_accept();
+  }
   if (0 < _period && _period < BIGBIG) {
     //time = fmod(time,_period);
     if (time > _delay) {
@@ -160,11 +166,17 @@ void EVAL_BM_PULSE::tr_eval(ELEMENT* d)const
   double ev = 0; // effective value
   if (time >= _delay+_rise+_width+_fall) {	/* past pulse	*/
     ev = _iv;
+    if (!_fall) { untested()
+      d->_discont |= 1;
+    }
   }else if (time >= _delay+_rise+_width) {	/* falling 	*/
     double interp = (time - (_delay+_rise+_width)) / _fall;
     ev = _pv + interp * (_iv - _pv);
   }else if (time >= _delay + _rise) {		/* pulse val 	*/
     ev = _pv;
+    if (!_rise) { untested()
+      d->_discont |= 1;
+    }
   }else if (time >= _delay) {			/* rising 	*/
     double interp = (time - _delay) / _rise;
     ev = _iv + interp * (_pv - _iv);
@@ -241,3 +253,4 @@ DISPATCHER<COMMON_COMPONENT>::INSTALL d1(&bm_dispatcher, "pulse", &p1);
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
+// vim:ts=8:sw=2:noet
