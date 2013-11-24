@@ -207,6 +207,7 @@ void SIM::clear_arrays(void)
 void SIM::evaluate_models()
 {
   ::status.evaluate.start();
+  _sim->_nstat[0].set_discont(0);
   if (OPT::bypass) {
     converged = true;
     swap(_sim->_evalq, _sim->_evalq_uc);
@@ -268,6 +269,7 @@ void SIM::solve_equations()
   if (_sim->_nstat) {
     // mixed mode
     for (int ii = _sim->_lu.size(); ii >= 1; --ii) {
+      _sim->_nstat[ii].set_discont(0);
       _sim->_nstat[ii].set_a_iter();
     }
   }else{
