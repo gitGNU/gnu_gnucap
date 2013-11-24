@@ -118,6 +118,7 @@ protected: // inline, below
   bool	   using_ac_eval()const;
   void	   tr_eval();
   void	   ac_eval();
+  void	   tr_accept(); // not yet inline
 
 protected: // in .cc
   void	   tr_iwant_matrix_passive();
@@ -163,6 +164,8 @@ public: // commons
   double   _time[OPT::_keep_time_steps];
   FPOLY1   _y1;		// iteration parameters, 1 iter ago
   FPOLY1   _y[OPT::_keep_time_steps]; /* charge or flux, and deriv.	*/
+
+  DISCONT _discont;
 };
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
