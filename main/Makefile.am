@@ -29,4 +29,4 @@ gnucap_SOURCES = main.cc
 gnucap_LDADD = ../lib/libgnucap.la
 gnucap_CPPFLAGS = -I$(top_builddir)/include -I$(top_srcdir)/include $(AM_CPPFLAGS)
 
-gnucap_LDFLAGS = -rpath ${pkglibdir}
+gnucap_real_LDFLAGS = -Wl,--enable-new-dtags -rpath ${pkglibdir}
