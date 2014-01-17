@@ -191,6 +191,7 @@ done
 #	])
 
 AC_CONFIG_FILES([gnucap-conf], [chmod +x gnucap-conf])
+AC_CONFIG_FILES([main/gnucap], [chmod +x main/gnucap])
 
 AC_OUTPUT([
 	GNUmakefile
