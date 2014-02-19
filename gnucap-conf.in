@@ -5,13 +5,13 @@ exec_prefix=@exec_prefix@
 
 case $1 in
 	"--cppflags")
-		echo -I@includedir@
+		echo -I@includedir@/gnucap
 	;;
 	"--ldflags")
 		echo -L@libdir@ -lgnucap
 	;;
 	"--includedir")
-		echo @includedir@
+		echo @includedir@/gnucap
 	;;
 	"--libdir")
 		echo @libdir@
@@ -25,4 +25,3 @@ case $1 in
 	echo $0 --libdir
 	echo $0 --data
 esac
-

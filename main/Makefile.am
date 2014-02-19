@@ -23,10 +23,10 @@
 ##  Foundation, Inc.,  51 Franklin Street, Fifth Floor, Boston, MA
 ##  02110-1301, USA.
 
-bin_PROGRAMS = gnucap
+noinst_SCRIPTS = gnucap
+bin_PROGRAMS = gnucap.real
+transform=s&\.real$$&&;$(program_transform_name)
 
-gnucap_SOURCES = main.cc
-gnucap_LDADD = ../lib/libgnucap.la
-gnucap_CPPFLAGS = -I$(top_builddir)/include -I$(top_srcdir)/include $(AM_CPPFLAGS)
-
-gnucap_LDFLAGS = -rpath ${pkglibdir}
+gnucap_real_SOURCES = main.cc
+gnucap_real_LDADD = ../lib/libgnucap.la
+gnucap_real_CPPFLAGS = -I$(top_builddir)/include -I$(top_srcdir)/include $(AM_CPPFLAGS)
