@@ -34,7 +34,7 @@ mg_out_common.cc mg_out_dev.cc mg_out_lib.cc mg_out_model.cc mg_out_root.cc
 #------------------------------------------------------------------------
 
 gnucap_modelgen_SOURCES = $(RAW_SRCS)
-gnucap_modelgen_LDADD = -L$(top_builddir)/lib/.libs -lgnucap
+gnucap_modelgen_LDADD = ../lib/libgnucap.la
 gnucap_modelgen_CPPFLAGS = $(AM_CPPFLAGS) -I$(top_srcdir)/include -I$(top_builddir)/include
 
 
