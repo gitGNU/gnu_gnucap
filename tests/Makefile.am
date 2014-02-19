@@ -494,11 +494,11 @@ CKT_TESTS = \
 
 XFAIL_TESTS = list.1.sh dc_temp.sh
 
-AUTO_TESTS = $(CKT_TESTS) $(XFAIL_TESTS)
+AUTO_TESTS = $(CKT_TESTS)
 
 .PHONY: $(AUTO_TESTS:%.sh=%.out)
 
-$(CKT_TESTS) $(XFAIL_TESTS): %.sh: %.out
+$(CKT_TESTS): %.sh: %.out
 
 # try this first
 $(CKT_TESTS:%.sh:%.log): gnucap_run.log
