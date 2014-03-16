@@ -32,7 +32,7 @@ public:
 		if(Cmd.tail()==""){
 			throw Exception("Usage: help [command]");
 		}
-		std::string file_name = "c_"+Cmd.tail()+".cc";//Generate concerned file name using the command name passed with "help".
+		std::string file_name = "c_"+Cmd.tail()+".cc";//Generate concerned file name using the command name which is enquired.
 		std::string line;
 		std::ifstream file;
 		
