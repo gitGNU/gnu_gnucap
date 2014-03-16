@@ -1,0 +1,11 @@
+________________testing history command_______________ 
+enabled history tracking mode.... 
+history
+history
+tracking history.... 
+stopped tracking history... 
+You haven't enabled the history mode to track the commands.
+Usage:history [mode]
+-t        Start tracking
+-s        Stop tracking
+

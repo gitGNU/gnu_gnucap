@@ -1,0 +1,5 @@
+Readme for WIP(Work in Progress) branch
+This is a development snapshot.  As such, there may be problems due to
+new work.
+This branch contains only the set of command plugins which are being implemented.
+Commands Checklist file lists the set of commands which are to be implemented and which have been implented.
