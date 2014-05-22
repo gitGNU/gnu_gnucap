@@ -5,6 +5,6 @@ ACLOCAL_AMFLAGS = -Im4
 
 SUBDIRS=	include lib modelgen main apps tests
 
-EXTRA_DIST=	autogen.sh Makefile.template configure.static
+EXTRA_DIST=	bootstrap Makefile.template configure.static
 
 dist_bin_SCRIPTS = gnucap-conf
