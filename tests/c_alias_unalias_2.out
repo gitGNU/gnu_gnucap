@@ -1,0 +1,6 @@
+______________test alias and unalias command____________ 
+flag=0
+flag=-15
+compare 
+^ ? what's this?
+
