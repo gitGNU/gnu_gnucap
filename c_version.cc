@@ -19,8 +19,21 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  *------------------------------------------------------------------*/
+<<<<<<< HEAD
 //Outputs the current version of gnucap
 
+=======
+/*
+<Plugin Manual>
+Purpose:Prints the version of gnucap being used
+Usage:version
+Comments:'ver' also works.
+Example:
+gnucap> version
+Gnucap Version: 2009.12.07 RCS 26.136
+<End>
+*/
+>>>>>>> 885ea50882b58deda6d9a94cbd32a5dd294b5cf4
 //testing=script 2013.09.10
 #include <gnucap/patchlev.h>
 #include <gnucap/c_comand.h>

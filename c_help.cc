@@ -39,14 +39,22 @@ public:
 		//Open the file with filename in the "current directory".
 		file.open(file_name.c_str(),std::ios::out);
 		if(file.is_open()){
+<<<<<<< HEAD
 			while(getline(file,line) && line.find("Plugin Manual")==std::string::npos);//Search for the line "Plugin Manual".
+=======
+			while(getline(file,line) && line.find("<Plugin Manual>")==std::string::npos);//Search for the line "Plugin Manual".
+>>>>>>> 885ea50882b58deda6d9a94cbd32a5dd294b5cf4
 
 			//If no manual is dpecified by the developer.			
 			if(line==""){																																																			
 				throw Exception("No manual entry found.Refer GNUcap Manual or contact gnucap-devel.");
 			}
 
+<<<<<<< HEAD
 			while(getline(file,line) && line.find("End")==std::string::npos){//Find the End marker.
+=======
+			while(getline(file,line) && line.find("<End>")==std::string::npos){//Find the End marker.
+>>>>>>> 885ea50882b58deda6d9a94cbd32a5dd294b5cf4
 				IO::mstdout << line << '\n';
 				}
 		}

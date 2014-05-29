@@ -1,0 +1,24 @@
+Manual Help Command
+===================================================================================
+Implementation:This plugin provides help on the given command by accessing the text string in the comment section of the corresponding source file predefined by the developer.In more geeral sense,it is basically a source code parser which filters out the necessary detail for the command defined by the developer and prints it on the interpreter for help purposes from the source file of that command.
+
+Plugin Coding Standard:To allow help command to access the help manual defined in comment section in the source code of a command,developer must write the help manual between a start tag and an end tag.
+Start tag is "<Plugin Manual>".The help string should start from the next line of the start tag and terminated by an end tag which is "<End>".All the information apperaing for the command within these two tags will be printed on the interpreter upon user's request.
+
+Usage:
+Syntax:help [command]
+
+Example:
+gnucap> help
+Usage: help [command]
+
+To get help on the "version" command,execute following and let us see what version command does.
+
+gnucap> help version
+Purpose:Prints the version of gnucap being used
+Usage:version
+Comments:'ver' also works.
+Example:
+gnucap> version
+Gnucap Version: 2009.12.07 RCS 26.136
+
