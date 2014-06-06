@@ -1,0 +1,11 @@
+For running this source code we requires gtkmm-3.0 or more latest version installed in your system.
+TO DO LIST: 
+*Currently plot_wip.h is highly messed and need lot of modification and correction.
+
+*Expanding the plot_wip.h lib for meeting the user preference as currently it plots out all the probes stored in wave object.
+
+* We need more sample points for fine plotting and if user runs analysis with large step size then it is difficult to realize actual plot so in a way we need to modify these step sizes and then store data in wave object.
+
+*Forking the main gnucap loop to execute the plot loop in parallel.
+
+*Implementation of iplot plugin.
