@@ -1,4 +1,4 @@
-/*$Id: c_version.cc,v 26.138 2013/06/22 03:32:53 al Exp $ -*- C++ -*-
+/*$Id: c_help.cc,v 26.138 2014/03/15 01:53:23 al Exp $ -*- C++ -*-
  * Copyright (C) 2013 Rishabh Yadav
  * Author: Rishabh Yadav <rishabh.ece.iitbhu@gmail.com>
  *
@@ -19,31 +19,34 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  *------------------------------------------------------------------*/
-//Outputs the current version of gnucap
-
-//testing=script 2013.09.10
-#include <gnucap/patchlev.h>
 #include <gnucap/c_comand.h>
 #include <gnucap/globals.h>
+#include <fstream> 
 /*-------------------------------------------------------------------*/
 namespace {
 /*-------------------------------------------------------------------*/
-//help string
-static std::string helptext = "Usage: version\n\t\t\t\t\t\t\tver\nversion or ver command tells the version of gnucap installed on the system.\n";
+static std::string helptext = "Usage: help [command]\nTo get help for a command you can also type command --help\n";
 
-class CMD_VERSION : public CMD {
+class CMD_HELP : public CMD {
 public:
-  void do_it(CS& cmd, CARD_LIST*) {itested();
-	 if(cmd.tail() == "--help"){
+  
+  void do_it(CS& cmd, CARD_LIST* Scope) {
+		//If no command is passed as an argument
+		if(cmd.tail()==""){
+			throw Exception("Usage: help [command]");
+		}
+		else if(cmd.tail() == "--help"){
 			IO::mstdout << helptext;
-	 }else{
-     IO::mstdout <<
-     "Gnucap : The Gnu Circuit Analysis Package\n"
-     "Main version: " PATCHLEVEL "\n"
-     "Core-lib version: " << lib_version() << "\n";  
-	 }
+		}
+		else{
+			if(cmd.more()){//if some command is passed run it. 
+				command(cmd.tail()+" --help",Scope);
+			}else{
+			}
+		}	
   }
 }p;
-DISPATCHER<CMD>::INSTALL d(&command_dispatcher,"version|ver",&p);
+DISPATCHER<CMD>::INSTALL d(&command_dispatcher,"help",&p);
 /*-------------------------------------------------------------------*/
 }
+
