@@ -22,3 +22,25 @@ Example:
 gnucap> version
 Gnucap Version: 2009.12.07 RCS 26.136
 
+Help Version 2
+===========================================
+Plugin Coding Standard:
+1.Define a static helptext variable of string type in the anonymous namespace.Initialise the help string with the manual for your command.
+Ex.:static std::string helptext = "help manual";
+2.Include an if statement in your plugin which runs if the argument is --help.
+Ex.:
+class CMD_VERSION : public CMD {
+public:
+  void do_it(CS& cmd, CARD_LIST*) {itested();
+	 if(cmd.tail() == "--help"){
+			IO::mstdout << helptext;//
+	 }else{
+     	//Your plugin
+	 }
+  }
+}p;
+DISPATCHER<CMD>::INSTALL d(&command_dispatcher,"version|ver",&p);
+}
+
+The "if" portion in help command is a kinf of headache.Next update for this command will consider this and it will accomodate help_dispatcher.
+ 
