@@ -61,6 +61,8 @@
  /* TO DO: 1.Debug nested loops.
 		   2.Find the usage of gnucap's expression parser library and substitute in line 96.
 		   3.Make the conditionals work without brackets.(Now,'{','}' braces are necessary)
+		   4.Implement elseif statements.//DONE
+		   5.Store the commands to be executed in queue and execute them only after the whole script has been parsed. 
     Notice:Right now it is assumed that condition in if clause evaluates to false.After doing a bit research on TODO#2 it will be fixed.It only 
     requires a modification 
     of line 96 and removal of line 101; 
@@ -73,13 +75,7 @@
 #include <stack>
 
 #define NUM_FLAGS 10
-#define TRUE 1
-#define FALSE 0
 
-#define START_BRACE 0
-#define END_BRACE 1
-#define ELSE 2
-#define COMMENT 3
 /*--------------------------------------------------------------------------*/
 namespace {
 /*--------------------------------------------------------------------------*/
@@ -109,35 +105,32 @@ public:
     //if(_flag){
 	//functionalize the following procedure as process_block()
 	//IF BLOCK
-	while(flags[START_BRACE] && !flags[END_BRACE]){
-		IO::mstdout << '>';
- 		//std::cin >> instruction;
-		//std::cin.clear();
+	//std::cout << "Processing block...\n";
+	process_block(flags,NUM_FLAGS,_flag,Scope);
+	
+	while(instruction!=" " || instruction!= "\n"){
+		
+		//Look for else/elif statement.
 		std::getline(std::cin, instruction);
-		//std::cout << "Execute:"<<instruction << '\n';
-		instruction = parse(instruction,flags,NUM_FLAGS);
-		if(_flag){
-			//std::cout << "Returned " << instruction << "\n";
-			CMD::command(instruction.c_str(),Scope);
-		}
-	}
-	
-	//Look for else statement.
-	std::getline(std::cin, instruction);
-	instruction = parse(instruction,flags,NUM_FLAGS);
-	
-	//ELSE BLOCK
-	if(flags[ELSE]){
-		//functionalize the the following procedure as process_block()
-		while(flags[START_BRACE] && !flags[END_BRACE]){	
-			IO::mstdout << '>';
-			std::getline(std::cin, instruction);
-			instruction = parse(instruction,flags,NUM_FLAGS);
-			if(!_flag){
-				CMD::command(instruction.c_str(),Scope);
+		parse(instruction,flags,NUM_FLAGS);
+		
+		//ELSE-IF BLOCK
+		if(flags[ELSE_IF]){
+			condition = parse(instruction,flags,NUM_FLAGS,"condition");
+			if(_flag == false){
+				_flag = true;//eval(condition);
+				process_block(flags,NUM_FLAGS,_flag,Scope);
 			}
+			else
+				process_block(flags,NUM_FLAGS,!_flag,Scope);
 		}
-	}				
+	
+		//ELSE BLOCK
+		if(flags[ELSE]){
+			process_block(flags,NUM_FLAGS,!_flag,Scope);
+			break;
+		}
+	}					
   }
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher, "if", &p);
