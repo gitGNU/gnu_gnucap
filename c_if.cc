@@ -24,6 +24,9 @@
  * Syntax: if (condition){
  * 				//Set of instructions;
  * 		   }
+ * 		   elif (condition){
+ * 				//Set of instructions;
+ * 		   }
  * 		   else{
  * 				//Set of instructions
  * 		   }
@@ -56,7 +59,35 @@
  * 		//instruction4
  * 		...
  *  }		
+ * 
+ * 4. if (condition){
+ * 		//instruction1
+ * 		//instruction2
+ * 		...	
+ * 	   }
+ * 	   elif (condition){
+ * 		//instruction3
+ * 		//instruction4
+ * 		...	
+ * 		}
+ * 		else{
+ * 		//instruction1
+ * 		//instruction2
+ * 		...	
+ * 		}
+ *
+ * 5. if (condition){
+ * 		//instruction1
+ * 		//instruction2
+ * 		...	
+ * 	   }
+ * 	   elif (condition){
+ * 		//instruction3
+ * 		//instruction4
+ * 		...	
+ * 		}
  */
+ 
  
  /* TO DO: 1.Debug nested loops.
 		   2.Find the usage of gnucap's expression parser library and substitute in line 96.
