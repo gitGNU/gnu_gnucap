@@ -39,6 +39,9 @@
 #define END_BRACE 1
 #define ELSE 2
 #define COMMENT 3
+#define ELSE_IF  4
+
+
 
 /*This structure is not in use now.
 typedef struct environment_variables{
@@ -60,7 +63,8 @@ std::string parse(std::string instruction,int* flag_ptr,int length,std::string t
 	flag_ptr[START_BRACE] = 1;
 	flag_ptr[END_BRACE] = 0;
 	flag_ptr[ELSE] = 0;
-	flag_ptr[COMMENT] =0;
+	flag_ptr[COMMENT] = 0;
+	flag_ptr[ELSE_IF] =0;
 	
 	if(type == "condition")
 		flag_ptr[START_BRACE] = false;
@@ -106,10 +110,16 @@ std::string parse(std::string instruction,int* flag_ptr,int length,std::string t
 		else if(delim == ')'){
 			count--;
 		}
-		else if(delim == 'e'){
+		else if(delim == 'e' && i==0){
 				if(instruction.substr(i+1,4) == "lse{"){
 						flag_ptr[ELSE] = TRUE;
-						//std::cout << "else detected\n";
+					}
+				if(instruction.substr(i+1,3) == "lif" ){
+						flag_ptr[ELSE_IF] = TRUE;
+						if(len>6)
+							command = instruction.substr(5,len-5);
+						else
+							std::cout << "SYNTAX ERROR:ELIF satement needs a condition to evaluate\n";
 					}
 		}
 	}
@@ -126,3 +136,20 @@ std::string parse(std::string instruction,int* flag_ptr,int length,std::string t
 
 
 #endif
+
+
+void process_block(int* flags,int num_flags,bool _flag,CARD_LIST* Scope){
+
+	std::string instruction;
+	while(flags[START_BRACE] && !flags[END_BRACE]){	
+		//IO::mstdout << '>';
+ 		//std::cin >> instruction;
+		//std::cin.clear();
+		std::getline(std::cin, instruction);
+		instruction = parse(instruction,flags,num_flags);
+		if(_flag){
+			CMD::command(instruction.c_str(),Scope);
+		}
+	}
+	return ;	
+}
