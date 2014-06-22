@@ -96,7 +96,7 @@ public:
     bool _flag;//= eval(condition);
     
     //Setting the _flag for testing.
-    _flag=false;
+    _flag=true;
     
     
     //TO DO:Check if only one instruction follows the condtional statement or if there is a block of instructions
@@ -108,7 +108,7 @@ public:
 	//std::cout << "Processing block...\n";
 	process_block(flags,NUM_FLAGS,_flag,Scope);
 	
-	while(instruction!=" " || instruction!= "\n"){
+	while(!instruction.empty()){
 		
 		//Look for else/elif statement.
 		std::getline(std::cin, instruction);
@@ -117,6 +117,8 @@ public:
 		//ELSE-IF BLOCK
 		if(flags[ELSE_IF]){
 			condition = parse(instruction,flags,NUM_FLAGS,"condition");
+			
+			//Take the branch only if previous if/elif statements hasn't been executed.
 			if(_flag == false){
 				_flag = true;//eval(condition);
 				process_block(flags,NUM_FLAGS,_flag,Scope);
