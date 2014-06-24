@@ -89,6 +89,7 @@ std::string parse(std::string instruction,int* flag_ptr,int length,std::string t
 			*/
 			flag_ptr[START_BRACE] = FALSE;
 			flag_ptr[END_BRACE] = TRUE;
+			
 		}
 		else if(delim == '{'){
 			/*
@@ -119,12 +120,13 @@ std::string parse(std::string instruction,int* flag_ptr,int length,std::string t
 						if(len>6)
 							command = instruction.substr(5,len-5);
 						else
-							std::cout << "SYNTAX ERROR:ELIF satement needs a condition to evaluate\n";
+							std::cout << "SYNTAX ERROR:ELIF satement needs a condition to evaluate\n";//Convert to Gnucap's standard Error
 					}
 		}
 	}
 	if(count!=0){
-			std::cout << "Syntax Error:No matching brace found.\n";
+			std::cout << "Syntax Error:No matching brace found.\n";//Convert to Gnucap's standard Error
+			
 			//exit(1);
 	}
 	return command;
@@ -138,7 +140,7 @@ std::string parse(std::string instruction,int* flag_ptr,int length,std::string t
 #endif
 
 
-void process_block(int* flags,int num_flags,bool _flag,CARD_LIST* Scope){
+void process_block(int* flags,int num_flags,bool _flag,std::queue<std::string> *p){
 
 	std::string instruction;
 	while(flags[START_BRACE] && !flags[END_BRACE]){	
@@ -148,7 +150,9 @@ void process_block(int* flags,int num_flags,bool _flag,CARD_LIST* Scope){
 		std::getline(std::cin, instruction);
 		instruction = parse(instruction,flags,num_flags);
 		if(_flag){
-			CMD::command(instruction.c_str(),Scope);
+			//CMD::command(instruction.c_str(),Scope);
+			p->push(instruction	);
+			
 		}
 	}
 	return ;	
