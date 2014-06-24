@@ -103,7 +103,7 @@
 #include <gnucap/globals.h>
 #include <gnucap/m_expression.h>
 #include "interp.h"
-#include <stack>
+#include <queue>
 
 #define NUM_FLAGS 10
 
@@ -113,7 +113,7 @@ namespace {
 class CMD_IF : public CMD {
 public:
   void do_it(CS& cmd, CARD_LIST* Scope){
-    
+    std::queue<std::string> operations;
     std::string condition = cmd.tail();
     //if_struct env_vars;
     
@@ -129,7 +129,6 @@ public:
     //Setting the _flag for testing.
     _flag=true;
     
-    
     //TO DO:Check if only one instruction follows the condtional statement or if there is a block of instructions
     //Now,assuming instructions are always defined in a pair of curley braces.
     
@@ -137,8 +136,7 @@ public:
 	//functionalize the following procedure as process_block()
 	//IF BLOCK
 	//std::cout << "Processing block...\n";
-	process_block(flags,NUM_FLAGS,_flag,Scope);
-	
+	process_block(flags,NUM_FLAGS,_flag,&operations);
 	while(!instruction.empty()){
 		
 		//Look for else/elif statement.
@@ -152,18 +150,22 @@ public:
 			//Take the branch only if previous if/elif statements hasn't been executed.
 			if(_flag == false){
 				_flag = true;//eval(condition);
-				process_block(flags,NUM_FLAGS,_flag,Scope);
+				process_block(flags,NUM_FLAGS,_flag,&operations);
 			}
 			else
-				process_block(flags,NUM_FLAGS,!_flag,Scope);
+				process_block(flags,NUM_FLAGS,!_flag,&operations);
 		}
 	
 		//ELSE BLOCK
 		if(flags[ELSE]){
-			process_block(flags,NUM_FLAGS,!_flag,Scope);
+			process_block(flags,NUM_FLAGS,!_flag,&operations);
 			break;
 		}
-	}					
+	}
+	while(!operations.empty()){
+			CMD::command(operations.front(),Scope);
+			operations.pop();
+		}					
   }
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher, "if", &p);
