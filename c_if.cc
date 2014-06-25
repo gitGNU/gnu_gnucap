@@ -21,151 +21,85 @@
  *------------------------------------------------------------------
  *
  * <plugin>
- * Syntax: if (condition){
- * 				//Set of instructions;
- * 		   }
- * 		   elif (condition){
- * 				//Set of instructions;
- * 		   }
- * 		   else{
- * 				//Set of instructions
- * 		   }
- * 
- * The if statement should be followed by a space then the condition(brackets '()' are not necessary).The condition should be immediately terminated by 
- * '{' brace.The end of if block is designated by '}'.The set of instructions supposed to work when the condition in if statement is true can be defined
- * between the two pair of curley braces.
- * single if statement and set of if-else statements both are supported.
- * Example statements:
- * 1. if (condition){
- * 		//instruction1
- * 		//instruction2
- * 		...	
- * }
- * 
- * 2. if (condition){
- * 		//instruction1
- * 		//instruction2
- * 		...
- * 	  }
- * 	  else{}
- * 
- * 3.if (condition){
- * 		//instruction1
- * 		//instruction2
- * 		...	
- * 	}
- * 	else{
- * 		//instruction3
- * 		//instruction4
- * 		...
- *  }		
- * 
- * 4. if (condition){
- * 		//instruction1
- * 		//instruction2
- * 		...	
- * 	   }
- * 	   elif (condition){
- * 		//instruction3
- * 		//instruction4
- * 		...	
- * 		}
- * 		else{
- * 		//instruction1
- * 		//instruction2
- * 		...	
- * 		}
- *
- * 5. if (condition){
- * 		//instruction1
- * 		//instruction2
- * 		...	
- * 	   }
- * 	   elif (condition){
- * 		//instruction3
- * 		//instruction4
- * 		...	
- * 		}
+ * Syntax: if condition_1
+ * 				//instruction_1
+ * 				//instruction_2
+ * 				.....
+ * 			elif condition_2
+ * 				//instruction_3
+ * 				//instruction_4
+ * 				.....
+ * 			elif condition_3
+ * 				//instruction_5
+ * 				//instruction_6
+ * 				.....
+ * 			.
+ * 			.
+ * 			elif condition_i
+ * 				//instruction_(m-1)
+ * 				//instruction_m
+ * 				.....
+ * 			else
+ * 				//instruction_(n-1)
+ * 				//instruction_n
+ * 				...
+ * 			end
  */
  
- 
- /* TO DO: 1.Debug nested loops.
-		   2.Find the usage of gnucap's expression parser library and substitute in line 96.
-		   3.Make the conditionals work without brackets.(Now,'{','}' braces are necessary)
-		   4.Implement elseif statements.//DONE
-		   5.Store the commands to be executed in queue and execute them only after the whole script has been parsed. 
-    Notice:Right now it is assumed that condition in if clause evaluates to false.After doing a bit research on TODO#2 it will be fixed.It only 
-    requires a modification 
-    of line 96 and removal of line 101; 
+ /* 
+  * TO DO: Debug Nested Loops
  */
  
 #include <gnucap/c_comand.h>
 #include <gnucap/globals.h>
-#include <gnucap/m_expression.h>
+#include <gnucap/u_parameter.h>
+#include <string>
 #include "interp.h"
 #include <queue>
-
-#define NUM_FLAGS 10
 
 /*--------------------------------------------------------------------------*/
 namespace {
 /*--------------------------------------------------------------------------*/
 class CMD_IF : public CMD {
 public:
-  void do_it(CS& cmd, CARD_LIST* Scope){
-    std::queue<std::string> operations;
-    std::string condition = cmd.tail();
-    //if_struct env_vars;
-    
-    /*Flag array */
-    int flags[NUM_FLAGS];
-    
-    //Find the condition to be checked for the branch to be taken or not
-    std::string instruction = parse(condition,flags,NUM_FLAGS,"condition");
-    
-    //TO DO:Evaluate the condition
-    bool _flag;//= eval(condition);
-    
-    //Setting the _flag for testing.
-    _flag=true;
-    
-    //TO DO:Check if only one instruction follows the condtional statement or if there is a block of instructions
-    //Now,assuming instructions are always defined in a pair of curley braces.
-    
-    //if(_flag){
-	//functionalize the following procedure as process_block()
+  void do_it(CS& cmd, CARD_LIST* Scope){	  
+	//Queue to store the instructions to be executed.
+    std::queue< std::string > operations;
+    PARAMETER<double> condition;
+    cmd >> condition;
+    cmd.check(bDANGER, "syntax error");
+    condition.e_val(0.,Scope);
+    bool truth = condition != 0;
+    new_subckt();
+
 	//IF BLOCK
-	//std::cout << "Processing block...\n";
-	process_block(flags,NUM_FLAGS,_flag,&operations);
-	while(!instruction.empty()){
-		
-		//Look for else/elif statement.
-		std::getline(std::cin, instruction);
-		parse(instruction,flags,NUM_FLAGS);
+	std::string symbol = process_block(cmd,Scope,&operations,truth);
+	
+	while(symbol != "end"){untested();		
 		
 		//ELSE-IF BLOCK
-		if(flags[ELSE_IF]){
-			condition = parse(instruction,flags,NUM_FLAGS,"condition");
-			
+		if(symbol != "else"){untested();
 			//Take the branch only if previous if/elif statements hasn't been executed.
-			if(_flag == false){
-				_flag = true;//eval(condition);
-				process_block(flags,NUM_FLAGS,_flag,&operations);
+			if(truth == false){itested();
+				truth = atoi(symbol.c_str());
+				symbol = process_block(cmd,Scope,&operations,truth);
 			}
-			else
-				process_block(flags,NUM_FLAGS,!_flag,&operations);
+			else{itested();
+				symbol = process_block(cmd,Scope,&operations,false);
+			}
 		}
 	
 		//ELSE BLOCK
-		if(flags[ELSE]){
-			process_block(flags,NUM_FLAGS,!_flag,&operations);
-			break;
+		if(symbol == "else"){itested();
+			symbol = process_block(cmd,Scope,&operations,!truth);
 		}
 	}
-	while(!operations.empty()){
-			CMD::command(operations.front(),Scope);
+	/*
+	while(!operations.empty()){itested();	
+			command(operations.front(), Scope);
 			operations.pop();
-		}					
+		}
+	*/					
   }
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher, "if", &p);
