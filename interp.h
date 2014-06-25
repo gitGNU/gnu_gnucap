@@ -24,16 +24,79 @@
 #ifndef INTERP_H
 #define INTERP_H
 
-#include <gnucap/c_comand.h>
-#include <gnucap/globals.h>	
+#include "gnucap/c_comand.h"
+#include "gnucap/globals.h"
+#include "gnucap/u_parameter.h"
 #include <stdbool.h>
 
 #define TRUE 1
 #define FALSE 0
 
+std::string process_block(CS& cmd,std::queue< PARAMETER<double> >*,bool);
+/*
+ * process_block()
+ * This functions processes a complete body of if/elif/else statements and returns else/end if user inputs any of these and 
+ * in case of elif,retuens the boolean value after evaluating the condition.
+ * 
+*/
 
+bool is_symbol(std::string p);
+/*
+ * is_symbol()
+ * This function checks if the passed string is a logical symbol or not.later on it will be modified to look for identifiers,variablesand keywords.
+*/
+
+std::string process_block(CS& cmd,CARD_LIST* Scope,std::queue<std::string> *p,bool execute){untested();
+
+	std::string cmd_ctos,cmd_tail,instruction;
+	PARAMETER<double> condition;
+	std::string prompt = "> ";
+	cmd.get_line(prompt);
+	cmd_ctos = cmd.ctos();
+	cmd_tail = cmd.tail();
+	while(!is_symbol(cmd_ctos)){
+		instruction = cmd_ctos+" "+cmd_tail;
+		//IO::mstdout << "Instruction: " << 	instruction << "\n";	
+		if(execute){untested();
+			//p->push(instruction);	 
+			CMD::command(instruction,Scope);
+		}
+		cmd.get_line(prompt);
+		cmd_ctos = cmd.ctos();
+		cmd_tail = cmd.tail();
+		
+	}
+	if(cmd_ctos == "elif"){untested();
+		cmd >> condition;
+		cmd.check(bDANGER, "syntax error");
+		condition.e_val(0.,Scope);
+		return to_string(condition!=0);
+	}
+	else{untested();
+		return cmd_ctos;
+	}	
+}
+
+
+bool is_symbol(std::string p){untested();
+	if(p == "else" || p == "elif"){
+		return true;
+	}
+	else if(p == "end"){
+		return true;
+	}
+	else{
+		return false;
+	}	
+	
+}
+
+#endif
+
+
+/*********************************************Following code is obsolete***********************************************/
 //Conditionals Block
-/*---------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------
 
 #define START_BRACE 0
 #define END_BRACE 1
@@ -43,22 +106,22 @@
 
 
 
-/*This structure is not in use now.
+This structure is not in use now.
 typedef struct environment_variables{
 	bool _else;
 	bool start_brace;
 	bool end_brace;
 }if_struct;
-*/
+
 
 std::string parse(std::string instruction,int* flag_ptr,int length,std::string type = "expression"){
-	/*
-	if_struct env_vars;
-	Initialise structure variables
-	/*env_vars.end_brace = false;
-	env_vars._else = false;
-	env_vars.start_brace = true;
-	*/
+	
+	//if_struct env_vars;
+	//Initialise structure variables
+	//env_vars.end_brace = false;
+	//env_vars._else = false;
+	//env_vars.start_brace = true;
+	
 	std::string command = instruction;
 	flag_ptr[START_BRACE] = 1;
 	flag_ptr[END_BRACE] = 0;
@@ -78,44 +141,44 @@ std::string parse(std::string instruction,int* flag_ptr,int length,std::string t
 	char delim;  //Delimiter:
 	for(i=0;i<len;i++){
 		delim = instruction[i];
-		if(delim == '/' && instruction[i+1]=='/' ){
+		if(delim == '/' && instruction[i+1]=='/' ){untested();
 			flag_ptr[COMMENT] = TRUE;
 		}
 			
-		if(delim == '}'){
-			/*
-			env_vars.end_brace = true;	
-			env_vars.start_brace = false;
-			*/
+		if(delim == '}'){itested();
+			
+			//env_vars.end_brace = true;	
+			//env_vars.start_brace = false;
+			
 			flag_ptr[START_BRACE] = FALSE;
 			flag_ptr[END_BRACE] = TRUE;
 			
 		}
-		else if(delim == '{'){
-			/*
-			env_vars.start_brace = true;
-			env_vars.instruction = instruction.substr(0,i);
-			*/
+		else if(delim == '{'){itested();
+			
+			//env_vars.start_brace = true;
+			//env_vars.instruction = instruction.substr(0,i);
+			
 			flag_ptr[START_BRACE] = TRUE;
 			command = instruction.substr(0,i);
-			/*(if(i!=(len-1)){
+			(if(i!=(len-1)){
 				if(instruction[len-1]!='}' || int(instruction[len-1])!= 32){
 					std::cout << "Syntax Error:symbols should be not be defined after '{' in the same line.\n";
 					//exit(1);
 				}
-			}*/
+			}
 		}
-		else if(delim == '('){
+		else if(delim == '('){itested();
 			count++;
 		}
-		else if(delim == ')'){
+		else if(delim == ')'){itested();
 			count--;
 		}
-		else if(delim == 'e' && i==0){
-				if(instruction.substr(i+1,4) == "lse{"){
+		else if(delim == 'e' && i==0){itested();
+				if(instruction.substr(i+1,4) == "lse{"){itested();
 						flag_ptr[ELSE] = TRUE;
 					}
-				if(instruction.substr(i+1,3) == "lif" ){
+				if(instruction.substr(i+1,3) == "lif" ){itested();
 						flag_ptr[ELSE_IF] = TRUE;
 						if(len>6)
 							command = instruction.substr(5,len-5);
@@ -124,7 +187,7 @@ std::string parse(std::string instruction,int* flag_ptr,int length,std::string t
 					}
 		}
 	}
-	if(count!=0){
+	if(count!=0){itested();
 			std::cout << "Syntax Error:No matching brace found.\n";//Convert to Gnucap's standard Error
 			
 			//exit(1);
@@ -132,28 +195,8 @@ std::string parse(std::string instruction,int* flag_ptr,int length,std::string t
 	return command;
 	
 	}
-//Cases to consider (){},(){,expression,expression;,expression},expression;},}
-
-/*---------------------------------------------------------------------------------------------------*/
-
-
-#endif
-
-
-void process_block(int* flags,int num_flags,bool _flag,std::queue<std::string> *p){
-
-	std::string instruction;
-	while(flags[START_BRACE] && !flags[END_BRACE]){	
-		//IO::mstdout << '>';
- 		//std::cin >> instruction;
-		//std::cin.clear();
-		std::getline(std::cin, instruction);
-		instruction = parse(instruction,flags,num_flags);
-		if(_flag){
-			//CMD::command(instruction.c_str(),Scope);
-			p->push(instruction	);
-			
-		}
-	}
-	return ;	
-}
+*/
+/*
+All cases covered
+Cases to consider (){},(){,expression,expression;,expression},expression;},}
+*/
