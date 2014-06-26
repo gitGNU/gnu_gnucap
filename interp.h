@@ -51,21 +51,19 @@ std::string process_block(CS& cmd,CARD_LIST* Scope,std::queue<std::string> *p,bo
 	std::string cmd_ctos,cmd_tail,instruction;
 	PARAMETER<double> condition;
 	std::string prompt = "> ";
-	cmd.get_line(prompt);
-	cmd_ctos = cmd.ctos();
-	cmd_tail = cmd.tail();
-	while(!is_symbol(cmd_ctos)){
-		instruction = cmd_ctos+" "+cmd_tail;
-		//IO::mstdout << "Instruction: " << 	instruction << "\n";	
-		if(execute){untested();
-			//p->push(instruction);	 
-			CMD::command(instruction,Scope);
-		}
+	do{
 		cmd.get_line(prompt);
 		cmd_ctos = cmd.ctos();
 		cmd_tail = cmd.tail();
+		instruction = cmd_ctos+" "+cmd_tail;
+		//IO::mstdout << "Instruction: " << 	instruction << "\n";	
+		if(execute){untested();
+			p->push(instruction);	 
+			//CMD::command(instruction,Scope);
+		}
 		
-	}
+	}while(!is_symbol(cmd_ctos));
+	
 	if(cmd_ctos == "elif"){untested();
 		cmd >> condition;
 		cmd.check(bDANGER, "syntax error");
