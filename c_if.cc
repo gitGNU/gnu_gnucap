@@ -54,11 +54,71 @@
 #include <gnucap/globals.h>
 #include <gnucap/u_parameter.h>
 #include <string>
-#include "interp.h"
 #include <queue>
+
+#define TRUE 1
+#define FALSE 0
 
 /*--------------------------------------------------------------------------*/
 namespace {
+	
+/*Function Declarations and Definitions*/
+
+std::string process_block(CS& cmd,std::queue< PARAMETER<double> >*,bool);
+bool is_symbol(std::string p);
+
+
+std::string process_block(CS& cmd,CARD_LIST* Scope,std::queue<std::string> *p,bool execute){itested();
+	/*
+	* process_block()
+	* This functions processes a complete body of if/elif/else statements and returns else/end if user inputs any of these and 
+	* in case of elif,retuens the boolean value after evaluating the condition.
+	* 
+	*/
+	std::string cmd_ctos,cmd_tail,instruction;
+	PARAMETER<double> condition;
+	std::string prompt = "> ";
+	do{
+		cmd.get_line(prompt);
+		cmd_ctos = cmd.ctos();
+		cmd_tail = cmd.tail();
+		instruction = cmd_ctos+" "+cmd_tail;
+		//IO::mstdout << "Instruction: " << 	instruction << "\n";	
+		if(execute){untested();
+			p->push(instruction);	 
+			//CMD::command(instruction,Scope);
+		}
+		
+	}while(!is_symbol(cmd_ctos));
+	
+	if(cmd_ctos == "elif"){untested();
+		cmd >> condition;
+		cmd.check(bDANGER, "syntax error");
+		condition.e_val(0.,Scope);
+		return to_string(condition!=0);
+	}
+	else{untested();
+		return cmd_ctos;
+	}	
+}
+
+
+bool is_symbol(std::string p){itested();
+	/*
+	* is_symbol()
+	* This function checks if the passed string is a logical symbol or not.later on it will be modified to look for identifiers,variablesand keywords.
+	*/
+	if(p == "else" || p == "elif"){
+		return true;
+	}
+	else if(p == "end"){
+		return true;
+	}
+	else{
+		return false;
+	}	
+	
+}
 /*--------------------------------------------------------------------------*/
 class CMD_IF : public CMD {
 public:
