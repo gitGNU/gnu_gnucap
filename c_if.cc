@@ -94,12 +94,10 @@ public:
 			symbol = process_block(cmd,Scope,&operations,!truth);
 		}
 	}
-	/*
 	while(!operations.empty()){itested();	
 			command(operations.front(), Scope);
 			operations.pop();
-		}
-	*/					
+		}					
   }
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher, "if", &p);
