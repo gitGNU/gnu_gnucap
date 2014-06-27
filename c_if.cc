@@ -104,7 +104,7 @@ std::string process_block(CS& cmd,CARD_LIST* Scope,std::queue<std::string> *p,bo
 /*--------------------------------------------------------------------------*/
 class CMD_IF : public CMD {
 public:
-  void do_it(CS& cmd, CARD_LIST* Scope){IO::mstdout << "if initiated\n";	  
+  void do_it(CS& cmd, CARD_LIST* Scope){	  
 	//Queue to store the instructions to be executed.
     std::queue<std::string> operations;
     PARAMETER<double> condition;
@@ -140,8 +140,7 @@ public:
 			cmd::cmdproc(operations.front(), Scope);
 			operations.pop();
 		}
-	*/
-	IO::mstdout << "destroying if\n";					
+	*/				
   }
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher, "if", &p);
