@@ -62,12 +62,11 @@
 /*--------------------------------------------------------------------------*/
 namespace {
 	
-/*Function Declarations and Definitions*/
+//Function Declarations
 
-std::string process_block(CS& cmd,std::queue< PARAMETER<double> >*,bool);
-bool is_symbol(std::string p);
+std::string process_block(CS& cmd,std::queue<std::string>*,bool);
 
-
+//Function Definitions
 std::string process_block(CS& cmd,CARD_LIST* Scope,std::queue<std::string> *p,bool execute){itested();
 	/*
 	* process_block()
@@ -75,21 +74,29 @@ std::string process_block(CS& cmd,CARD_LIST* Scope,std::queue<std::string> *p,bo
 	* in case of elif,retuens the boolean value after evaluating the condition.
 	* 
 	*/
-	std::string cmd_ctos,cmd_tail,instruction;
+	
+	std::string cmd_ctos;
 	PARAMETER<double> condition;
 	std::string prompt = "> ";
 	do{
 		cmd.get_line(prompt);
-		cmd_ctos = cmd.ctos();
-		cmd_tail = cmd.tail();
-		instruction = cmd_ctos+" "+cmd_tail;
-		//IO::mstdout << "Instruction: " << 	instruction << "\n";	
+		if(cmd.umatch("else")){
+			return "else";
+		}
+		else if(cmd.umatch("elif")){
+			cmd_ctos = "elif";break;
+		}
+		else if(cmd.umatch("end")){
+			return "end";
+		}else{
+		} 
+			
 		if(execute){untested();
-			p->push(instruction);	 
-			//CMD::command(instruction,Scope);
+			//p->push(cmd);	 
+			CMD::cmdproc(cmd,Scope);
 		}
 		
-	}while(!is_symbol(cmd_ctos));
+	}while(1);
 	
 	if(cmd_ctos == "elif"){untested();
 		cmd >> condition;
@@ -102,29 +109,12 @@ std::string process_block(CS& cmd,CARD_LIST* Scope,std::queue<std::string> *p,bo
 	}	
 }
 
-
-bool is_symbol(std::string p){itested();
-	/*
-	* is_symbol()
-	* This function checks if the passed string is a logical symbol or not.later on it will be modified to look for identifiers,variablesand keywords.
-	*/
-	if(p == "else" || p == "elif"){
-		return true;
-	}
-	else if(p == "end"){
-		return true;
-	}
-	else{
-		return false;
-	}	
-	
-}
 /*--------------------------------------------------------------------------*/
 class CMD_IF : public CMD {
 public:
   void do_it(CS& cmd, CARD_LIST* Scope){	  
 	//Queue to store the instructions to be executed.
-    std::queue< std::string > operations;
+    std::queue<std::string> operations;
     PARAMETER<double> condition;
     cmd >> condition;
     cmd.check(bDANGER, "syntax error");
@@ -153,11 +143,12 @@ public:
 		if(symbol == "else"){itested();
 			symbol = process_block(cmd,Scope,&operations,!truth);
 		}
-	}
+	}/*
 	while(!operations.empty()){itested();	
-			command(operations.front(), Scope);
+			cmd::cmdproc(operations.front(), Scope);
 			operations.pop();
-		}					
+		}
+	*/					
   }
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher, "if", &p);
