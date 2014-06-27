@@ -71,22 +71,24 @@ std::string process_block(CS& cmd,CARD_LIST* Scope,std::queue<std::string> *p,bo
 	/*
 	* process_block()
 	* This functions processes a complete body of if/elif/else statements and returns else/end if user inputs any of these and 
-	* in case of elif,retuens the boolean value after evaluating the condition.
+	* in case of elif,returns the boolean value after evaluating the condition.
 	* 
 	*/
 	
-	std::string cmd_ctos;
 	PARAMETER<double> condition;
 	std::string prompt = "> ";
 	do{
 		cmd.get_line(prompt);
-		if(cmd.umatch("else")){
+		if(cmd >> "else "){
 			return "else";
 		}
-		else if(cmd.umatch("elif")){
-			cmd_ctos = "elif";break;
+		else if(cmd >> "elif "){
+			cmd >> condition;
+			cmd.check(bDANGER, "syntax error");
+			condition.e_val(0.,Scope);
+			return to_string(condition!=0);
 		}
-		else if(cmd.umatch("end")){
+		else if(cmd >> "end "){
 			return "end";
 		}else{
 		} 
@@ -97,22 +99,12 @@ std::string process_block(CS& cmd,CARD_LIST* Scope,std::queue<std::string> *p,bo
 		}
 		
 	}while(1);
-	
-	if(cmd_ctos == "elif"){untested();
-		cmd >> condition;
-		cmd.check(bDANGER, "syntax error");
-		condition.e_val(0.,Scope);
-		return to_string(condition!=0);
-	}
-	else{untested();
-		return cmd_ctos;
-	}	
 }
 
 /*--------------------------------------------------------------------------*/
 class CMD_IF : public CMD {
 public:
-  void do_it(CS& cmd, CARD_LIST* Scope){	  
+  void do_it(CS& cmd, CARD_LIST* Scope){IO::mstdout << "if initiated\n";	  
 	//Queue to store the instructions to be executed.
     std::queue<std::string> operations;
     PARAMETER<double> condition;
@@ -148,7 +140,8 @@ public:
 			cmd::cmdproc(operations.front(), Scope);
 			operations.pop();
 		}
-	*/					
+	*/
+	IO::mstdout << "destroying if\n";					
   }
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher, "if", &p);
