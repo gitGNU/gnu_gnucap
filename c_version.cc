@@ -31,8 +31,10 @@ namespace {
 class CMD_VERSION : public CMD {
 public:
   void do_it(CS&, CARD_LIST*) {itested();
-    IO::mstdout <<
-    "Gnucap Version: " PATCHLEVEL "\n";//Prints the version defined in patchlev.h
+     IO::mstdout <<
+    "Gnucap : The Gnu Circuit Analysis Package\n"
+    "Main version: " PATCHLEVEL "\n"
+    "Core-lib version: " << lib_version() << "\n";  
   }
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher,"version|ver",&p);

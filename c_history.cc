@@ -33,14 +33,14 @@ class CMD_HISTORY : public CMD {
 public:
   void do_it(CS& cmd, CARD_LIST* Scope){
     itested();
-    std::string track;
+    std::string track;//variable to track the current mode of history.
     FILE *fptr;
     cmd >> track;
-    fptr=fopen("history.txt","r+");
+    fptr=fopen("history.txt","r+");//create a local file history.txt,if it does not exists.
     if(track==""){
       if(fptr!=NULL){
         system("cat history.txt");
-      }else{untested();
+      }else{itested();
         throw Exception("You haven't enabled the history mode to track the commands.\nUsage:history [mode]\n"
    				"-t        Start tracking\n"
    				"-s        Stop tracking");
@@ -52,9 +52,9 @@ public:
       "-s        Stop tracking\n";
       }   
     else if (track == "-t"){
-      CMD::command("log >> history.txt ",Scope); 
+      CMD::command("log >> history.txt ",Scope);
     }
-    else if(track == "-s" && fptr!=NULL){
+    else if(track == "-s" && fptr!=NULL){//stop tracking history.
       OS::system("rm history.txt");
       fclose(fptr);
     }      

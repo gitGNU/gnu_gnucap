@@ -44,7 +44,7 @@ public:
       start = end + delim.length();//Search for next command
       end = commands.find(delim, start);
     }
-    CMD::command(commands.substr(start, end),Scope);
+    CMD::command(commands.substr(start, end),Scope);//pass the last command to the interpreter.
   }
 }p;
 DISPATCHER<CMD>::INSTALL d3(&command_dispatcher, ":", &p);

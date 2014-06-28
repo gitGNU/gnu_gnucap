@@ -51,7 +51,7 @@ public:
     }
     IO::mstdout<<"flag="<<flag<<"\n";
     PARAM_LIST* pl = Scope->params();
-    pl->set("flag",static_cast<std::ostringstream*>( &(std::ostringstream() << flag) )->str());
+    pl->set("flag",static_cast<std::ostringstream*>( &(std::ostringstream() << flag) )->str());//set the value of flag in param list
   }
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher, "strcmp", &p);

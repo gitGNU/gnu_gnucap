@@ -131,7 +131,7 @@ public:
        _flag=1;
        //Remove the "alias" object.
        for(int i=0;objects_ptr[i]!='\0';i++){
-         if (objects_ptr[i]->get_aliasname() == _alias_name){
+         if (objects_ptr[i]->get_aliasname() == _alias_name){//get the address of aliased name and uninstall it.
            objects_ptr[i]->uninstall(i);
            _flag=0;
            break;
