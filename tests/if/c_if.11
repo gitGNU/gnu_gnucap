@@ -1,0 +1,20 @@
+load ./echo.so
+load ./if.so
+if 1
+echo if
+    if 0
+      echo 1- if
+    else
+      echo 1-else
+    end 
+elif 1
+echo elif
+    if 0
+      echo 2-if
+    else
+      echo 2-else
+    end
+else
+     echo else
+end
+exit

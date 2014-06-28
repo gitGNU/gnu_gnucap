@@ -97,6 +97,19 @@ std::string process_block(CS& cmd,CARD_LIST* Scope,std::queue<std::string> *p,bo
 			//p->push(cmd);	 
 			CMD::cmdproc(cmd,Scope);
 		}
+		else if(cmd >> "if "){
+			int if_count = 1;
+			cmd >> condition;
+			do{
+				cmd.get_line(prompt);
+				if(cmd >> "if "){
+					if_count +=1;
+				}
+				else if(cmd >> "end "){
+					if_count -=1;
+				}
+			}while(if_count!=0);
+	}
 		
 	}while(1);
 }
@@ -113,7 +126,7 @@ public:
     condition.e_val(0.,Scope);
     bool truth = condition != 0;
     new_subckt();
-
+	
 	//IF BLOCK
 	std::string symbol = process_block(cmd,Scope,&operations,truth);
 	
