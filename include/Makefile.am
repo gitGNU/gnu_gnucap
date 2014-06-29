@@ -76,3 +76,5 @@ DISTCLEANFILES = $(CLEANFILES)
 MAINTAINERCLEANFILES = $(DISTCLEANFILES)
 #------------------------------------------------------------------------
 #------------------------------------------------------------------------
+-@am__include@ ../Make2
+-@am__include@ Make2

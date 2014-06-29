@@ -40,3 +40,6 @@ gnucap_modelgen_CPPFLAGS = $(AM_CPPFLAGS) -I$(top_srcdir)/include -I$(top_buildd
 
 EXTRA_DIST= \
  Make1 Make.depend Make2.g++ Make2.Debug Make2.mingw32
+
+-@am__include@ ../Make2
+-@am__include@ Make2

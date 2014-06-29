@@ -40,3 +40,6 @@ e_elemnt.cc e_ccsrc.cc e_storag.cc e_cardlist.cc \
 bm_cond.cc bm_value.cc bm.cc \
 c__cmd.cc c_attach.cc c_file.cc \
 findbr.cc plot.cc globals.cc
+
+-@am__include@ ../Make2
+-@am__include@ Make2
