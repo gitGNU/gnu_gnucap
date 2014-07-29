@@ -24,22 +24,22 @@ CC=g++
 CFLAGS=-shared -fPIC -o
 
 all:c_alias_unalias.so \
-        c_alter.so \
-        c_aspice.so \
-        c_cls.so \
-	c_echo.so \
-	c_history.so \
-	c_mdump.so \
-	c_colon_comand.so \
-	c_quit.so \
-	c_rmcirc.so \
-        c_setv.so \
-        c_showmod.so \
-	c_shell.so \
-	c_strcmp.so \
-	c_sysinfo.so \
-        c_version.so 
-	
+		c_alter.so \
+    c_aspice.so \
+    c_cls.so \
+		c_def_undef.so \
+		c_echo.so \
+		c_history.so \
+		c_colon_comand.so \
+		c_mdump.so \
+		c_quit.so \
+		c_rmcirc.so \
+    c_setv.so \
+    c_showmod.so \
+		c_shell.so \
+		c_strcmp.so \
+		c_sysinfo.so \
+    c_version.so 
 
 c_alias_unalias.so : c_alias_unalias.cc
 	$(CC) $(CFLAGS) c_alias_unalias.so c_alias_unalias.cc
@@ -53,8 +53,8 @@ c_aspice.so : c_aspice.cc
 c_cls.so : c_cls.cc
 	$(CC) $(CFLAGS) c_cls.so c_cls.cc
 
-#c_def_undef.so : c_def_undef.cc
-#	$(CC) $(CFLAGS) c_def_undef.so c_def_undef.cc     include c_def_undef.so in all
+c_def_undef.so : c_def_undef.cc
+	$(CC) $(CFLAGS) c_def_undef.so c_def_undef.cc
 
 c_echo.so : c_echo.cc
 	$(CC) $(CFLAGS) c_echo.so c_echo.cc
@@ -62,6 +62,7 @@ c_echo.so : c_echo.cc
 c_history.so : c_history.cc
 	$(CC) $(CFLAGS) c_history.so c_history.cc
 
+#Uncomment //T&	s(int r, int c); from m_matrix.h for this plugin to compile and work. 
 c_mdump.so : c_mdump.cc
 	$(CC) $(CFLAGS) c_mdump.so c_mdump.cc
 
