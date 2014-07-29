@@ -58,7 +58,8 @@ public:
 			//Execute the body
 			typedef std::list<CARD*>::iterator iterator;
 			if (!new_module->is_empty()){	
-				for (iterator ci=new_module->begin(); ci!=new_module->end(); ++ci) {
+				while(counter!=0){
+				   for (iterator ci=new_module->begin(); ci!=new_module->end(); ++ci) {
 								//Retrieve the object at index ci;								
 								std::string ptr_command = (dynamic_cast<DEV_DOT*>(*ci))->s();
 								
@@ -74,6 +75,8 @@ public:
 								*/
 								command(ptr_command,Scope);
 				}
+				counter--;
+			}
 		}			 
 }
 }p;
