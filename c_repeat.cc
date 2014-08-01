@@ -35,22 +35,38 @@ class CMD_REPEAT : public CMD {
 public:
   void do_it(CS& cmd, CARD_LIST* Scope) {
 		//Get the number of times loop has to be repeated.
-		int counter = atoi((cmd.ctos()).c_str());
-
+		int counter = atoi((cmd.ctos()).c_str()),body_count = 1;
+		
 		//Create a CARD_LIST object to store the body of the loop.
+		new_subckt();
 		CARD_LIST new_module;;
 			 
 		//Read the body
 		cmd.get_line(">");
-		while(!(cmd >> "end ")){untested();
-			 //Create a DEV_DOT object to store the command as a string.
-			DEV_DOT* instruction = new DEV_DOT();	
+		while(body_count!=0){untested();
+			//Match the command name of all the loop and conditionals in gnucap.
+				if(cmd.umatch("repeat ") || cmd.umatch("if ")){untested();
+						body_count +=1;
+				}
+
+				else if(cmd.umatch("end ")){itested();
+						body_count -=1;
+						if(body_count!=0){itested();
+							cmd.get_line(">");
+							continue;
+						}else{untested();
+								break;
+						}
+				}
+
+				//Create a DEV_DOT object to store the command as a string.
+				DEV_DOT* instruction = new DEV_DOT();	
 				 
-			//Store the command.
-			instruction->set(cmd.fullstring());
+				//Store the command.
+				instruction->set(cmd.fullstring());
 			
-			//Insert the cloned DEV_DOT object into the list.
-			new_module.push_back(instruction->clone());
+				//Insert the cloned DEV_DOT object into the list.
+				new_module.push_back(instruction->clone());
 			
 			//Get the command.
 			cmd.get_line(">");
@@ -58,9 +74,9 @@ public:
 		}
 			
 		//Execute the body of the loop			
-		if (!new_module.is_empty()){untested();
-			while(counter>0){itested();
-				for(CARD_LIST::iterator i=new_module.begin(); i!=new_module.end(); ++i){untested();
+		if (!new_module.is_empty()){itested();
+			while(counter>0){
+				for(CARD_LIST::iterator i=new_module.begin(); i!=new_module.end(); ++i){
 					DEV_DOT* ptr_command = dynamic_cast<DEV_DOT*>(*i);
 					assert(ptr_command);
 													
@@ -70,6 +86,7 @@ public:
 				}
 				counter--;
 			}
+		}else{
 		}			 
 }
 }p;
