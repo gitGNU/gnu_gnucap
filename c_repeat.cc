@@ -50,7 +50,7 @@ public:
 			instruction->set(cmd.fullstring());
 			
 			//TODO::DEV_DOT clone() not working so directly calling the constructor for the time being.
-			CARD* ptr_comand = new DEV_DOT(*instruction);	 
+			CARD* ptr_comand = new DEV_DOT(*instruction);
 			
 			//Insert the cloned DEV_DOT object into the list.
 			new_module.push_back(ptr_comand);
@@ -67,12 +67,9 @@ public:
 					DEV_DOT* ptr_command = dynamic_cast<DEV_DOT*>(*i);
 					assert(ptr_command);
 													
-					//Construct the CS object with ptr_command as a parameter.
-					/*
-					CS cmd_str = CS(CS::_STRING,ptr_command->s());
-					cmdproc(cmd_str,Scope);
-					*/
-					command(ptr_command->s(),Scope);
+					//Assign the command to cmd.
+					cmd = ptr_command->s();
+					cmdproc(cmd,Scope);
 				}
 				counter--;
 			}
