@@ -22,22 +22,20 @@
  */
 #ifndef D_DOT_H
 #define D_DOT_H
-#include <gnucap/e_card.h>
+#include "e_card.h"
 /*--------------------------------------------------------------------------*/
 class DEV_DOT : public CARD {
 private:
   std::string	_s;
-  
+  explicit DEV_DOT(const DEV_DOT& p) :CARD(p), _s(p._s) {set_constant(true);} 
 public:
   explicit	DEV_DOT()		:CARD() {set_constant(true);}
-  CARD*		clone()const		{return new DEV_DOT(*this);}
-	explicit DEV_DOT(const DEV_DOT& p) :CARD(p), _s(p._s) {set_constant(true);} 
-
+	CARD*		clone()const		{return new DEV_DOT(*this);}
 private: // override virtual
   std::string   value_name()const	{return "";}
   char		id_letter()const	{untested();return '\0';}
   std::string	dev_type()const		{untested();return "dotcard";}
-  
+
 public:
   void set(const std::string& S) {_s = S;}
   const std::string& s()const {return _s;}

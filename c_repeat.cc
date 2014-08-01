@@ -22,7 +22,7 @@
  
 #include <gnucap/c_comand.h>
 #include <gnucap/globals.h>
-//Modified the privacy of clone() member function and copy constructor in d_dot.h
+//Modified the copy constructor in d_dot.h and privacy of clone() member function
 #include <gnucap/d_dot.h>
 #include <gnucap/e_cardlist.h>
 #include <gnucap/ap.h>
@@ -49,11 +49,8 @@ public:
 			//Store the command.
 			instruction->set(cmd.fullstring());
 			
-			//TODO::DEV_DOT clone() not working so directly calling the constructor for the time being.
-			CARD* ptr_comand = new DEV_DOT(*instruction);
-			
 			//Insert the cloned DEV_DOT object into the list.
-			new_module.push_back(ptr_comand);
+			new_module.push_back(instruction->clone());
 			
 			//Get the command.
 			cmd.get_line(">");
