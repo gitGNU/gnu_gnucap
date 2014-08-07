@@ -33,43 +33,43 @@ namespace {
 
 class dowhile{
 	public:
-	 PARAMETER<double> condition;
+		PARAMETER<double> condition;
 	private:
-	 CARD_LIST body;
+		CARD_LIST body;
 	public:
 		dowhile(PARAMETER<double> condition)
 			:condition(condition){
-			}
+		}
 		~dowhile(){
 			delete this;
-			}
+		}
 		void store(CS& ,CARD_LIST*);
 		void execute(CS&,CARD_LIST*);	
 		void free();
 };
 
-void dowhile::store(CS& cmd, CARD_LIST* Scope){untested();
-			CARD_LIST* ptr = &body;
-			store_body(cmd,ptr);
-			
+void dowhile::store(CS& cmd, CARD_LIST* Scope){itested();
+	CARD_LIST* ptr = &body;
+	store_body(cmd,ptr);			
 }
-void dowhile::execute(CS& cmd,CARD_LIST* Scope){untested();
-			if (!body.is_empty()){untested();
-				do{untested();
-					for(CARD_LIST::iterator i=body.begin(); i!=body.end(); ++i){
-						DEV_DOT* ptr_command = dynamic_cast<DEV_DOT*>(*i);
-						assert(ptr_command);									
-						std::string instruction = ptr_command->s();
-						if(instruction!="end"){untested();
-							CS& cmd_copy = cmd;
-							cmd_copy = instruction;
-							CMD::cmdproc(cmd_copy,Scope);
-						}else{untested();
+
+void dowhile::execute(CS& cmd,CARD_LIST* Scope){itested();
+	if (!body.is_empty()){untested();
+		do{itested();
+			for(CARD_LIST::iterator i=body.begin(); i!=body.end(); ++i){
+				DEV_DOT* ptr_command = dynamic_cast<DEV_DOT*>(*i);
+				assert(ptr_command);									
+				std::string instruction = ptr_command->s();
+				if(instruction!="end"){itested();
+					CS& cmd_copy = cmd;
+					cmd_copy = instruction;
+					CMD::cmdproc(cmd_copy,Scope);
+					}else{untested();
 							//break;
-						}
-					}				
-				}while(condition.e_val(0.,Scope)!=0);
-			}
+					}
+			}				
+		}while(condition.e_val(0.,Scope)!=0);
+	}
 }
 
 void dowhile::free(){
@@ -101,7 +101,7 @@ public:
 		loop->store(cmd,Scope);
 		loop->execute(cmd,Scope);
 		loop->free();		
-}
+	}
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher,"dowhile",&p);
 /*-------------------------------------------------------------------*/

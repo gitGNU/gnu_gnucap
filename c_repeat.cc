@@ -33,47 +33,49 @@ namespace {
 
 class repeat{
 	public:
-	 long int counter;
-	 CARD_LIST body;
+		long int counter;
+	private:
+	  CARD_LIST body;
+	public:
 		repeat(int counter)
 			:counter(counter){
-			}
+		}
 		~repeat(){
 			delete this;
-			}
+		}
 		void store(CS& ,CARD_LIST*);
 		void execute(CS&,CARD_LIST*);	
 		void free();
 };
 
 void repeat::store(CS& cmd, CARD_LIST* Scope){
-			CARD_LIST* ptr = &body;
-			store_body(cmd,ptr);
-			
+	CARD_LIST* ptr = &body;
+	store_body(cmd,ptr);			
 }
+
 void repeat::execute(CS& cmd,CARD_LIST* Scope){untested();
-			if (!body.is_empty()){untested();
-				while(counter!=0){untested();
-					for(CARD_LIST::iterator i=body.begin(); i!=body.end(); ++i){
-						DEV_DOT* ptr_command = dynamic_cast<DEV_DOT*>(*i);
-						assert(ptr_command);									
-						//Assign the command to cmd.
-						std::string instruction = ptr_command->s();
-						if(instruction!="end"){untested();
-							CS& cmd_copy = cmd;
-							cmd_copy = instruction;
-							CMD::cmdproc(cmd_copy,Scope);
-						}else{untested();
+	if (!body.is_empty()){untested();
+		while(counter!=0){untested();
+			for(CARD_LIST::iterator i=body.begin(); i!=body.end(); ++i){
+				DEV_DOT* ptr_command = dynamic_cast<DEV_DOT*>(*i);
+				assert(ptr_command);									
+				//Assign the command to cmd.
+				std::string instruction = ptr_command->s();
+				if(instruction!="end"){untested();
+					CS& cmd_copy = cmd;
+					cmd_copy = instruction;
+					CMD::cmdproc(cmd_copy,Scope);
+				}else{untested();
 							//break;
-						}
-					}
-					if(counter!=-1){untested();
-						counter--;
-					}
-					else{untested();
-					}					
 				}
 			}
+			if(counter!=-1){itested();
+				counter--;
+			}
+			else{untested();
+			}					
+		}
+	}
 }
 
 void repeat::free(){
@@ -108,7 +110,7 @@ public:
 		loop->store(cmd,Scope);
 		loop->execute(cmd,Scope);
 		loop->free();		
-}
+	}
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher,"repeat",&p);
 /*-------------------------------------------------------------------*/
