@@ -33,9 +33,11 @@ namespace {
 
 class repeat{
 	public:
-		long int counter;
+		long int counter;	//Variable to count the number of times loops has to be executed.
+	
 	private:
-	  CARD_LIST body;
+	  CARD_LIST body; //Body stores the complete body of the loop.
+	
 	public:
 		repeat(int counter)
 			:counter(counter){
@@ -43,8 +45,13 @@ class repeat{
 		~repeat(){
 			delete this;
 		}
+		//Function to read and store the body of loop
 		void store(CS& ,CARD_LIST*);
+		
+		//Function to execute the stores instruction in the body
 		void execute(CS&,CARD_LIST*);	
+
+		//Function to free the memory
 		void free();
 };
 
@@ -53,34 +60,30 @@ void repeat::store(CS& cmd, CARD_LIST* Scope){
 	store_body(cmd,ptr);			
 }
 
-void repeat::execute(CS& cmd,CARD_LIST* Scope){untested();
-	if (!body.is_empty()){untested();
-		while(counter!=0){untested();
-			for(CARD_LIST::iterator i=body.begin(); i!=body.end(); ++i){
-				DEV_DOT* ptr_command = dynamic_cast<DEV_DOT*>(*i);
-				assert(ptr_command);									
+void repeat::execute( CS& cmd, CARD_LIST* Scope ) { itested();
+	if ( !body.is_empty() ) { untested();
+		for( int ii=1; ii<=counter; ii++) { itested();
+			for( CARD_LIST::iterator i=body.begin(); i!=body.end(); ++i ){
+				DEV_DOT* ptr_command = dynamic_cast<DEV_DOT*>( *i );
+				assert( ptr_command );									
 				//Assign the command to cmd.
 				std::string instruction = ptr_command->s();
-				if(instruction!="end"){untested();
+				if( instruction != "end" ){ itested();
 					CS& cmd_copy = cmd;
 					cmd_copy = instruction;
 					CMD::cmdproc(cmd_copy,Scope);
-				}else{untested();
-							//break;
+				}else{ untested();
 				}
 			}
-			if(counter!=-1){itested();
-				counter--;
-			}
-			else{untested();
+			else{ untested();
 			}					
 		}
 	}
 }
 
 void repeat::free(){
-	for(CARD_LIST::iterator i=(this->body).begin(); i!=(this->body).end(); ++i){
-		DEV_DOT* ptr_command = dynamic_cast<DEV_DOT*>(*i);
+	for( CARD_LIST::iterator i=(this->body).begin(); i!=(this->body).end(); ++i ){
+		DEV_DOT* ptr_command = dynamic_cast<DEV_DOT*>( *i );
 		assert(ptr_command);
 		delete ptr_command;
 	}
@@ -89,20 +92,22 @@ void repeat::free(){
 
 class CMD_REPEAT : public CMD {
 public:
-  void do_it(CS& cmd, CARD_LIST* Scope) {
+  void do_it( CS& cmd, CARD_LIST* Scope ) {
+		
+		long int counter;		
 		//Get the number of times loop has to be repeated.If no paramter is passed execute infinite times.
-		long int counter;
 		
 		//Set counter such that loop runs infinite times
-		if(cmd.umatch(" ")){untested();
-			counter = -1;
+		if( cmd.umatch(" ") ){ untested();
+			counter = -1;//Infinite loop;
 		}
+
 		//Set counter such that loop runs finite times
-		else{untested();
-			counter = atoi((cmd.ctos()).c_str());	
-			if(counter<0){untested();	
+		else{ untested();
+			counter = atoi( (cmd.ctos()).c_str() );	
+			if( counter<0 ){ untested();	
 				throw Exception("repeat command takes only non-negative values of counter");
-			}else{untested();
+			}else{ untested();
 			}		
 		}
 		
