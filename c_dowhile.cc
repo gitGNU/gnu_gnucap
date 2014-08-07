@@ -1,4 +1,4 @@
-/*$Id: c_while.cc,v 26.138 2014/08/07 10:28:00 al Exp $ -*- C++ -*-
+/*$Id: c_dowhile.cc,v 26.138 2014/08/07 11:30:00 al Exp $ -*- C++ -*-
  * Copyright (C) 2014 Rishabh Yadav
  * Author: Rishabh Yadav <rishabh.ece.iitbhu@gmail.com>
  *
@@ -31,16 +31,16 @@
 namespace {
 /*-------------------------------------------------------------------*/
 
-class _while{
+class dowhile{
 	public:
 	 PARAMETER<double> condition;
 	private:
 	 CARD_LIST body;
 	public:
-		_while(PARAMETER<double> condition)
+		dowhile(PARAMETER<double> condition)
 			:condition(condition){
 			}
-		~_while(){
+		~dowhile(){
 			delete this;
 			}
 		void store(CS& ,CARD_LIST*);
@@ -48,14 +48,14 @@ class _while{
 		void free();
 };
 
-void _while::store(CS& cmd, CARD_LIST* Scope){untested();
+void dowhile::store(CS& cmd, CARD_LIST* Scope){untested();
 			CARD_LIST* ptr = &body;
 			store_body(cmd,ptr);
 			
 }
-void _while::execute(CS& cmd,CARD_LIST* Scope){untested();
+void dowhile::execute(CS& cmd,CARD_LIST* Scope){untested();
 			if (!body.is_empty()){untested();
-				while(condition.e_val(0.,Scope)!=0){untested();
+				do{untested();
 					for(CARD_LIST::iterator i=body.begin(); i!=body.end(); ++i){
 						DEV_DOT* ptr_command = dynamic_cast<DEV_DOT*>(*i);
 						assert(ptr_command);									
@@ -68,11 +68,11 @@ void _while::execute(CS& cmd,CARD_LIST* Scope){untested();
 							//break;
 						}
 					}				
-				}
+				}while(condition.e_val(0.,Scope)!=0);
 			}
 }
 
-void _while::free(){
+void dowhile::free(){
 	for(CARD_LIST::iterator i=(this->body).begin(); i!=(this->body).end(); ++i){
 		DEV_DOT* ptr_command = dynamic_cast<DEV_DOT*>(*i);
 		assert(ptr_command);
@@ -81,7 +81,7 @@ void _while::free(){
 }
 	
 
-class CMD_WHILE : public CMD {
+class CMD_DOWHILE : public CMD {
 public:
   void do_it(CS& cmd, CARD_LIST* Scope) {
 		
@@ -90,20 +90,21 @@ public:
 		
 		//If no "condition" is given by the user
 		if(cmd.umatch(" ")){untested();
-			throw Exception("while command requires an expression as its input.");
+			throw Exception("dowhile command requires an expression as its input.");
 		}
 		
 		//Get the condition. 
 		else{untested();
 			cmd >> condition;
 		}
-		_while* loop = new _while(condition);
+		dowhile* loop = new dowhile(condition);
 		loop->store(cmd,Scope);
 		loop->execute(cmd,Scope);
 		loop->free();		
 }
 }p;
-DISPATCHER<CMD>::INSTALL d(&command_dispatcher,"while",&p);
+DISPATCHER<CMD>::INSTALL d(&command_dispatcher,"dowhile",&p);
 /*-------------------------------------------------------------------*/
 }
+
 
