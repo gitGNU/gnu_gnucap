@@ -34,13 +34,13 @@ namespace {
 class repeat{
 	public:
 		long int counter;	//Variable to count the number of times loops has to be executed.
-	
+		bool infinite;
 	private:
 	  CARD_LIST body; //Body stores the complete body of the loop.
-	
+		
 	public:
-		repeat(int counter)
-			:counter(counter){
+		repeat(int _counter,bool _infinite)
+			:counter(_counter),infinite(_infinite){
 		}
 		~repeat(){
 			delete this;
@@ -62,26 +62,28 @@ void repeat::store(CS& cmd, CARD_LIST* Scope){
 
 void repeat::execute( CS& cmd, CARD_LIST* Scope ) { itested();
 	if ( !body.is_empty() ) { untested();
-		for( int ii=1; ii<=counter; ii++) { itested();
+		for( int ii=1; ii<=counter || infinite; ii++) { itested();
+			//Iterate over all the stored instructions in given CARD_LIST
 			for( CARD_LIST::iterator i=body.begin(); i!=body.end(); ++i ){
+				//Cast the stored CARD_LIST* type object to DEV_DOT object			
 				DEV_DOT* ptr_command = dynamic_cast<DEV_DOT*>( *i );
 				assert( ptr_command );									
-				//Assign the command to cmd.
+				//Extract the instruction string				
 				std::string instruction = ptr_command->s();
+				//Bypass the execution if instruction is "end" else continue
 				if( instruction != "end" ){ itested();
 					CS& cmd_copy = cmd;
 					cmd_copy = instruction;
 					CMD::cmdproc(cmd_copy,Scope);
 				}else{ untested();
 				}
-			}
-			else{ untested();
 			}					
 		}
 	}
 }
 
 void repeat::free(){
+	//Iterate over all the objects in CARD_LIST and delete them.
 	for( CARD_LIST::iterator i=(this->body).begin(); i!=(this->body).end(); ++i ){
 		DEV_DOT* ptr_command = dynamic_cast<DEV_DOT*>( *i );
 		assert(ptr_command);
@@ -94,24 +96,28 @@ class CMD_REPEAT : public CMD {
 public:
   void do_it( CS& cmd, CARD_LIST* Scope ) {
 		
-		long int counter;		
-		//Get the number of times loop has to be repeated.If no paramter is passed execute infinite times.
-		
+		long int counter;	
+		bool infinite;	
+		//Get the number of times loop has to be repeated.If no paramter is passed,execute infinite times.
 		//Set counter such that loop runs infinite times
 		if( cmd.umatch(" ") ){ untested();
-			counter = -1;//Infinite loop;
+			//Infinite loop;
+			counter = -1;
+			infinite = true;
 		}
 
 		//Set counter such that loop runs finite times
 		else{ untested();
 			counter = atoi( (cmd.ctos()).c_str() );	
+			infinite = false;
 			if( counter<0 ){ untested();	
 				throw Exception("repeat command takes only non-negative values of counter");
 			}else{ untested();
 			}		
 		}
 		
-		repeat* loop = new repeat(counter);
+		//Create a loop object,store the body and then execute the instructions
+		repeat* loop = new repeat(counter,infinite);
 		loop->store(cmd,Scope);
 		loop->execute(cmd,Scope);
 		loop->free();		
