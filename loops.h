@@ -8,7 +8,7 @@ void store_body(CS& cmd, CARD_LIST* body){
 				cmd.get_line("> ");
 			
 				//Match the command name of all the loop and conditionals in gnucap.
-				if(cmd.umatch("repeat ") || cmd.umatch("for " || cmd.umatch("dowhile") || cmd.umatch("while ") || cmd.umatch("if "))){untested();
+				if(cmd.umatch("repeat ") || cmd.umatch("for ") || cmd.umatch("dowhile") || cmd.umatch("while ") || cmd.umatch("if ")){untested();
 					start+=1;
 				}
 				else if(cmd.umatch("end ")){untested();
