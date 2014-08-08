@@ -30,7 +30,7 @@
 /*-------------------------------------------------------------------*/
 namespace {
 /*-------------------------------------------------------------------*/
-
+//Declaration
 class repeat{
 	public:
 		long int counter;	//Variable to count the number of times loops has to be executed.
@@ -46,18 +46,19 @@ class repeat{
 			delete this;
 		}
 		//Function to read and store the body of loop
-		void store(CS& ,CARD_LIST*);
+		void store( CS&, CARD_LIST* );
 		
-		//Function to execute the stores instruction in the body
-		void execute(CS&,CARD_LIST*);	
+		//Function to execute the instruction stored in the body
+		void execute( CS&, CARD_LIST* );	
 
 		//Function to free the memory
 		void free();
 };
-
-void repeat::store(CS& cmd, CARD_LIST* Scope){
+/*-------------------------------------------------------------------*/
+//Function definitions
+void repeat::store( CS& cmd, CARD_LIST* Scope ){
 	CARD_LIST* ptr = &body;
-	store_body(cmd,ptr);			
+	store_body( cmd, ptr );			
 }
 
 void repeat::execute( CS& cmd, CARD_LIST* Scope ) { itested();
@@ -90,7 +91,7 @@ void repeat::free(){
 		delete ptr_command;
 	}
 }
-	
+/*-------------------------------------------------------------------*/
 
 class CMD_REPEAT : public CMD {
 public:

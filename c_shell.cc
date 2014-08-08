@@ -1,5 +1,5 @@
 /*$Id: c_shell.cc,v 26.133 2013/07/01 06:00:04 al Exp $ -*- C++ -*-
- * Copyright (C) 2013 Rishabh Yadav
+ * Copyright (C) 2014 Rishabh Yadav
  * Author: Rishabh Yadav <rishabh.ece.iitbhu@gmail.com>
  *
  * This file is part of "Gnucap", the Gnu Circuit Analysis Package
@@ -24,16 +24,18 @@
 //testing script = 2013.09.11
 #include <gnucap/c_comand.h>
 #include <gnucap/globals.h>
+
 /*--------------------------------------------------------------------------*/
 namespace {
 /*--------------------------------------------------------------------------*/
 class CMD_SHELL : public CMD {
 public:
-  void do_it(CS& cmd, CARD_LIST*){
-    if (cmd.more()){itested();
-      OS::system(cmd.tail());//Pass command to the shell.
+  void do_it(CS& cmd, CARD_LIST*)
+  {itested();
+    if (cmd.more()) {itested();
+      OS::system(cmd.tail());
     }else{
-      OS::system(SHELL);//Call shell
+      OS::system(SHELL);
     }
   }
 }p;
