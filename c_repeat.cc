@@ -20,6 +20,7 @@
  * 02110-1301, USA.
  *------------------------------------------------------------------*/
 //testing = script 2014.08.10 
+
 #include <gnucap/c_comand.h>
 #include <gnucap/globals.h>
 //Modified the copy constructor in d_dot.h and privacy of clone() member function
@@ -119,9 +120,14 @@ public:
 		
 		//Create a loop object,store the body and then execute the instructions
 		repeat* loop = new repeat(counter,infinite);
-		loop->store(cmd,Scope);
-		loop->execute(cmd,Scope);
-		loop->free();		
+    if(!loop){untested();
+			throw Exception("Not enough memory available");
+		}
+    else{itested();
+			loop->store(cmd,Scope);
+			loop->execute(cmd,Scope);
+			loop->free();
+		}		
 	}
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher,"repeat",&p);

@@ -74,7 +74,7 @@ void _while::execute( CS& cmd, CARD_LIST* Scope ){itested();
 				std::string instruction = ptr_command->s();
 				
 				//bypass the execution if instruction is "end". 
-				if( instruction!="end" ){untested();
+				if( instruction!="end " ){itested();
 					CS& cmd_copy = cmd;
 					cmd_copy = instruction;
 					CMD::cmdproc( cmd_copy, Scope );
@@ -82,12 +82,13 @@ void _while::execute( CS& cmd, CARD_LIST* Scope ){itested();
 				}
 			}				
 		}
+	}else{itested();
 	}
 }
 
-void _while::free(){
+void _while::free(){itested();
 	//Free the pointer of all the stored objects from CARD_LIST(body).
-	for( CARD_LIST::iterator i=( this->body ).begin(); i!=(this->body).end(); ++i ){
+	for( CARD_LIST::iterator i=( this->body ).begin(); i!=(this->body).end(); ++i ){itested();
 		DEV_DOT* ptr_command = dynamic_cast<DEV_DOT*>( *i );
 		assert(ptr_command);
 		delete ptr_command;
@@ -102,22 +103,27 @@ public:
 		PARAMETER<double> condition;
 		
 		//If no "condition" is given by the user
-		if(cmd.umatch(" ")){untested();
+		if(cmd.umatch(" ")){itested();
 			throw Exception("while command requires an expression as its input.");
 		}
 		
 		//Get the condition. 
-		else{untested();
+		else{itested();
 			cmd >> condition;
 		}
 		//Initialise a "while" object and get the pointer to that object in "loop".
 		_while* loop = new _while( condition );
-		//Store the body.
-		loop->store( cmd, Scope );
-		//Exeute the stored commands.
-		loop->execute( cmd, Scope );
-		//Free the dynamically allocated memory.
-		loop->free();		
+		if(!loop){untested();
+			throw Exception("Not enough memory available");
+		}
+		else{itested();	
+			//Store the body.
+			loop->store( cmd, Scope );
+			//Exeute the stored commands.
+			loop->execute( cmd, Scope );
+			//Free the dynamically allocated memory.
+			loop->free();		
+	  }
 	}
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher,"while",&p);
