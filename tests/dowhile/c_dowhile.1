@@ -1,0 +1,11 @@
+load ./echo.so
+load ./dowhile.so
+echo testing dowhile command
+param a=5
+dowhile a>0
+echo new iteration
+eval(a)
+echo after decrement
+measure a eval(a-1)
+end
+exit

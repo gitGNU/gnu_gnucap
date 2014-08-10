@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  *------------------------------------------------------------------*/
- 
+ //testing = script 2014.08.10
 #include <gnucap/c_comand.h>
 #include <gnucap/globals.h>
 #include <gnucap/d_dot.h>
@@ -66,7 +66,7 @@ void dowhile::store( CS& cmd, CARD_LIST* Scope ){itested();
 
 void dowhile::execute( CS& cmd, CARD_LIST* Scope ){itested();
 	//Check if the body is not empty.
-	if ( !body.is_empty() ){untested();
+	if ( !body.is_empty() ){itested();
 		do{itested();
 			for( CARD_LIST::iterator i=body.begin(); i!=body.end(); ++i ){
 				
@@ -78,18 +78,19 @@ void dowhile::execute( CS& cmd, CARD_LIST* Scope ){itested();
 				std::string instruction = ptr_command->s();
 	
 				//bypass the execution if instruction is "end". 
-				if( instruction!="end" ){itested();
+				if( instruction!="end " ){itested();
 					CS& cmd_copy = cmd;
 					cmd_copy = instruction;
 					CMD::cmdproc( cmd_copy, Scope );
-					}else{untested();
+					}else{itested();
 					}
 			}				
 		}while( condition.e_val(0.,Scope)!=0 );
+	}else{itested();
 	}
 }
 
-void dowhile::free(){
+void dowhile::free(){itested();
 	//Free the pointer of all the stored objects from CARD_LIST(body).
 	for( CARD_LIST::iterator i=(this->body).begin(); i!=(this->body).end(); ++i ){
 		DEV_DOT* ptr_command = dynamic_cast<DEV_DOT*>( *i );
@@ -107,22 +108,27 @@ public:
 		PARAMETER<double> condition;
 		
 		//If no "condition" is given by the user
-		if(cmd.umatch(" ")){untested();
+		if(cmd.umatch(" ")){itested();
 			throw Exception("dowhile command requires an expression as its input.");
 		}
 		
 		//Get the condition. 
-		else{untested();
+		else{itested();
 			cmd >> condition;
 		}
 		//Initialise a "dowhile" object and get the pointer in "loop".
 		dowhile* loop = new dowhile(condition);
-		//Store the body.
-		loop->store( cmd, Scope );
-		//Exeute the stored commands.
-		loop->execute( cmd, Scope );
-		//Free the dynamically allocated memory.
-		loop->free();		
+		if(!loop){untested();
+			throw Exception("Not enough memory available");
+		}
+		else{
+			//Store the body.
+			loop->store( cmd, Scope );
+			//Exeute the stored commands.
+			loop->execute( cmd, Scope );
+			//Free the dynamically allocated memory.
+			loop->free();		
+		}  
 	}
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher,"dowhile",&p);

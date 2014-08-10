@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  *------------------------------------------------------------------*/
- 
+ //testing = script 2014.08.10 
 #include <gnucap/c_comand.h>
 #include <gnucap/globals.h>
 #include <gnucap/d_dot.h>

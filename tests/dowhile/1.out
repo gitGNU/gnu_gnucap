@@ -1,0 +1,21 @@
+testing dowhile command 
+new iteration 
+a= 5.
+after decrement 
+a= 4.
+new iteration 
+a= 4.
+after decrement 
+a= 3.
+new iteration 
+a= 3.
+after decrement 
+a= 2.
+new iteration 
+a= 2.
+after decrement 
+a= 1.
+new iteration 
+a= 1.
+after decrement 
+a= 0.
