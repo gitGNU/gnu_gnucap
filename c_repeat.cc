@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  *------------------------------------------------------------------*/
- 
+//testing = script 2014.08.10 
 #include <gnucap/c_comand.h>
 #include <gnucap/globals.h>
 //Modified the copy constructor in d_dot.h and privacy of clone() member function
@@ -56,13 +56,13 @@ class repeat{
 };
 /*-------------------------------------------------------------------*/
 //Function definitions
-void repeat::store( CS& cmd, CARD_LIST* Scope ){
+void repeat::store( CS& cmd, CARD_LIST* Scope ){itested();
 	CARD_LIST* ptr = &body;
 	store_body( cmd, ptr );			
 }
 
 void repeat::execute( CS& cmd, CARD_LIST* Scope ) { itested();
-	if ( !body.is_empty() ) { untested();
+	if ( !body.is_empty() ) { itested();
 		for( int ii=1; ii<=counter || infinite; ii++) { itested();
 			//Iterate over all the stored instructions in given CARD_LIST
 			for( CARD_LIST::iterator i=body.begin(); i!=body.end(); ++i ){
@@ -72,7 +72,7 @@ void repeat::execute( CS& cmd, CARD_LIST* Scope ) { itested();
 				//Extract the instruction string				
 				std::string instruction = ptr_command->s();
 				//Bypass the execution if instruction is "end" else continue
-				if( instruction != "end" ){ itested();
+				if( instruction != "end " ){ itested();
 					CS& cmd_copy = cmd;
 					cmd_copy = instruction;
 					CMD::cmdproc(cmd_copy,Scope);
@@ -85,7 +85,7 @@ void repeat::execute( CS& cmd, CARD_LIST* Scope ) { itested();
 
 void repeat::free(){
 	//Iterate over all the objects in CARD_LIST and delete them.
-	for( CARD_LIST::iterator i=(this->body).begin(); i!=(this->body).end(); ++i ){
+	for( CARD_LIST::iterator i=(this->body).begin(); i!=(this->body).end(); ++i ){itested();
 		DEV_DOT* ptr_command = dynamic_cast<DEV_DOT*>( *i );
 		assert(ptr_command);
 		delete ptr_command;
@@ -101,19 +101,19 @@ public:
 		bool infinite;	
 		//Get the number of times loop has to be repeated.If no paramter is passed,execute infinite times.
 		//Set counter such that loop runs infinite times
-		if( cmd.umatch(" ") ){ untested();
+		if( cmd.umatch(" ") ){ itested();
 			//Infinite loop;
 			counter = -1;
 			infinite = true;
 		}
 
 		//Set counter such that loop runs finite times
-		else{ untested();
+		else{itested();
 			counter = atoi( (cmd.ctos()).c_str() );	
 			infinite = false;
-			if( counter<0 ){ untested();	
+			if( counter<0 ){ itested();	
 				throw Exception("repeat command takes only non-negative values of counter");
-			}else{ untested();
+			}else{ itested();
 			}		
 		}
 		
