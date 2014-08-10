@@ -1,0 +1,4 @@
+testing foreach command
+foreach command requires a variable and range of values that variable can take.
+Syntax: foreach var m:n
+

@@ -78,12 +78,12 @@ void dowhile::execute( CS& cmd, CARD_LIST* Scope ){itested();
 				std::string instruction = ptr_command->s();
 	
 				//bypass the execution if instruction is "end". 
-				if( instruction!="end " ){itested();
+				if(instruction == "end" || instruction == "end "){itested();						
+				}else{itested();
 					CS& cmd_copy = cmd;
 					cmd_copy = instruction;
-					CMD::cmdproc( cmd_copy, Scope );
-					}else{itested();
-					}
+					CMD::cmdproc(cmd_copy,Scope);
+				}
 			}				
 		}while( condition.e_val(0.,Scope)!=0 );
 	}else{itested();

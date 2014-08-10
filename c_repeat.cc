@@ -73,11 +73,11 @@ void repeat::execute( CS& cmd, CARD_LIST* Scope ) { itested();
 				//Extract the instruction string				
 				std::string instruction = ptr_command->s();
 				//Bypass the execution if instruction is "end" else continue
-				if( instruction != "end " ){ itested();
+				if(instruction == "end" || instruction == "end "){itested();						
+				}else{itested();
 					CS& cmd_copy = cmd;
 					cmd_copy = instruction;
 					CMD::cmdproc(cmd_copy,Scope);
-				}else{ untested();
 				}
 			}					
 		}

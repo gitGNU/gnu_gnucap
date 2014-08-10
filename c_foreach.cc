@@ -52,7 +52,7 @@ class foreach{
 		void store( CS&, CARD_LIST* );
 		
 		//Function to execute the instructions stored in the body
-		void execute( CS&, CARD_LIST*, std::vector<int> );
+		void execute( CS&, CARD_LIST*, int, int );
 
 		//Function to free the memory	
 		void free();
@@ -66,11 +66,11 @@ void foreach::store( CS& cmd, CARD_LIST* Scope ){itested();
 	store_body(cmd,ptr);			
 }
 
-void foreach::execute( CS& cmd, CARD_LIST* Scope, std::vector<int> range ){itested();
+void foreach::execute( CS& cmd, CARD_LIST* Scope, int first,int last ){itested();
 	//Check if the body is not empty.
 	if (!body.is_empty()){itested();
-		int len = range.size(),j; 
-			for(j=0;j<len;j++){
+		int j; 
+			for(j=first;j<=last;j++){itested();
 				for( CARD_LIST::iterator i=body.begin(); i!=body.end(); ++i ){
 					//Retrieve the pointer to stored object and dynamically cast it into DEV_DOT* type pointer.	
 					DEV_DOT* ptr_command = dynamic_cast<DEV_DOT*>(*i);
@@ -79,24 +79,25 @@ void foreach::execute( CS& cmd, CARD_LIST* Scope, std::vector<int> range ){itest
 					
 					//Substitue $var by the value in "var".
 					std::string search = "$"+variable;
-					std::string rep = to_string(range[j]);
+					std::string rep = to_string(j);
 					if( instruction.find(search) ){itested();
 						replace(instruction,search,rep);
 					}
 				
 					//bypass the execution if instruction is "end".
-					if(instruction!="end"){itested();
+					if(instruction == "end" || instruction == "end "){itested();						
+					}else{itested();
 						CS& cmd_copy = cmd;
 						cmd_copy = instruction;
 						CMD::cmdproc(cmd_copy,Scope);
-					}else{itested();
 					}
 				}				
 			}
-	}
+	}else{itested();
+  }
 }
 
-void foreach::replace( std::string &s, const std::string &search, const std::string &replace ) {
+void foreach::replace( std::string &s, const std::string &search, const std::string &replace ) {itested();
 	for(size_t pos = 0; ; pos += replace.length()){
 		pos = s.find( search, pos );
 		if( pos == std::string::npos ) break;
@@ -106,7 +107,7 @@ void foreach::replace( std::string &s, const std::string &search, const std::str
 }
 
 //Free the pointer of all the stored objects from CARD_LIST(body).
-void foreach::free(){
+void foreach::free(){itested();
 	for(CARD_LIST::iterator i=(this->body).begin(); i!=(this->body).end(); ++i){
 		DEV_DOT* ptr_command = dynamic_cast<DEV_DOT*>(*i);
 		assert(ptr_command);
@@ -121,7 +122,6 @@ public:
   void do_it(CS& cmd, CARD_LIST* Scope) {
 		std::string variable;
 		int first,last;
-		std::vector<int> range(10);//range is a vector which stores the values which "var" is supposed to take.
 		
 		//If no range and variable name is given by the user
 		if(cmd.umatch(" ")){itested();
@@ -131,22 +131,21 @@ public:
 		else{itested();
 			//Fil the values given by the user into appropriate variables
 			cmd >> variable >> first >> ":" >> last;
-			range.resize(last-first+1);//Resize the length of vector
-			//Fill the range from values "first" to "last"
-			for(int i=first;i<=last;i++){
-				range[i-first] = i;
-			}
+		}
 	
-			//Initialise a "foreach" object and get the pointer in "loop".
-			foreach* loop = new foreach(variable);
+		//Initialise a "foreach" object and get the pointer in "loop".
+		foreach* loop = new foreach(variable);
+    if(!loop){untested();
+			throw Exception("Not enough memory available");
+		}else{itested();
 			//Store the body.
 			loop->store(cmd,Scope);
 			//Exeute the stored commands.
-			loop->execute(cmd,Scope,range);
+			loop->execute(cmd,Scope,first,last);
 			//Free the dynamically allocated memory.
 			loop->free();
-		}	
-	}
+		}
+	}	
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher,"foreach",&p);
 /*-------------------------------------------------------------------*/
