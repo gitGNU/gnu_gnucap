@@ -40,9 +40,6 @@ class _while{
 		_while(PARAMETER<double> condition)
 			:condition( condition ){
 		}
-		~_while(){
-			delete this;
-		}
 		//Function to read and store the body of loop
 		void store( CS&, CARD_LIST*);
 
@@ -87,12 +84,7 @@ void _while::execute( CS& cmd, CARD_LIST* Scope ){itested();
 }
 
 void _while::free(){itested();
-	//Free the pointer of all the stored objects from CARD_LIST(body).
-	for( CARD_LIST::iterator i=( this->body ).begin(); i!=(this->body).end(); ++i ){itested();
-		DEV_DOT* ptr_command = dynamic_cast<DEV_DOT*>( *i );
-		assert(ptr_command);
-		delete ptr_command;
-	}
+	body.erase_all();
 }
 	
 /*-------------------------------------------------------------------*/
@@ -112,18 +104,17 @@ public:
 			cmd >> condition;
 		}
 		//Initialise a "while" object and get the pointer to that object in "loop".
-		_while* loop = new _while( condition );
-		if(!loop){untested();
-			throw Exception("Not enough memory available");
-		}
-		else{itested();	
-			//Store the body.
-			loop->store( cmd, Scope );
-			//Exeute the stored commands.
-			loop->execute( cmd, Scope );
-			//Free the dynamically allocated memory.
-			loop->free();		
-	  }
+		_while loop( condition );	
+		
+		//Store the body.
+		loop.store( cmd, Scope );
+			
+		//Exeute the stored commands.
+		loop.execute( cmd, Scope );
+			
+		//Free the dynamically allocated memory.
+		loop.free();		
+
 	}
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher,"while",&p);

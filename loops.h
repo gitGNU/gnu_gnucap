@@ -42,13 +42,13 @@ void store_body( CS& cmd, CARD_LIST* body ){itested();
 		}
 						
 		//Create a DEV_DOT object to store the command as a string.
-		DEV_DOT* instruction = new DEV_DOT();	
+		DEV_DOT instruction;
 				 
 		//Store the command.
-		instruction->set(cmd.fullstring());
+		instruction.set(cmd.fullstring());
 			
 		//Insert the cloned DEV_DOT object into the list.
-		body->push_back(instruction->clone());			
+		body->push_back(instruction.clone());			
 			
 		}
 }
