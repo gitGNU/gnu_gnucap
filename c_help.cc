@@ -1,6 +1,6 @@
-/*$Id: c_help.cc,v 26.138 2014/03/15 01:53:23 al Exp $ -*- C++ -*-
- * Copyright (C) 2013 Rishabh Yadav
- * Author: Rishabh Yadav <rishabh.ece.iitbhu@gmail.com>
+/*$Id: c_help.cc 2014/08/09 al $ -*- C++ -*-
+ * Copyright (C) 2014 Albert Davis
+ * Author: Albert Davis <aldavis@gnu.org>
  *
  * This file is part of "Gnucap", the Gnu Circuit Analysis Package
  *
@@ -18,54 +18,84 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
- *------------------------------------------------------------------*/
-#include <gnucap/c_comand.h>
-#include <gnucap/globals.h>
-#include <fstream> 
-/*-------------------------------------------------------------------*/
+ *------------------------------------------------------------------
+ */
+//testing=informal
+#include "gnucap/l_dispatcher.h"
+#include "gnucap/c_comand.h"
+#include "gnucap/globals.h"
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 namespace {
-/*-------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
+  static DISPATCHER<CKT_BASE>* dispatchers[] = {
+    reinterpret_cast<DISPATCHER<CKT_BASE>*>(&help_dispatcher),
+    reinterpret_cast<DISPATCHER<CKT_BASE>*>(&bm_dispatcher),
+    reinterpret_cast<DISPATCHER<CKT_BASE>*>(&function_dispatcher),
+    reinterpret_cast<DISPATCHER<CKT_BASE>*>(&measure_dispatcher),
+    reinterpret_cast<DISPATCHER<CKT_BASE>*>(&model_dispatcher),
+    reinterpret_cast<DISPATCHER<CKT_BASE>*>(&device_dispatcher),
+    reinterpret_cast<DISPATCHER<CKT_BASE>*>(&language_dispatcher),
+    reinterpret_cast<DISPATCHER<CKT_BASE>*>(&command_dispatcher),
+    reinterpret_cast<DISPATCHER<CKT_BASE>*>(&status_dispatcher),
+    reinterpret_cast<DISPATCHER<CKT_BASE>*>(&probe_dispatcher),
+    NULL };
+  // the order here determines the search order
+  //BUG// reinterpret_cast is needed because there is not a common base class
+  // but they really are all the same.  Fix is needed to provide one in l_dispatcher.h.
+/*--------------------------------------------------------------------------*/
 class CMD_HELP : public CMD {
 public:
-  void do_it(CS& Cmd, CARD_LIST*) {
-		//If no command is passed as an argument
-		if(Cmd.tail()==""){
-			throw Exception("Usage: help [command]");
-		}
-		std::string file_name = "c_"+Cmd.tail()+".cc";//Generate concerned file name using the command name which is enquired.
-		std::string line;
-		std::ifstream file;
-		
-		//Open the file with filename in the "current directory".
-		file.open(file_name.c_str(),std::ios::out);
-		if(file.is_open()){
-<<<<<<< HEAD
-			while(getline(file,line) && line.find("Plugin Manual")==std::string::npos);//Search for the line "Plugin Manual".
-=======
-			while(getline(file,line) && line.find("<Plugin Manual>")==std::string::npos);//Search for the line "Plugin Manual".
->>>>>>> 885ea50882b58deda6d9a94cbd32a5dd294b5cf4
+  void do_it(CS& Cmd, CARD_LIST*)
+  {
+    std::string topic;
+    Cmd >> topic;
 
-			//If no manual is dpecified by the developer.			
-			if(line==""){																																																			
-				throw Exception("No manual entry found.Refer GNUcap Manual or contact gnucap-devel.");
-			}
-
-<<<<<<< HEAD
-			while(getline(file,line) && line.find("End")==std::string::npos){//Find the End marker.
-=======
-			while(getline(file,line) && line.find("<End>")==std::string::npos){//Find the End marker.
->>>>>>> 885ea50882b58deda6d9a94cbd32a5dd294b5cf4
-				IO::mstdout << line << '\n';
-				}
-		}
-
-		else{																											//If there is a problem opening c_command.cc
-			IO::mstdout << "No entry matching "<<Cmd.tail()<<" found.\nPlease check Gnucap Manual or contact gnucap-devel for more info on "\
-			<<Cmd.tail()<<'\n';
-		}		
-		
+    bool did_something = false;
+    unsigned here = Cmd.cursor();
+    for (DISPATCHER<CKT_BASE>** ii = dispatchers; *ii; ++ii) {
+      CKT_BASE* object = (**ii)[topic];
+      if (object) {
+	   		did_something = true;
+	 			//BUG// help in in CKT_BASE needs to be changed to return bool
+	 			// where true means it actually did something
+				object->help(Cmd, IO::mstdout);
+      }else{
+	 			// nothing, it's ok
+      }
+      Cmd.reset(here);
+    }
+    if (!did_something) {
+      Cmd.warn(bWARNING, here, "no help on " + topic);
+    }else{
+    }
   }
-}p;
-DISPATCHER<CMD>::INSTALL d(&command_dispatcher,"help",&p);
-/*-------------------------------------------------------------------*/
+  
+  CS& help_text()const
+  {
+    static CS ht(CS::_STRING,
+	      "help command\n"
+	      "Provides help on a variety of topics\n"
+	      "Syntax: help topic\n"
+	      "In some cases, help on subtopics is available\n"
+	      "Syntax: help topic subtopic\n\n"
+	      "@@nuts\n"
+	      "help nuts\n\n"
+	      "@@eggs\n"
+	      "help eggs\n\n");
+    return ht;
+  }
+
+  void help(CS& Cmd, OMSTREAM& Out)const
+  {
+    std::string keyword;
+    Cmd >> keyword;
+    Out << help_text().reset().scan("@@" + keyword + ' ').get_to("@@");
+    //return true;
+  }
+} p0;
+DISPATCHER<CMD>::INSTALL d0(&command_dispatcher, "help", &p0);
+/*--------------------------------------------------------------------------*/
 }
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
