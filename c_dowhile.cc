@@ -44,9 +44,6 @@ class dowhile{
 		dowhile(PARAMETER<double> condition)
 			:condition( condition ){
 		}
-		~dowhile(){
-			delete this;
-		}
 
 		//Function to read and store the body of loop
 		void store( CS&, CARD_LIST* );
@@ -91,12 +88,7 @@ void dowhile::execute( CS& cmd, CARD_LIST* Scope ){itested();
 }
 
 void dowhile::free(){itested();
-	//Free the pointer of all the stored objects from CARD_LIST(body).
-	for( CARD_LIST::iterator i=(this->body).begin(); i!=(this->body).end(); ++i ){
-		DEV_DOT* ptr_command = dynamic_cast<DEV_DOT*>( *i );
-		assert(ptr_command);
-		delete ptr_command;
-	}
+	body.erase_all();
 }
 	
 /*-------------------------------------------------------------------*/
@@ -117,18 +109,13 @@ public:
 			cmd >> condition;
 		}
 		//Initialise a "dowhile" object and get the pointer in "loop".
-		dowhile* loop = new dowhile(condition);
-		if(!loop){untested();
-			throw Exception("Not enough memory available");
-		}
-		else{
-			//Store the body.
-			loop->store( cmd, Scope );
-			//Exeute the stored commands.
-			loop->execute( cmd, Scope );
-			//Free the dynamically allocated memory.
-			loop->free();		
-		}  
+		dowhile loop(condition);
+		//Store the body.
+		loop.store( cmd, Scope );
+		//Exeute the stored commands.
+		loop.execute( cmd, Scope );
+		//Free the dynamically allocated memory.
+		loop.free();		
 	}
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher,"dowhile",&p);

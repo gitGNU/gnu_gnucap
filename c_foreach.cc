@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  *------------------------------------------------------------------*/
- 
+ //testing = script 2014.08.10
 #include <gnucap/c_comand.h>
 #include <gnucap/globals.h>
 #include <gnucap/d_dot.h>
@@ -44,9 +44,6 @@ class foreach{
 		foreach(std::string variable)
 			:variable(variable){
 	   }
-		~foreach(){
-		 	delete this;
-		 }
 		
 		//Function to read and store the body of loop
 		void store( CS&, CARD_LIST* );
@@ -108,11 +105,7 @@ void foreach::replace( std::string &s, const std::string &search, const std::str
 
 //Free the pointer of all the stored objects from CARD_LIST(body).
 void foreach::free(){itested();
-	for(CARD_LIST::iterator i=(this->body).begin(); i!=(this->body).end(); ++i){
-		DEV_DOT* ptr_command = dynamic_cast<DEV_DOT*>(*i);
-		assert(ptr_command);
-		delete ptr_command;
-	}
+	body.erase_all();
 }
 	
 /*-------------------------------------------------------------------*/
@@ -134,17 +127,14 @@ public:
 		}
 	
 		//Initialise a "foreach" object and get the pointer in "loop".
-		foreach* loop = new foreach(variable);
-    if(!loop){untested();
-			throw Exception("Not enough memory available");
-		}else{itested();
-			//Store the body.
-			loop->store(cmd,Scope);
-			//Exeute the stored commands.
-			loop->execute(cmd,Scope,first,last);
-			//Free the dynamically allocated memory.
-			loop->free();
-		}
+		foreach loop(variable);
+		//Store the body.
+		loop.store(cmd,Scope);
+		//Exeute the stored commands.
+		loop.execute(cmd,Scope,first,last);
+		//Free the dynamically allocated memory.
+		loop.free();
+		
 	}	
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher,"foreach",&p);

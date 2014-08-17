@@ -43,9 +43,6 @@ class repeat{
 		repeat(int _counter,bool _infinite)
 			:counter(_counter),infinite(_infinite){
 		}
-		~repeat(){
-			delete this;
-		}
 		//Function to read and store the body of loop
 		void store( CS&, CARD_LIST* );
 		
@@ -57,7 +54,7 @@ class repeat{
 };
 /*-------------------------------------------------------------------*/
 //Function definitions
-void repeat::store( CS& cmd, CARD_LIST* Scope ){itested();
+void repeat::store(	 CS& cmd, CARD_LIST* Scope ){itested();
 	CARD_LIST* ptr = &body;
 	store_body( cmd, ptr );			
 }
@@ -85,12 +82,7 @@ void repeat::execute( CS& cmd, CARD_LIST* Scope ) { itested();
 }
 
 void repeat::free(){
-	//Iterate over all the objects in CARD_LIST and delete them.
-	for( CARD_LIST::iterator i=(this->body).begin(); i!=(this->body).end(); ++i ){itested();
-		DEV_DOT* ptr_command = dynamic_cast<DEV_DOT*>( *i );
-		assert(ptr_command);
-		delete ptr_command;
-	}
+	body.erase_all();
 }
 /*-------------------------------------------------------------------*/
 
@@ -117,17 +109,11 @@ public:
 			}else{ itested();
 			}		
 		}
-		
 		//Create a loop object,store the body and then execute the instructions
-		repeat* loop = new repeat(counter,infinite);
-    if(!loop){untested();
-			throw Exception("Not enough memory available");
-		}
-    else{itested();
-			loop->store(cmd,Scope);
-			loop->execute(cmd,Scope);
-			loop->free();
-		}		
+		repeat loop(counter,infinite);
+		loop.store(cmd,Scope);
+		loop.execute(cmd,Scope);
+		loop.free();		
 	}
 }p;
 DISPATCHER<CMD>::INSTALL d(&command_dispatcher,"repeat",&p);
