@@ -27,6 +27,7 @@
 #include "u_prblst.h"
 #include "u_xprobe.h"
 #include "e_base.h"
+#include "ap.h"
 /*--------------------------------------------------------------------------*/
 static char fix_case(char c)
 {
@@ -123,18 +124,27 @@ double CKT_BASE::ac_probe_num(const std::string& what)const
 /*--------------------------------------------------------------------------*/
 /*static*/ WAVE* CKT_BASE::find_wave(const std::string& probe_name)
 {
-  int ii = 0;
-  for (PROBELIST::const_iterator
-       p  = _probe_lists->store[_sim->_mode].begin();
-       p != _probe_lists->store[_sim->_mode].end();
-       ++p) {
-    if (wmatch(p->label(), probe_name)) {
-      return &(_sim->_waves[ii]);
-    }else{
-    }
-    ++ii;
+  trace0(("find_wave \"" + probe_name + "\" ... " + _sim->_label).c_str());
+  std::map<std::string,WAVE>* w = &_sim->_waves[_sim->_label];
+  std::map<std::string,WAVE>::iterator i;
+  i = w->find(probe_name);
+  if(i!=_sim->_waves[_sim->_label].end()){ untested();
+    return &i->second;
   }
+  std::string prefix;
+  std::string suffix;
+  CS cmd(CS::_STRING, probe_name);
+  prefix = cmd.ctos(":");
+  cmd >> ":";
+  suffix = cmd.ctos("");
+  trace0(("\"" + prefix + "\":\"" + suffix + "\"").c_str());
+  i = _sim->_waves[prefix].find(suffix);
+  if(i!=_sim->_waves[prefix].end()){ untested();
+    return &i->second;
+  }
+
   return NULL;
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
+// vim:ts=8:sw=2:noet

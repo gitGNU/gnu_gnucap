@@ -37,6 +37,7 @@ public:
 protected:
   void	fix_args(int);
   void	options(CS&, int);
+  std::string label()const{untested(); return "dc";}
 private:
   void	sweep();
   void	sweep_recursive(int);
