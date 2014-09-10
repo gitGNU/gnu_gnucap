@@ -69,8 +69,7 @@ SIM_DATA::SIM_DATA()
    _evalq2(),
    _late_evalq(),
    _evalq(NULL),
-   _evalq_uc(NULL),
-   _waves(NULL)
+   _evalq_uc(NULL)
 {
   _evalq = &_evalq1;
   _evalq_uc = &_evalq2;
@@ -126,11 +125,6 @@ SIM_DATA::~SIM_DATA()
   if (_evalq_uc) {
     _evalq_uc = NULL;
   }else{untested();
-  }
-  if (_waves) {
-    delete [] _waves;
-    _waves = NULL;
-  }else{
   }
 }
 /*--------------------------------------------------------------------------*/
