@@ -59,13 +59,17 @@ static void read_startup_files(void)
     if (name != "") {untested();
       CMD::command("include " + name, &CARD_LIST::card_list);
     }else{
-      CMD::command(std::string("load " DEFAULT_PLUGINS), &CARD_LIST::card_list);
+      #ifndef __MINGW_STATIC__
+	CMD::command(std::string("load " DEFAULT_PLUGINS), &CARD_LIST::card_list);
+      #endif
     }
   }
   {
     std::string name = findfile(USERSTARTFILE, USERSTARTPATH, R_OK);
     if (name != "") {untested();
-      CMD::command("include " + name, &CARD_LIST::card_list);
+      
+	CMD::command("include " + name, &CARD_LIST::card_list);
+   
     }else{
     }
   }

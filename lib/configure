@@ -28,7 +28,7 @@ echo "CCFLAGS = -fPIC \\" >Make.ccflags
 echo "LIBS = -ldl \\" >Make.libs
     
 rm -f a.out
-g++ -lreadline -ltermcap test_readline.cc
+g++ -lreadline -ltermcap test_readline.cc -I../include
 if [ -f a.out ] ; then
     echo "using readline"
     echo "-DHAVE_LIBREADLINE \\" >>Make.ccflags

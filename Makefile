@@ -27,6 +27,14 @@ mingw:
 	(cd modelgen; ${MAKE} mingw)
 	(cd main; ${MAKE} mingw)
 	(cd apps; ${MAKE} mingw)
+	
+mingw_static:
+	#(cd include; ${MAKE} mingw)
+	(cd modelgen; ${MAKE} mingw_static)
+	(cd lib; ${MAKE} mingw_static)
+	(cd apps; ${MAKE} mingw_static)
+	(cd main; ${MAKE} mingw_static)
+
 
 clean:
 	#(cd include; ${MAKE} clean)
