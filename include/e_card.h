@@ -1,4 +1,4 @@
-/*$Id: e_card.h,v 26.133 2009/11/26 04:58:04 al Exp $ -*- C++ -*-
+/*$Id: e_card.h 2014.11.25 $ -*- C++ -*-
  * Copyright (C) 2001 Albert Davis
  * Author: Albert Davis <aldavis@gnu.org>
  *
@@ -58,7 +58,7 @@ protected: // create and destroy.
   explicit CARD(const CARD&);
 public:
   virtual  ~CARD();
-  virtual CARD*	 clone()const		{unreachable(); return NULL;}
+  virtual CARD*	 clone()const = 0;
   virtual CARD*	 clone_instance()const  {return clone();}
   //--------------------------------------------------------------------
 public:	// "elaborate"
@@ -150,3 +150,4 @@ public:	// obsolete -- do not use in new code
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 #endif
+// vim:ts=8:sw=2:noet:

@@ -1,5 +1,5 @@
 #!/bin/sh
-# configure for executable
+# configure for library (shared object)
 
 mkdir -p O
 #-------------  Stuff added to enable --prefix  --------------
@@ -24,11 +24,21 @@ fi
 sed -e "s#/usr/local#$prefix#" ../Makefile.template > Makefile
 
 #----------------------------------------------------------------
-echo "CCFLAGS = \\" >Make.ccflags
-echo "-DUNIX -O2 -DNDEBUG -I. -I../include -I../../include -W" >>Make.ccflags
+echo "CCFLAGS = -fPIC \\" >Make.ccflags
+echo "LIBS = -ldl \\" >Make.libs
+    
+rm -f a.out
+g++ -lreadline -ltermcap test_readline.cc
+if [ -f a.out ] ; then
+    echo "using readline"
+    echo "-DHAVE_LIBREADLINE \\" >>Make.ccflags
+    echo "-lreadline -ltermcap \\" >>Make.libs
+else
+    echo "either libtermcap or libreadline is missing - not using readline"
+fi
+rm -f a.out
 
-echo "LIBS = \\" >Make.libs
-echo "-lgnucap \\" >>Make.libs
+echo "-DUNIX -O2 -DNDEBUG -I. -I../include -I../../include -W" >>Make.ccflags
 echo "" >>Make.libs
 echo "PREFIX = " $prefix >>Make.libs
 echo "" >>Make.libs
@@ -37,21 +47,21 @@ cat <<CAT_EOF >Make.sys
 #------------------------------------------------------------------------
 VPATH = .:..
 CCC = g++
-TARGET_EXT =
+TARGET_EXT = .so
 
-LDFLAGS = -rdynamic \
--L../../lib/O
+LDFLAGS = -shared
 
-.SUFFIXES : .o .cc
+.SUFFIXES:
+.SUFFIXES: .o .cc
 .cc.o:; \$(CCC) \$(CCFLAGS) -c \$<
 #------------------------------------------------------------------------
-\$(TARGET): \$(OBJS)
+\$(TARGET)\$(TARGET_EXT): \$(TARGET_DEPENDS)
 	rm -f \$@
-	\$(CCC) \$(CCFLAGS) \$(OBJS) -o \$@ \$(LIBS) \$(LDFLAGS)
+	\$(CCC) \$(CCFLAGS) \$(OBJS) \$(LIBS) \$(LDFLAGS) -o \$@
 #------------------------------------------------------------------------
 CAT_EOF
 
 cat Make.ccflags Make.libs Make.sys >Make2
-rm Make.ccflags Make.libs Make.sys
+rm  Make.ccflags Make.libs Make.sys
 
 exit 0

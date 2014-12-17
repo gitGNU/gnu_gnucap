@@ -16,6 +16,9 @@ case $1 in
 	"--libdir")
 		echo @libdir@
 	;;
+	"--exec-prefix")
+		echo "@exec_prefix@"
+	;;
 	"--data")
 		echo @datarootdir@
 	;;
@@ -23,5 +26,6 @@ case $1 in
 	echo $0 --cppflags
 	echo $0 --ldflags
 	echo $0 --libdir
+	echo $0 --exec-prefix
 	echo $0 --data
 esac
