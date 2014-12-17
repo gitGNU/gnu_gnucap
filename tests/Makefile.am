@@ -505,8 +505,8 @@ $(CKT_TESTS:%.sh:%.log): gnucap_run.log
 
 # this will trigger a warning in autogen.sh
 # (apparently this warning is s bug)
-c_getckt.log: | $(PWD)/d_cccs.1.ckt
-c_lib.1.log: | $(PWD)/c_lib.1.ckt
+c_getckt.sh c_getckt.log c_getckt.out: | $(PWD)/d_cccs.1.ckt
+c_lib.1.sh c_lib.1.log c_lib.1.out: | $(PWD)/c_lib.1.ckt
 
 PREDIFF= \
    '1,/^default·plugins/d' \
@@ -569,7 +569,7 @@ CLEANFILES = *.out $(AUTO_TESTS)
 # hmmm.
 if VPATH_BUILD
 $(PWD)/%.ckt: %.ckt
-	$(LN_S) $< $@
+	$(AM_V_at)$(LN_S) $< $@
 
 CLEANFILES+= d_cccs.1.ckt c_lib.1.ckt
 endif
