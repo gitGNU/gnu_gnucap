@@ -189,12 +189,7 @@ AC_CONFIG_FILES([
 	tests/Makefile
 	])
 
-AC_CONFIG_FILES([apps/Make2:Make2.in])
-AC_CONFIG_FILES([include/Make2:Make2.in])
-AC_CONFIG_FILES([lib/Make2:Make2.in])
-AC_CONFIG_FILES([main/Make2:Make2.in])
-AC_CONFIG_FILES([modelgen/Make2:Make2.in])
-AC_CONFIG_FILES([tests/Make2:Make2.in])
+AC_CONFIG_COMMANDS([make2], [$ac_top_srcdir/make2 apps include lib main modelgen tests])
 
 AC_CONFIG_COMMANDS([default])
 AC_OUTPUT

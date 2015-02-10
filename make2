@@ -1,0 +1,5 @@
+#!/bin/sh
+
+for i in $*; do
+  ./config.status --file $i/Make2:Make2.in
+done
