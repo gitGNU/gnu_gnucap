@@ -176,24 +176,10 @@ for i in `shopt -s nullglob; echo extern/*`; do
 	AS_IF([test -d $i -a -x $i/configure], [subdirs="$subdirs $i"])
 done
 
-#AC_OUTPUT([
-#	Makefile
-#	doc/Makefile
-#	examples/Makefile
-#	man/Makefile
-#	man/Addmodel/Makefile
-#	man/Behavior/Makefile
-#	man/Circuit/Makefile
-#	man/Commands/Makefile
-#	man/Tech/Makefile
-#	modelgen/Makefile
-#	src/Makefile
-#	])
-
 AC_CONFIG_FILES([gnucap-conf], [chmod +x gnucap-conf])
 AC_CONFIG_FILES([main/gnucap], [chmod +x main/gnucap])
 
-AC_OUTPUT([
+AC_CONFIG_FILES([
 	GNUmakefile
 	apps/Makefile
 	include/Makefile
@@ -203,6 +189,8 @@ AC_OUTPUT([
 	tests/Makefile
 	])
 
+AC_CONFIG_COMMANDS([default])
+AC_OUTPUT
 
 plugindir=$libdir/$package
 
