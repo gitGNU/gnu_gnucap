@@ -24,7 +24,8 @@
 ##  02110-1301, USA.
 
 plugindir=$(pkglibdir)
-plugin_LTLIBRARIES = libgnucap_default_plugins.la
+plugin_LTLIBRARIES = gnucap_default_plugins.la
+AM_LDFLAGS = -shared -module -avoid-version
 #------------------------------------------------------------------------
 # These source files can be omitted, and supplied as plugins.
 # device models defined in high level .model files
@@ -86,8 +87,8 @@ $(MODELS)
 #------------------------------------------------------------------------
 RAW = $(RAW_HDRS) $(RAW_SRCS) $(RAW_OTHER) $(MODELS)
 #------------------------------------------------------------------------
-libgnucap_default_plugins_la_SOURCES = $(RAW_SRCS)
-libgnucap_default_plugins_la_CPPFLAGS = $(AM_CPPFLAGS) \
+gnucap_default_plugins_la_SOURCES = $(RAW_SRCS)
+gnucap_default_plugins_la_CPPFLAGS = $(AM_CPPFLAGS) \
     -I$(top_srcdir)/include -I$(top_builddir)/include
 #------------------------------------------------------------------------
 #------------------------------------------------------------------------
