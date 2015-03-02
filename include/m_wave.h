@@ -29,12 +29,13 @@ class WAVE {
 private:
   std::deque<DPAIR> _w;
   double _delay;
+  explicit WAVE(const WAVE&);
 public:
+  WAVE* clone()const{return new WAVE(*this);}
   typedef std::deque<DPAIR>::iterator iterator;
   typedef std::deque<DPAIR>::const_iterator const_iterator;
 
   explicit WAVE(double d=0);
-  explicit WAVE(const WAVE&);
 	  ~WAVE() {}
   WAVE&	   set_delay(double d);
   WAVE&	   initialize();
