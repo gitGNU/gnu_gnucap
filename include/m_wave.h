@@ -24,6 +24,7 @@
 //testing=script 2006.07.13
 #include "l_denoise.h"
 #include "m_interp.h"
+#include "l_dispatcher.h"
 /*--------------------------------------------------------------------------*/
 class WAVE {
 private:
@@ -48,6 +49,10 @@ public:
   WAVE&	   operator*=(double x);
   const_iterator begin()const {return _w.begin();}
   const_iterator end()const {return _w.end();}
+};
+/*--------------------------------------------------------------------------*/
+class WAVELIST : public DISPATCHER<WAVE>{
+public:
 };
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

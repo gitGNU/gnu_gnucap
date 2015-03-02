@@ -22,6 +22,7 @@
  * tr,dc analysis output functions (and some ac)
  */
 //testing=obsolete,script 2005.09.17
+#include "globals.h"
 #include "u_sim_data.h"
 #include "u_status.h"
 #include "m_wave.h"
@@ -66,18 +67,25 @@ void SIM::outdata(double x)
  */
 void SIM::head(double start, double stop, const std::string& col1)
 {
-  _sim->_waves[_sim->_label].clear();
+  WAVELIST* wl = wavelist_dispatcher[_sim->_label];
+  assert(wl);
 
-  if(_wavep){untested();
-    delete[] _wavep;
-  }else{untested();
-  }
   _wavep = new WAVE*[storelist().size()];
 
   unsigned ii = 0;
   for (PROBELIST::const_iterator
 	 p=storelist().begin();  p!=storelist().end();  ++p) { untested();
-    _wavep[ii++] = &(_sim->_waves[_sim->_label][p->label()]);
+    WAVELIST* wl = wavelist_dispatcher[_sim->_label];
+    assert(wl);
+    WAVE* w = (*wl)[p->label()];
+    if(!w){
+      w = new WAVE;
+      wl->install(p->label(), w);
+    }else{
+      w->initialize();
+    }
+    _wavep[ii] = w;
+    ++ii;
   }
 
   if (!plopen(start, stop, plotlist())) {
