@@ -26,7 +26,7 @@
 #include "m_interp.h"
 #include "l_dispatcher.h"
 /*--------------------------------------------------------------------------*/
-class WAVE {
+class WAVE : public CKT_BASE {
 private:
   std::deque<DPAIR> _w;
   double _delay;
@@ -51,8 +51,32 @@ public:
   const_iterator end()const {return _w.end();}
 };
 /*--------------------------------------------------------------------------*/
-class WAVELIST : public DISPATCHER<WAVE>{
-public:
+class WAVELIST : public CKT_BASE, public DISPATCHER_BASE {
+  public:
+    WAVELIST() : CKT_BASE(), DISPATCHER_BASE() {}
+    CKT_BASE* clone(){return new WAVELIST(*this);}
+
+    WAVE* operator[](const std::string& x) {
+      WAVE* r = prechecked_cast<WAVE*>((*_map)[x]);
+      return r;
+    }
+    void install(const std::string& s, WAVE* p) {
+      if (!_map) {unreachable();
+	puts("build error: link order: dispatcher not yet constructed\n");
+	_map = new std::map<std::string, CKT_BASE*>;
+      }else{
+      }
+      (*_map)[s] = p;
+    }
+
+    ~WAVELIST(){
+      for(std::map<std::string, CKT_BASE*>::iterator i=_map->begin(); i!=_map->end(); ++i){
+	WAVE* w = dynamic_cast<WAVE*>(i->second);
+	assert(w);
+	delete w;
+	i->second = NULL;
+      }
+    }
 };
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
