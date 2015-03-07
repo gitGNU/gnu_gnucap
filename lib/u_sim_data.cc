@@ -1,4 +1,4 @@
-/*$Id: u_sim_data.cc,v 26.137 2010/04/10 02:37:33 al Exp $ -*- C++ -*-
+/*$Id: u_sim_data.cc 2015/01/28 al Exp $ -*- C++ -*-
  * Copyright (C) 2001 Albert Davis
  * Author: Albert Davis <aldavis@gnu.org>
  *
@@ -21,7 +21,7 @@
  *------------------------------------------------------------------
  * aux functions associated with the SIM class
  */
-//testing=obsolete
+//testing=script 2015.01.28
 #include "m_wave.h"
 #include "e_node.h"
 #include "u_nodemap.h"
@@ -77,55 +77,52 @@ SIM_DATA::SIM_DATA()
 /*--------------------------------------------------------------------------*/
 SIM_DATA::~SIM_DATA()
 {
-  if (_nm) {untested();
+  if (_nm) {unreachable();
     delete [] _nm;
     _nm = NULL;
   }else{
   }
-  if (_i) {untested();
+  if (_i) {unreachable();
     delete [] _i;
     _i = NULL;
   }else{
   }
-  if (_v0) {untested();
+  if (_v0) {unreachable();
     delete [] _v0;
     _v0 = NULL;
   }else{
   }
-  if (_vt1) {untested();
+  if (_vt1) {unreachable();
     delete [] _vt1;
     _vt1 = NULL;
   }else{
   }
-  if (_ac) {untested();
+  if (_ac) {unreachable();
     delete [] _ac;
     _ac = NULL;
   }else{
   }
-  if (_nstat) {untested();
+  if (_nstat) {unreachable();
     delete [] _nstat;
     _nstat = NULL;
   }else{
   }
-  if (_vdc) {untested();
+  if (_vdc) {unreachable();
     delete [] _vdc;
     _vdc = NULL;
   }else{
   }
-  //assert(_eq.empty()); //BUG// should be empty here
+  //assert(_eq.empty()); //not empty means an analysis ended with an unhandled event
+			 // could be DC, could be tran with event time past the end
   assert(_loadq.empty());
   assert(_acceptq.empty());
   assert(_evalq1.empty());
   assert(_evalq2.empty());
   assert(_late_evalq.empty());
-  if (_evalq) {
-    _evalq = NULL;
-  }else{untested();
-  }
-  if (_evalq_uc) {
-    _evalq_uc = NULL;
-  }else{untested();
-  }
+  assert(_evalq);
+  assert(_evalq_uc);
+  _evalq = NULL;
+  _evalq_uc = NULL;
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
@@ -162,6 +159,7 @@ void SIM_DATA::keep_voltages()
     }
     _last_time = (_time0 > 0.) ? _time0 : 0.;
   }else{untested();
+    //BUG// probably incorrect
   }
 }
 /*--------------------------------------------------------------------------*/
@@ -189,11 +187,10 @@ void SIM_DATA::map__nodes()
   _nm = new int[_total_nodes+1];
   ::status.order.reset().start();
   switch (OPT::order) {
-    default: untested();
-      error(bWARNING, "invalid order spec: %d\n", OPT::order);
-    case oAUTO:		       order_auto();    break;
-    case oREVERSE: untested(); order_reverse(); break;
-    case oFORWARD: untested(); order_forward(); break;
+  default:       unreachable(); error(bWARNING, "invalid order spec: %d\n", OPT::order);
+  case oAUTO:    order_auto();    break;
+  case oREVERSE: order_reverse(); break;
+  case oFORWARD: order_forward(); break;
   }
   ::status.order.stop();
 }
@@ -202,9 +199,9 @@ void SIM_DATA::map__nodes()
  *  subcircuits at beginning, results on border at the bottom
  */
 void SIM_DATA::order_reverse()
-{untested();
+{
   _nm[0] = 0;
-  for (int node = 1;  node <= _total_nodes;  ++node) {untested();
+  for (int node = 1;  node <= _total_nodes;  ++node) {
     _nm[node] = _total_nodes - node + 1;
   }
 }
@@ -213,9 +210,9 @@ void SIM_DATA::order_reverse()
  * results in border at the top (worst possible if lots of subcircuits)
  */
 void SIM_DATA::order_forward()
-{untested();
+{
   _nm[0] = 0;
-  for (int node = 1;  node <= _total_nodes;  ++node) {untested();
+  for (int node = 1;  node <= _total_nodes;  ++node) {
     _nm[node] = node;
   }
 }
