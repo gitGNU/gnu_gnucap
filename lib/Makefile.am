@@ -27,6 +27,7 @@ lib_LTLIBRARIES = libgnucap.la
 libgnucap_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(top_srcdir)/include -I$(top_builddir)/include
 libgnucap_la_LDFLAGS = $(AM_LDFLAGS) -Wl,--enable-new-dtags -Wl,-rpath -Wl,${pkglibdir}
 libgnucap_la_SOURCES = \
+globals.cc \
 m_expression_dump.cc m_expression_in.cc m_expression_reduce.cc \
 m_base_in.cc m_base_math.cc m_fft.cc  m_spline.cc \
 ap_construct.cc ap_convert.cc ap_error.cc ap_get.cc ap_match.cc ap_skip.cc \
@@ -39,4 +40,4 @@ e_base.cc e_card.cc e_node.cc e_model.cc e_compon.cc \
 e_elemnt.cc e_ccsrc.cc e_storag.cc e_cardlist.cc \
 bm_cond.cc bm_value.cc bm.cc \
 c__cmd.cc c_attach.cc c_file.cc \
-findbr.cc plot.cc globals.cc
+findbr.cc plot.cc
