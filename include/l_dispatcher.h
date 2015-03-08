@@ -36,11 +36,7 @@ private:
   explicit DISPATCHER_BASE(DISPATCHER_BASE*) {unreachable();incomplete();}
 public:
   DISPATCHER_BASE() /*: _map(new std::map<std::string, CKT_BASE*>)*/ {
-    if (!_map) {
-      _map = new std::map<std::string, CKT_BASE*>;
-    }else{unreachable();
-      puts("build error: link order: constructing dispatcher that already has contents\n");
-    }    
+    _map = new std::map<std::string, CKT_BASE*>;
   }
   ~DISPATCHER_BASE() {
 #if !defined(NDEBUG)
