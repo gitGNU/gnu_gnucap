@@ -55,13 +55,13 @@ class PARAMETER : public PARA_BASE {
 private:
   mutable T _v;
 public:
-  explicit PARAMETER() : PARA_BASE(), _v(NOT_INPUT) {}
+  explicit PARAMETER();
   PARAMETER(const PARAMETER<double>& p): PARA_BASE(p), _v(p._v) {}
   explicit PARAMETER(T v) :PARA_BASE(), _v(v) {}
   //explicit PARAMETER(T v, const std::string& s) :_v(v), _s(s) {untested();}
   ~PARAMETER() {}
   
-  bool	has_good_value()const {return (_v != NOT_INPUT);}
+  bool	has_good_value()const;
   //bool has_soft_value()const {untested(); return (has_good_value() && !has_hard_value());}
 
   operator T()const {return _v;}
@@ -83,16 +83,7 @@ public:
   void	operator=(const T& v)		{_v = v; _s = "#";}
   //void	operator=(const std::string& s)	{untested();_s = s;}
 
-  void	operator=(const std::string& s)	{
-    if (strchr("'\"{", s[0])) {
-      CS cmd(CS::_STRING, s);
-      _s = cmd.ctos("", "'\"{", "'\"}");
-    }else if (s == "NA") {
-      _s = "";
-    }else{
-      _s = s;
-    }
-  }
+  void	operator=(const std::string& s);
   bool  operator==(const PARAMETER& p)const {
     return (_v == p._v  &&  _s == p._s);
   }
@@ -113,6 +104,24 @@ public:
 private:
   T lookup_solve(const T& def, const CARD_LIST* scope)const;
 };
+/*--------------------------------------------------------------------------*/
+template<>
+inline PARAMETER<std::vector<PARAMETER<double> > >::PARAMETER() : PARA_BASE(), _v() {}
+/*--------------------------------------------------------------------------*/
+template<class T>
+inline PARAMETER<T>::PARAMETER() : PARA_BASE(), _v(NOT_INPUT) {}
+/*--------------------------------------------------------------------------*/
+template<>
+inline bool PARAMETER<std::vector<PARAMETER<double> > >::has_good_value()const
+{
+  return (_v.size()); // ?!
+}
+/*--------------------------------------------------------------------------*/
+template<class T>
+inline bool PARAMETER<T>::has_good_value()const
+{
+  return (_v != NOT_INPUT);
+}
 /*--------------------------------------------------------------------------*/
 /* non-class interface, so non-paramaters can have same syntax */
 /* It is needed by the model compiler */
@@ -258,6 +267,21 @@ inline T PARAMETER<T>::lookup_solve(const T& def, const CARD_LIST* scope)const
 }
 #endif
 /*--------------------------------------------------------------------------*/
+template <>
+inline std::vector<PARAMETER<double> >
+   PARAMETER<std::vector<PARAMETER<double> > >::e_val(
+       const std::vector<PARAMETER<double> > & def, const CARD_LIST* scope)const
+{ untested();
+  for(unsigned  i=0; i<_v.size()  ; i++) { untested();
+    PARAMETER<double> D;
+    if (i < def.size()){
+      D = def[i];
+    }
+    _v[i].e_val(D, scope);
+  }
+  return _v;
+}
+/*--------------------------------------------------------------------------*/
 template <class T>
 T PARAMETER<T>::e_val(const T& def, const CARD_LIST* scope)const
 {
@@ -329,6 +353,12 @@ inline void PARAMETER<bool>::parse(CS& cmd)
   }
 }
 /*--------------------------------------------------------------------------*/
+// template <>
+// inline void PARAMETER<std::vector<PARAMETER<double> > >::parse(CS& cmd)
+// {
+//   incomplete();
+// }
+/*--------------------------------------------------------------------------*/
 template <class T>
 inline void PARAMETER<T>::parse(CS& cmd) 
 {
@@ -354,6 +384,41 @@ inline void PARAMETER<T>::parse(CS& cmd)
     }else{
     }
   }
+}
+/*--------------------------------------------------------------------------*/
+template<class T>
+inline void PARAMETER<T>::operator=(const std::string& s)
+{
+  if (strchr("'\"{", s[0])) {
+    CS cmd(CS::_STRING, s);
+    _s = cmd.ctos("", "'\"{", "'\"}");
+  }else if (s == "NA") {
+    _s = "";
+  }else{
+    _s = s;
+  }
+}
+/*--------------------------------------------------------------------------*/
+template<>
+inline void PARAMETER<std::vector<PARAMETER<double> > >::operator=(const std::string& s)
+{
+  CS cmd(CS::_STRING, s);
+  _v.clear();
+  std::string compon;
+
+  cmd.skipbl();
+
+  for(;;) { untested();
+    if(!cmd.more()) break;
+    compon = cmd.ctos(",","({",")}",""); // More sorts of braces?
+
+    PARAMETER<double> d;
+    d = compon;
+    _v.push_back( d );
+
+    cmd.skip1b(')');
+  }
+  _s = "#";
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
