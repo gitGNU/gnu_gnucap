@@ -1,0 +1,18 @@
+verilog
+
+cpoly_g #(.nports(2),.c(0,1,0))   id(1,0,c1,0);
+cpoly_g #(.nports(2),.c(0,0,1))   square(1,0,c1,0);
+cpoly_g #(.nports(3),.c(0,0,0,0,1)) mul(1,0,c1,0,c2,0);
+cpoly_g #(.nports(3),.c(0,1,0,0,0)) p1(1,0,c1,0,c2,0);
+cpoly_g #(.nports(3),.c(0,0,1,0,0)) p2(1,0,c1,0,c2,0);
+
+list
+spice
+Vc1 c1 0 1
+Vc2 c2 0 1
+
+Vbias 1 0 1
+.print dc v(vc1) v(vc2) i(id) i(square) i(mul) i(p1) i(p2) y(p1)
+.dc Vc1 0 2 1 Vc2 0 2 1
+
+.end
