@@ -1,5 +1,6 @@
 /*$Id: d_poly_g.cc,v 26.137 2010/04/10 02:37:05 al Exp $ -*- C++ -*-
  * Copyright (C) 2001 Albert Davis
+ *               2015 Felix Salfelder
  * Author: Albert Davis <aldavis@gnu.org>
  *
  * This file is part of "Gnucap", the Gnu Circuit Analysis Package
@@ -31,6 +32,7 @@
 //testing=script 2006.07.17
 #include "globals.h"
 #include "e_elemnt.h"
+#include "m_mvpoly.h"
 /*--------------------------------------------------------------------------*/
 namespace {
 /*--------------------------------------------------------------------------*/
@@ -40,6 +42,7 @@ protected:
   double*  _old_values;
   int	   _n_ports;
   double   _time;
+  PARAMETER<vector<PARAMETER<double> > > _coeffs;
   const double** _inputs;
 protected:
   explicit DEV_CPOLY_G(const DEV_CPOLY_G& p);
@@ -49,7 +52,7 @@ public:
 protected: // override virtual
   char	   id_letter()const	{unreachable(); return '\0';}
   std::string value_name()const	{incomplete(); return "";}
-  std::string dev_type()const	{unreachable(); return "cpoly_g";}
+  std::string dev_type()const	{untested(); return "cpoly_g";}
   int	   max_nodes()const	{return net_nodes();}
   int	   min_nodes()const	{return net_nodes();}
   int	   matrix_nodes()const	{return _n_ports*2;}
@@ -67,10 +70,16 @@ protected: // override virtual
   COMPLEX  ac_involts()const	{itested(); return NOT_VALID;}
   COMPLEX  ac_amps()const	{itested(); return NOT_VALID;}
 
-  std::string port_name(int)const {untested();
-    incomplete();
-    unreachable();
-    return "";
+  std::string port_name(int n)const {itested();
+    if(n==0){
+      return "p";
+    }else if(n==1){
+      return "n";
+    }else if(n%2){
+      return "cn" + to_string(n/2-1);
+    }else{
+      return "cp" + to_string(n/2-1);
+    }
   }
 public:
   void set_parameters(const std::string& Label, CARD* Parent,
@@ -78,8 +87,13 @@ public:
 		      int state_count, double state[],
 		      int node_count, const node_t nodes[]);
   //		      const double* inputs[]=0);
+  void set_param_by_name(const std::string, const std::string);
+  void expand();
+  void precalc_last();
 protected:
   bool do_tr_con_chk_and_q();
+private:
+  MV_POLY<double>* _poly;
 };
 /*--------------------------------------------------------------------------*/
 #if 0
@@ -151,6 +165,21 @@ bool DEV_CPOLY_G::do_tr_con_chk_and_q()
 /*--------------------------------------------------------------------------*/
 bool DEV_CPOLY_G::do_tr()
 {
+  if(_poly){ // move to common
+    for(unsigned i=2; i<=_n_ports; ++i) { itested();
+      _values[i] = dn_diff(_n[2*i-2].v0(),_n[2*i-1].v0());
+    }
+    trace2("b4", _values[2], _values[3]);
+    _values[1] = _poly->eval(_values+2);
+    trace1("evald", _values[1]);
+    trace2("deriv", _values[2], _values[3]);
+
+    for(unsigned i=2; i<=_n_ports; ++i) { itested();
+      _values[1] -= dn_diff(_n[2*i-2].v0(),_n[2*i-1].v0()) * _values[i];
+    }
+
+    trace3("after", _values[0], _values[1], _values[2]);
+  }
   assert(_values);
   _m0 = CPOLY1(0., _values[0], _values[1]);
   return do_tr_con_chk_and_q();
@@ -261,10 +290,61 @@ void DEV_CPOLY_G::set_parameters(const std::string& Label, CARD *Owner,
   assert(net_nodes() == _n_ports * 2);
 }
 /*--------------------------------------------------------------------------*/
+void DEV_CPOLY_G::set_param_by_name(std::string Name, std::string Value)
+{
+  if (Umatch(Name, "nports ")) {
+    if(_n_ports){ untested();
+      throw Exception("only one nports allowed right now.");
+    }
+    _n_ports = atoi(Value.c_str());
+    if (net_nodes() > NODES_PER_BRANCH) { untested();
+      // allocate a bigger node list
+      _n = new node_t[net_nodes()];
+    }else{ untested();
+      // use the default node list, already set
+    }
+  }else if (Umatch(Name, "c{oeffs} ")) { untested();
+    _coeffs = Value;
+  }else{
+    ELEMENT::set_param_by_name(Name, Value);
+  }
+
+}
+/*--------------------------------------------------------------------------*/
+void DEV_CPOLY_G::expand()
+{
+  if(_values){ untested();
+    // hack: done by set_parameters
+    // move to common somehow
+  }else{ untested();
+  }
+}
+/*--------------------------------------------------------------------------*/
+void DEV_CPOLY_G::precalc_last()
+{
+  if(_values){ untested();
+    // hack: done by set_parameters
+    // move to common somehow
+  }else{ untested();
+    _coeffs.e_val(vector<PARAMETER<double> >(), scope());
+    if(_poly){ untested();
+    }else{untested();
+      _poly = new MV_POLY<double>(vector<PARAMETER<double> >(_coeffs), _n_ports-1);
+      _values = new double[_n_ports*2];
+      _values[0] = 0;
+      _old_values = new double[_n_ports*2];
+    }
+  }
+  untested();
+}
+/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 DEV_CPOLY_G p4;
 DISPATCHER<CARD>::INSTALL d4(&device_dispatcher, "cpoly_g", &p4);
 }
+/*--------------------------------------------------------------------------*/
+// hack: put it here, for now.
+vector<vector<unsigned> > MV_POLY_BASE::_spn_list=vector<vector<unsigned> >(1,vector<unsigned>(1,1));
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 // vim:ts=8:sw=2:noet:
