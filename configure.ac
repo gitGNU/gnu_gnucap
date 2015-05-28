@@ -66,6 +66,9 @@ AS_IF([test x"$GIT" = "xyes" && test -d $srcdir/.git],
       [have_git_repo=no])
 AC_MSG_RESULT([$have_git_repo])
 
+WHICH_MAKE=`which make`
+AC_SUBST([WHICH_MAKE])
+
 AH_TEMPLATE(HAVE_GIT_REPO, "whether this is built from git")
 AH_TEMPLATE(GIT_BRANCH, "the current branch")
 AH_TEMPLATE(GIT_TAG, "the description")
@@ -176,6 +179,7 @@ for i in `shopt -s nullglob; echo extern/*`; do
 	AS_IF([test -d $i -a -x $i/configure], [subdirs="$subdirs $i"])
 done
 
+AC_CONFIG_FILES([gnucap.mk], [chmod +x gnucap.mk])
 AC_CONFIG_FILES([gnucap-conf], [chmod +x gnucap-conf])
 AC_CONFIG_FILES([main/gnucap], [chmod +x main/gnucap])
 
