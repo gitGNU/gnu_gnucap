@@ -42,13 +42,6 @@ sed -e "s#@prefix@#$prefix#" \
     -e "s#@WHICH_MAKE@#$WHICH_MAKE#" \
     -e "s#@CXX@#$CXX#" < gnucap.mk.in > gnucap.mk
 
-sed -e "s#@prefix@#$prefix#" \
-    -e "s#@libdir@#$prefix/lib#" \
-    -e "s#@pkglibdir@#$pkglibdir#" \
-    -e "s#@CXXFLAGS@#$CCFLAGS#" \
-    -e "s#@LIBS@#-lgnucap#" \
-    -e "s#@CXX@#$CXX#" < gnucap-conf.in > gnucap-conf
-
 echo "Configuring gnucap using $args"
 #---------------------------------------------------
 echo include
