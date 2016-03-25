@@ -1,4 +1,4 @@
-/*$Id: s_ac.cc,v 26.137 2010/04/10 02:37:05 al Exp $ -*- C++ -*-
+/*$Id: s_ac.cc 2016/03/23 al $ -*- C++ -*-
  * Copyright (C) 2001 Albert Davis
  * Author: Albert Davis <aldavis@gnu.org>
  *
@@ -79,6 +79,8 @@ void AC::do_it(CS& Cmd, CARD_LIST* Scope)
   _sim->_acx.set_min_pivot(OPT::pivtol);
   
   setup(Cmd);
+  CARD_LIST::card_list.precalc_last();
+
   ::status.set_up.stop();
   switch (ENV::run_mode) {
   case rPRE_MAIN:	unreachable();	break;
@@ -89,6 +91,7 @@ void AC::do_it(CS& Cmd, CARD_LIST* Scope)
   }
   _sim->_acx.unallocate();
   _sim->unalloc_vectors();
+  _sim->_has_op = s_AC;
   _scope = NULL;
   
   ::status.ac.stop();

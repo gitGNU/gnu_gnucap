@@ -88,7 +88,7 @@ enum {
 #else
 #define	ENDDIR		"/"
 #define PATHSEP		':'
-#define DEFAULT_PLUGINS "gnucap_default_plugins.so"
+#define DEFAULT_PLUGINS "gnucap-default-plugins.so"
 #define SYSTEMSTARTFILE	"gnucap.rc"
 #define SYSTEMSTARTPATH	OS::getenv("PATH")
 #define USERSTARTFILE	".gnucaprc"

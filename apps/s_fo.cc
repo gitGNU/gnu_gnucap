@@ -1,4 +1,4 @@
-/*$Id: s_fo.cc 2014/07/04 al $ -*- C++ -*-
+/*$Id: s_fo.cc 2016/03/23 al $ -*- C++ -*-
  * Copyright (C) 2001 Albert Davis
  * Author: Albert Davis <aldavis@gnu.org>
  *
@@ -105,6 +105,7 @@ void FOURIER::do_it(CS& Cmd, CARD_LIST* Scope)
   _sim->unalloc_vectors();
   _sim->_lu.unallocate();
   _sim->_aa.unallocate();
+  _sim->_has_op = s_FOURIER;
   _scope = NULL;
 
   ::status.four.stop();

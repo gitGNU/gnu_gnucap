@@ -24,7 +24,7 @@
 ##  02110-1301, USA.
 
 plugindir=$(pkglibdir)
-plugin_LTLIBRARIES = gnucap_default_plugins.la
+plugin_LTLIBRARIES = gnucap-default-plugins.la
 AM_LDFLAGS = -shared -module -avoid-version
 #------------------------------------------------------------------------
 # These source files can be omitted, and supplied as plugins.
