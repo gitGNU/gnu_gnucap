@@ -180,7 +180,7 @@ for i in `shopt -s nullglob; echo extern/*`; do
 done
 
 AC_CONFIG_FILES([gnucap.mk], [chmod +x gnucap.mk])
-AC_CONFIG_FILES([gnucap-conf], [chmod +x gnucap-conf])
+AC_CONFIG_FILES([main/gnucap-conf], [chmod +x main/gnucap-conf])
 AC_CONFIG_FILES([main/gnucap], [chmod +x main/gnucap])
 
 AC_CONFIG_FILES([
