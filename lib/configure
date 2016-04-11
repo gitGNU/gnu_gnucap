@@ -89,14 +89,16 @@ LDFLAGS = -shared
 \${LIBTOOL_FALSE}TARGET_DEPENDS = \$(SRCS:%.cc=%.o) \$(RAW)
 \${LIBTOOL_TRUE}TARGET_DEPENDS = \$(SRCS:%.cc=%.lo) \$(RAW)
 VERSION_INFO = -version-info 0:0:0
+# this is a BUG, now override manually.
+pkglibdir=${PREFIX}/lib
 #------------------------------------------------------------------------
 \$(TARGET)\$(TARGET_EXT): \$(TARGET_DEPENDS)
 	rm -f \$@
 	\$(LIBTOOL_FALSE) \$(CCC) \$(CXXFLAGS) \$(CPPFLAGS) \$(CCFLAGS) \$(OBJS) \$(LIBS) \$(LDFLAGS) -o \$@
 	\$(LIBTOOL_TRUE) \$(LIBTOOL) --tag=CXX --mode=link \$(CCC) \\
-	    -Wl,--enable-new-dtags -Wl,-rpath -Wl,/usr/local/lib/gnucap-uf \\
+	    -Wl,--enable-new-dtags -Wl,-rpath -Wl,$(pkglibdir) \\
 	    \${VERSION_INFO} -rdynamic -o \$@ \$(LTOBJS) \$(LIBS) \$(LDFLAGS) \\
-	    -rpath /usr/local/lib/gnucap-uf
+	    -rpath $(pkglibdir)
 #------------------------------------------------------------------------
 CAT_EOF
 

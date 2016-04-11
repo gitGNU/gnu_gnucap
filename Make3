@@ -30,7 +30,12 @@ checkout:
 install : $(INSTALL_FILES)
 	echo ==================
 	mkdir -p $(DESTDIR)$(INSTALL_DIR)
-	$(INSTALL) $(INSTALL_FILES) $(DESTDIR)$(INSTALL_DIR)
+	# BUG: INSTALL might be empty.
+	if [ -n "$(INSTALL)" ]; then \
+		$(INSTALL) $(INSTALL_FILES) $(DESTDIR)$(INSTALL_DIR); \
+	else \
+		cp $(INSTALL_FILES) $(DESTDIR)$(INSTALL_DIR); \
+	fi;
 #------------------------------------------------------------------------
 uninstall :
 	(cd $(DESTDIR)$(INSTALL_DIR) ; rm $(INSTALL_FILES))

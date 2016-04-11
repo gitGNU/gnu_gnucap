@@ -24,6 +24,8 @@ echo \# created by $PWD/$0. do not edit >Make2
 echo \#------------------------------------------------------------------------ >>Make2
 echo "CCC = g++" >>Make2
 echo "PREFIX = " $prefix >>Make2
+# echo "INSTALL = cp" >>Make2
+
 echo "" >>Make2
 
 cat Make1 Make2 ../Make3 >Makefile
