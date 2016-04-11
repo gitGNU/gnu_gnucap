@@ -79,10 +79,7 @@ LDFLAGS = -rdynamic \
 \$(TARGET): \$(OBJS)
 	rm -f \$@
 	\$(LIBTOOL_FALSE)\$(CCC) \$(CXXFLAGS) \$(CPPFLAGS) \$(CCFLAGS) \$(OBJS) -o \$@ \$(LIBS) \$(LDFLAGS)
-	\$(LIBTOOL_TRUE)\$(LIBTOOL) --tag=CXX --mode=link \$(CCC) \\
-	    -Wl,--enable-new-dtags -Wl,-rpath -Wl,\$(PREFIX)/lib \\
-	    -o \$@ \$(OBJS) \$(LIBS) \$(LDFLAGS) \\
-	    -rpath \$(PREFIX)/lib
+	\$(LIBTOOL_TRUE)\$(LIBTOOL) --tag=CXX --mode=link \$(CCC) -Wl,--enable-new-dtags -Wl,-rpath -Wl,\$(PREFIX)/lib -o \$@ \$(OBJS) \$(LIBS) \$(LDFLAGS) -rpath \$(PREFIX)/lib
 #------------------------------------------------------------------------
 CAT_EOF
 
