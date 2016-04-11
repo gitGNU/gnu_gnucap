@@ -30,7 +30,7 @@ checkout:
 install : $(INSTALL_FILES)
 	echo ==================
 	mkdir -p $(DESTDIR)$(INSTALL_DIR)
-	cp $(INSTALL_FILES) $(DESTDIR)$(INSTALL_DIR)
+	$(INSTALL) $(INSTALL_FILES) $(DESTDIR)$(INSTALL_DIR)
 #------------------------------------------------------------------------
 uninstall :
 	(cd $(DESTDIR)$(INSTALL_DIR) ; rm $(INSTALL_FILES))
