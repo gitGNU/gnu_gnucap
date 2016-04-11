@@ -75,8 +75,8 @@ CCC = g++
 ${LIBTOOL_FALSE}INSTALL = cp
 ${LIBTOOL_TRUE}INSTALL = libtool --mode=install cp -p
 LIBTOOL = libtool
-${LIBTOOL_FALSE}TARGET_EXT = .so
-${LIBTOOL_TRUE}TARGET_EXT = .la
+\${LIBTOOL_FALSE}TARGET_EXT = .so
+\${LIBTOOL_TRUE}TARGET_EXT = .la
 
 LDFLAGS = -shared
 
@@ -90,15 +90,12 @@ LDFLAGS = -shared
 \${LIBTOOL_TRUE}TARGET_DEPENDS = \$(SRCS:%.cc=%.lo) \$(RAW)
 VERSION_INFO = -version-info 0:0:0
 # this is a BUG, now override manually.
-pkglibdir=${PREFIX}/lib
+pkglibdir=\${PREFIX}/lib
 #------------------------------------------------------------------------
 \$(TARGET)\$(TARGET_EXT): \$(TARGET_DEPENDS)
 	rm -f \$@
-	\$(LIBTOOL_FALSE) \$(CCC) \$(CXXFLAGS) \$(CPPFLAGS) \$(CCFLAGS) \$(OBJS) \$(LIBS) \$(LDFLAGS) -o \$@
-	\$(LIBTOOL_TRUE) \$(LIBTOOL) --tag=CXX --mode=link \$(CCC) \\
-	    -Wl,--enable-new-dtags -Wl,-rpath -Wl,$(pkglibdir) \\
-	    \${VERSION_INFO} -rdynamic -o \$@ \$(LTOBJS) \$(LIBS) \$(LDFLAGS) \\
-	    -rpath $(pkglibdir)
+	\$(LIBTOOL_FALSE)\$(CCC) \$(CXXFLAGS) \$(CPPFLAGS) \$(CCFLAGS) \$(OBJS) \$(LIBS) \$(LDFLAGS) -o \$@
+	\$(LIBTOOL_TRUE)\$(LIBTOOL) --tag=CXX --mode=link \$(CCC) -Wl,--enable-new-dtags -Wl,-rpath -Wl,\$(pkglibdir) \${VERSION_INFO} -rdynamic -o \$@ \$(LTOBJS) \$(LIBS) \$(LDFLAGS) -rpath \$(pkglibdir)
 #------------------------------------------------------------------------
 CAT_EOF
 
