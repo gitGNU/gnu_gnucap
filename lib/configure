@@ -9,6 +9,7 @@ if test "x$1" != "x"; then
     if test "x${1#--prefix=}" != "x$1"; then
         # echo "Found --prefix in input args.  Setting prefix directory."
         prefix=${1#--prefix=}
+        shift
     else
         # echo "Found unrecognized parameter in input args."
         #  Just use the default prefix dir.
@@ -21,7 +22,27 @@ else
     prefix=/usr/local
 fi
 
-sed -e "s#/usr/local#$prefix#" ../Makefile.template > Makefile
+libtool=no
+# FIXME: use $#
+if test "x$1" != "x"; then
+    if test "x--with-libtool" == "x$1"; then
+	# echo "Found --with-libtool in input args."
+	libtool=yes
+    fi
+fi
+
+if test "$libtool" != "no"; then
+    libtool_true=
+    libtool_false='\#'
+else
+    libtool_true='\#'
+    libtool_false=
+fi
+
+sed -e "s#/usr/local#$prefix#" \
+    -e "s/@LIBTOOL_TRUE@/$libtool_true/" \
+    -e "s/@LIBTOOL_FALSE@/$libtool_false/" \
+    ../Makefile.template > Makefile
 
 #----------------------------------------------------------------
 echo "CCFLAGS = -fPIC \\" >Make.ccflags
@@ -40,24 +61,42 @@ rm -f a.out
 
 echo "-DUNIX -O2 -DNDEBUG -I. -I../include -I../../include -W" >>Make.ccflags
 echo "" >>Make.libs
+
+echo "# configuration, as passed to configure" >>Make.libs
 echo "PREFIX = " $prefix >>Make.libs
+echo "LIBTOOL_TRUE = $libtool_true" >>Make.libs
+echo "LIBTOOL_FALSE = $libtool_false" >>Make.libs
 echo "" >>Make.libs
 
 cat <<CAT_EOF >Make.sys
 #------------------------------------------------------------------------
 VPATH = .:..
 CCC = g++
-TARGET_EXT = .so
+${LIBTOOL_FALSE}INSTALL = cp
+${LIBTOOL_TRUE}INSTALL = libtool --mode=install cp -p
+LIBTOOL = libtool
+${LIBTOOL_FALSE}TARGET_EXT = .so
+${LIBTOOL_TRUE}TARGET_EXT = .la
 
 LDFLAGS = -shared
 
 .SUFFIXES:
-.SUFFIXES: .o .cc
+.SUFFIXES: .lo .o .cc
 .cc.o:; \$(CCC) \$(CXXFLAGS) \$(CPPFLAGS) \$(CCFLAGS) -c \$<
+.cc.lo:
+	\$(LIBTOOL) --mode=compile \$(CCC) \$(CXXFLAGS) \$(CPPFLAGS) \$(CCFLAGS) -c \$< -o \$@
+#------------------------------------------------------------------------
+\${LIBTOOL_FALSE}TARGET_DEPENDS = \$(SRCS:%.cc=%.o) \$(RAW)
+\${LIBTOOL_TRUE}TARGET_DEPENDS = \$(SRCS:%.cc=%.lo) \$(RAW)
+VERSION_INFO = -version-info 0:0:0
 #------------------------------------------------------------------------
 \$(TARGET)\$(TARGET_EXT): \$(TARGET_DEPENDS)
 	rm -f \$@
-	\$(CCC) \$(CXXFLAGS) \$(CPPFLAGS) \$(CCFLAGS) \$(OBJS) \$(LIBS) \$(LDFLAGS) -o \$@
+	\$(LIBTOOL_FALSE) \$(CCC) \$(CXXFLAGS) \$(CPPFLAGS) \$(CCFLAGS) \$(OBJS) \$(LIBS) \$(LDFLAGS) -o \$@
+	\$(LIBTOOL_TRUE) \$(LIBTOOL) --tag=CXX --mode=link \$(CCC) \\
+	    -Wl,--enable-new-dtags -Wl,-rpath -Wl,/usr/local/lib/gnucap-uf \\
+	    \${VERSION_INFO} -rdynamic -o \$@ \$(LTOBJS) \$(LIBS) \$(LDFLAGS) \\
+	    -rpath /usr/local/lib/gnucap-uf
 #------------------------------------------------------------------------
 CAT_EOF
 
@@ -67,3 +106,4 @@ cat Make.ccflags Make.libs Make.sys >>Make2
 rm  Make.ccflags Make.libs Make.sys
 
 exit 0
+# vim:ts=8:sw=4:noet

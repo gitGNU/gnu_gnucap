@@ -26,6 +26,9 @@
 # The special configurations listed here allow you to do multiple builds
 # from the same source directory, and patch some problems.
 #-----------------------------------------------------------------------------
+LIBTOOL_TRUE=@LIBTOOL_TRUE@
+LIBTOOL_FALSE=@LIBTOOL_FALSE@
+#-----------------------------------------------------------------------------
 # The default is to use the makefile built by "configure"
 default: nothing
 	-mkdir O

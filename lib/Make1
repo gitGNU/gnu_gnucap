@@ -68,10 +68,10 @@ DISTFILES = $(RAW) $(GENERATED_DIST) $(IMPORTED_DIST)
 SRCS = $(IMPORTED_SRCS) $(GENERATED_SRCS) $(RAW_SRCS)
 HDRS = $(RAW_HDRS) $(GENERATED_HDRS) $(IMPORTED_HDRS)
 OBJS = ${SRCS:.cc=.o}
-TARGET_DEPENDS = $(OBJS) $(RAW) 
+LTOBJS = ${SRCS:.cc=.lo}
 #------------------------------------------------------------------------
 #------------------------------------------------------------------------
-MOSTLYCLEANFILES = $(OBJS) $(GENERATED)
+MOSTLYCLEANFILES = $(OBJS) $(LTOBJS) $(GENERATED)
 CLEANFILES = $(MOSTLYCLEANFILES)
 DISTCLEANFILES = $(CLEANFILES)
 MAINTAINERCLEANFILES = $(DISTCLEANFILES)
