@@ -24,7 +24,6 @@ VPATH = .:..
 # Standard base for g++.
 
 CCC = g++
-LIBTOOL = libtool
 TARGET_EXT = .so
 
 CCFLAGS = \
@@ -44,8 +43,7 @@ LDFLAGS = -shared
 #------------------------------------------------------------------------
 $(TARGET)$(TARGET_EXT): $(TARGET_DEPENDS)
 	rm -f $@
-	${LIBTOOL_FALSE}$(CCC) $(CCFLAGS) $(OBJS) $(LIBS) $(LDFLAGS) -o $@
-	${LIBTOOL_TRUE}$(LIBTOOL) $(CCFLAGS) $(OBJS) $(LIBS) $(LDFLAGS) -o $@
+	$(CCC) $(CCFLAGS) $(OBJS) $(LIBS) $(LDFLAGS) -o $@ 
 #------------------------------------------------------------
 # If you are porting and using g++, you should use this file as a start,
 #	for a "release" version, optimized with run-time tracing removed.
