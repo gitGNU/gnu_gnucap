@@ -25,7 +25,7 @@ AC_PREREQ(2.64)
 # this is any file in the source directory
 # used as a check to be sure we found it
 
-AC_INIT([gnucap], [2013-04-23])
+AC_INIT([gnucap], [20160724])
 AM_INIT_AUTOMAKE([-Wno-portability -Wall silent-rules])
 AC_CONFIG_MACRO_DIR([m4])
 AM_CONFIG_HEADER([config.h])
