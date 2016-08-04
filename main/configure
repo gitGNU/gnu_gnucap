@@ -30,11 +30,15 @@ pkglibdir=$prefix/lib
 CXX=${CXX-g++}
 
 sed -e "s#@prefix@#$prefix#" \
+    -e "s#@exec_prefix@#$prefix#" \
     -e "s#@libdir@#$prefix/lib#" \
+    -e "s#@includedir@#$\{prefix\}/include#" \
+    -e "s#@datarootdir@#$\{prefix\}/share/gnucap#" \
     -e "s#@pkglibdir@#$pkglibdir#" \
     -e "s#@CXXFLAGS@#$CCFLAGS#" \
     -e "s#@LIBS@#-lgnucap#" \
     -e "s#@CXX@#$CXX#" < gnucap-conf.in > gnucap-conf
+chmod +x gnucap-conf
 #----------------------------------------------------------------
 echo "CCFLAGS = \\" >Make.ccflags
 echo "-DUNIX -O2 -DNDEBUG -I. -I../include -I../../include -W" >>Make.ccflags
