@@ -1,0 +1,15 @@
+
+* g++ -I../include -fPIC -shared f_strlen.cc -o f_strlen.so
+.load ./f_strlen.so
+
+.param p0 = 'strlen("abcdef")+3'
+.param p1 = exp("x")
+.param p2 = 'exp("x") + p1'
+.param p3 = 'exp("x) + p1'
+
+.param
+
+.eval p0
+.eval p1
+
+.end

@@ -1,0 +1,17 @@
+Gnucap : The Gnu Circuit Analysis Package
+Never trust any version less than 1.0
+Copyright 1982-2013, Albert Davis
+Gnucap comes with ABSOLUTELY NO WARRANTY
+This is free software, and you are welcome
+to redistribute it under the terms of 
+the GNU General Public License, version 3 or later.
+See the file "COPYING" for details.
+main version: traces-1 2016.08.11
+core-lib version: traces-1 2016.08.11
+default plugins: traces-1 2016.08.11
+ 
+ p0=strlen("abcdef")+3 p1=exp("x") p2=exp("x") + p1 p3=exp("x) + p1
+p0= 9.
+parameter exp("x") not specified, using default
+parameter exp("x") value is "NOT_INPUT"
+p1= 0.

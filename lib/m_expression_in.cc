@@ -91,9 +91,8 @@ void Expression::leaf(CS& File)
   Name_String name(File);
   if (File.peek() == '"') {untested();
     Quoted_String name(File);
-    push_back(new Token_SYMBOL(name, ""));
+    push_back(new Token_SYMBOL(name, "")); // Token_STRING?
     // do not put constants in symbol table
-    return;
   }else if (!File.stuck(&here)) {
     arglist(File);
     push_back(new Token_SYMBOL(name, ""));
