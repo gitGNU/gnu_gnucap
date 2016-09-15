@@ -25,7 +25,7 @@ AC_PREREQ(2.64)
 # this is any file in the source directory
 # used as a check to be sure we found it
 
-AC_INIT([gnucap], [2013-04-23])
+AC_INIT([gnucap], [20160724])
 AM_INIT_AUTOMAKE([-Wno-portability -Wall silent-rules])
 AC_CONFIG_MACRO_DIR([m4])
 AM_CONFIG_HEADER([config.h])
@@ -65,6 +65,9 @@ AS_IF([test x"$GIT" = "xyes" && test -d $srcdir/.git],
       [have_git_repo=yes],
       [have_git_repo=no])
 AC_MSG_RESULT([$have_git_repo])
+
+WHICH_MAKE=`which make`
+AC_SUBST([WHICH_MAKE])
 
 AH_TEMPLATE(HAVE_GIT_REPO, "whether this is built from git")
 AH_TEMPLATE(GIT_BRANCH, "the current branch")
@@ -178,24 +181,11 @@ for i in `shopt -s nullglob; echo extern/*`; do
 	AS_IF([test -d $i -a -x $i/configure], [subdirs="$subdirs $i"])
 done
 
-#AC_OUTPUT([
-#	Makefile
-#	doc/Makefile
-#	examples/Makefile
-#	man/Makefile
-#	man/Addmodel/Makefile
-#	man/Behavior/Makefile
-#	man/Circuit/Makefile
-#	man/Commands/Makefile
-#	man/Tech/Makefile
-#	modelgen/Makefile
-#	src/Makefile
-#	])
-
-AC_CONFIG_FILES([gnucap-conf], [chmod +x gnucap-conf])
+AC_CONFIG_FILES([gnucap.mk], [chmod +x gnucap.mk])
+AC_CONFIG_FILES([main/gnucap-conf], [chmod +x main/gnucap-conf])
 AC_CONFIG_FILES([main/gnucap], [chmod +x main/gnucap])
 
-AC_OUTPUT([
+AC_CONFIG_FILES([
 	GNUmakefile
 	apps/Makefile
 	include/Makefile
@@ -205,6 +195,8 @@ AC_OUTPUT([
 	tests/Makefile
 	])
 
+AC_CONFIG_COMMANDS([default])
+AC_OUTPUT
 
 plugindir=$libdir/$package
 

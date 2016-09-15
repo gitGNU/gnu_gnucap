@@ -1,4 +1,4 @@
-/*$Id: s_tr_set.cc 2014/07/04 al $ -*- C++ -*-
+/*$Id: s_tr_set.cc 2016/03/25 al $ -*- C++ -*-
  * Copyright (C) 2001 Albert Davis
  * Author: Albert Davis <aldavis@gnu.org>
  *
@@ -21,7 +21,7 @@
  *------------------------------------------------------------------
  * set up transient and fourier analysis
  */
-//testing=script 2014.07.04
+//testing=script 2016.03.25
 #include "u_sim_data.h"
 #include "u_prblst.h"
 #include "ap.h"
@@ -45,7 +45,7 @@ void TRANSIENT::setup(CS& Cmd)
     Cmd >> arg1;
     if (Cmd.match1("'\"({") || Cmd.is_float()) {
       Cmd >> arg2;
-    }else{untested();
+    }else{
     }
     if (Cmd.match1("'\"({") || Cmd.is_float()) {
       Cmd >> arg3;
@@ -69,7 +69,7 @@ void TRANSIENT::setup(CS& Cmd)
 	_tstart = arg1;			    /* _tstart _tstop _tstep */
 	_tstop  = arg2;				
 	_tstep  = arg3;
-      }else{untested(); 		    /* spice (illogical) order */
+      }else{				    /* spice (illogical) order */
 	_tstart = arg3;		    	    /* _tstep _tstop _tstart */
 	_tstop  = arg2;
 	_tstep  = arg1;
@@ -91,14 +91,14 @@ void TRANSIENT::setup(CS& Cmd)
 	_tstop  = arg2;
 	_tstep  = arg1;
       }
-    }else{untested();itested();
+    }else{				    /* 1 arg */
       assert(arg1.has_hard_value());
       arg1.e_val(0.,_scope);
-      if (arg1 > _sim->_last_time) {untested();	    /* 1 arg: _tstop */
+      if (arg1 > _sim->_last_time) {	    /* 1 arg: _tstop */
 	_tstart = _sim->_last_time;
 	_tstop  = arg1;
 	/* _tstep unchanged */
-      }else if (arg1 == 0.) {untested();itested();	    /* 1 arg: _tstart */
+      }else if (arg1 == 0.) {untested();    /* 1 arg: _tstart */
 	double oldrange = _tstop - _tstart;
 	_tstart = 0.;
 	_tstop  = oldrange;
@@ -137,7 +137,7 @@ void TRANSIENT::setup(CS& Cmd)
 
   if (!_tstep.has_good_value()) {untested();
     throw Exception("transient: time step is required");
-  }else if (_tstep==0.) {untested();itested();
+  }else if (_tstep==0.) {untested();
     throw Exception("time step = 0");
   }else{
   }

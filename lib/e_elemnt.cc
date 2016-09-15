@@ -1,4 +1,4 @@
-/*$Id: e_elemnt.cc,v 26.138 2013/04/24 03:03:11 al Exp $ -*- C++ -*-
+/*$Id: e_elemnt.cc 2016/03/25 al $ -*- C++ -*-
  * Copyright (C) 2001 Albert Davis
  * Author: Albert Davis <aldavis@gnu.org>
  *
@@ -83,7 +83,7 @@ void ELEMENT::precalc_last()
 
   //BUG// This is needed for AC analysis without doing op (or dc or tran ...) first.
   // Something like it should be moved to ac_begin.
-  if (_sim->is_first_expand()) {
+  if (_sim->has_op() == s_NONE) {
     _y[0].x  = 0.;
     _y[0].f0 = LINEAR;
     _y[0].f1 = value();
@@ -107,23 +107,29 @@ void ELEMENT::tr_begin()
 /*--------------------------------------------------------------------------*/
 void ELEMENT::tr_restore()
 {
-  if (_time[0] > _sim->_time0) {itested();
-    for (int i=0  ; i<OPT::_keep_time_steps-1; ++i) {itested();
+  if (_time[0] > _sim->_time0) {untested();
+    // _freezetime
+    incomplete();
+    //BUG// wrong values in _time[]
+    for (int i=0  ; i<OPT::_keep_time_steps-1; ++i) {untested();
       _time[i] = _time[i+1];
       _y[i] = _y[i+1];
     }
     _time[OPT::_keep_time_steps-1] = 0.;
     _y[OPT::_keep_time_steps-1]    = FPOLY1(0., 0., 0.);
   }else if (_time[0] == _sim->_time0) {
-  }else{untested();
+    // the usual continue where the last one left off
+  }else{unreachable();
+    // skipping ahead, not implemented
   }
 
   //assert(_time[0] == _sim->_time0);
-  if (_time[0] != _sim->_time0) {itested();
+  if (_time[0] != _sim->_time0) {untested();
     error(bDANGER, "//BUG// restore time mismatch.  last=%g, using=%g\n",
 	  _time[0], _sim->_time0);
     //BUG// happens when continuing after a ^c,
     // when the last step was not printed
+    //BUG// also happens with _freezetime
     // _time[0] is the non-printed time.  _sim->_time0 is the printed time.
   }else{
   }
@@ -375,7 +381,7 @@ XPROBE ELEMENT::ac_probe_ext(const std::string& x)const
   }else if (Umatch(x, "r ")) {			/* complex "resistance" */
     if (admittance == 0.) {untested();
       return XPROBE(MAXDBL);
-    }else{untested();
+    }else{
       return XPROBE(1. / admittance);
     }
   }else if (Umatch(x, "z ")) {			/* port impedance */

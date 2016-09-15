@@ -1,4 +1,4 @@
-/*$Id: d_subckt.cc,v 26.138 2013/04/24 03:03:11 al Exp $ -*- C++ -*-
+/*$Id: d_subckt.cc  2016/09/11  $ -*- C++ -*-
  * Copyright (C) 2001 Albert Davis
  * Author: Albert Davis <aldavis@gnu.org>
  *
@@ -101,17 +101,18 @@ void COMMON_SUBCKT::precalc_first(const CARD_LIST* Scope)
 {
   assert(Scope);
   COMMON_COMPONENT::precalc_first(Scope);
-
-  for (PARAM_LIST::iterator i = _params.begin(); i != _params.end(); ++i) {
-    i->second.e_val(NOT_INPUT,Scope);
-  }
   _mfactor = _params.deep_lookup("m");
+  //BUG//  _mfactor must be in precalc_first
 }
 /*--------------------------------------------------------------------------*/
 void COMMON_SUBCKT::precalc_last(const CARD_LIST* Scope)
 {
   assert(Scope);
   COMMON_COMPONENT::precalc_last(Scope);
+
+  for (PARAM_LIST::iterator i = _params.begin(); i != _params.end(); ++i) {
+    i->second.e_val(NOT_INPUT,Scope);
+  }
 }
 /*--------------------------------------------------------------------------*/
 MODEL_SUBCKT::MODEL_SUBCKT()
@@ -140,7 +141,7 @@ MODEL_SUBCKT::~MODEL_SUBCKT()
 }
 /*--------------------------------------------------------------------------*/
 CARD* MODEL_SUBCKT::clone_instance()const
-{itested();
+{
   DEV_SUBCKT* new_instance = dynamic_cast<DEV_SUBCKT*>(p1.clone());
   new_instance->_parent = this;
   return new_instance;
@@ -189,7 +190,7 @@ void DEV_SUBCKT::expand()
   assert(pl);
   c->_params.set_try_again(pl);
 
-  renew_subckt(_parent, this, scope(), &(c->_params));
+  renew_subckt(_parent, &(c->_params));
   subckt()->expand();
 }
 /*--------------------------------------------------------------------------*/
