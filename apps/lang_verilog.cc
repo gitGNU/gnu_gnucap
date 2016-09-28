@@ -299,13 +299,16 @@ COMPONENT* LANG_VERILOG::parse_instance(CS& cmd, COMPONENT* x)
 }
 /*--------------------------------------------------------------------------*/
 std::string LANG_VERILOG::find_type_in_string(CS& cmd)
-{
+{ untested();
   unsigned here = cmd.cursor();
   std::string type;
   if ((cmd >> "//")) {untested();
     assert(here == 0);
     type = "dev_comment";
-  }else{
+  }else if (cmd.skip1('`')) { untested();
+    cmd >> type;
+    type = '`' + type;
+  }else{ untested();
     cmd >> type;
   }
   cmd.reset(here);
