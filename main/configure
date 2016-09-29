@@ -37,7 +37,11 @@ sed -e "s#@prefix@#$prefix#" \
     -e "s#@pkglibdir@#$pkglibdir#" \
     -e "s#@CXXFLAGS@#$CCFLAGS#" \
     -e "s#@LIBS@#-lgnucap#" \
-    -e "s#@CXX@#$CXX#" < gnucap-conf.in > gnucap-conf
+    -e "s#@CXX@#$CXX#" < gnucap.conf.in > gnucap.conf
+
+sed -e "s#@prefix@#$prefix#" \
+    -e "s#@datarootdir@#$\{prefix\}/share/gnucap#" \
+          gnucap-conf.in > gnucap-conf
 chmod +x gnucap-conf
 #----------------------------------------------------------------
 echo "CCFLAGS = \\" >Make.ccflags
