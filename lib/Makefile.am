@@ -38,6 +38,7 @@ u_parameter.cc u_prblst.cc u_probe.cc u_sim_data.cc u_xprobe.cc \
 d_subckt.cc d_logic.cc d_logicmod.cc \
 e_base.cc e_card.cc e_node.cc e_model.cc e_compon.cc \
 e_elemnt.cc e_ccsrc.cc e_storag.cc e_cardlist.cc \
+e_paramlist.cc \
 bm_cond.cc bm_value.cc bm.cc \
 c__cmd.cc c_attach.cc c_file.cc \
 findbr.cc plot.cc

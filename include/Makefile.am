@@ -28,8 +28,9 @@ spice-wrapper.cc
 #------------------------------------------------------------------------
 RAW_HDRS = \
 ap.h bm.h c_comand.h constant.h d_coment.h d_dot.h d_logic.h \
-d_subckt.h declare.h e_aux.h e_base.h e_card.h e_cardlist.h e_ccsrc.h \
+declare.h e_aux.h e_base.h e_card.h e_cardlist.h e_ccsrc.h \
 e_compon.h e_elemnt.h e_model.h e_node.h e_storag.h e_subckt.h \
+e_paramlist.h \
 globals.h io_.h io_error.h io_trace.h l_compar.h l_denoise.h \
 l_dispatcher.h l_lib.h l_stlextra.h l_timer.h m_base.h m_cpoly.h \
 m_divdiff.h m_expression.h m_interp.h m_matrix.h m_phase.h m_spline.h \
