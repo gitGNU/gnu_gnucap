@@ -25,6 +25,7 @@
 #ifndef AP_H
 #define AP_H
 #include "md.h"
+#include "l_istring.h"
 /*--------------------------------------------------------------------------*/
 INTERFACE char* getcmd(const char*,char*,int);
 /*--------------------------------------------------------------------------*/
@@ -61,9 +62,11 @@ public:
   explicit    CS(STDIN);
   explicit    CS(INC_FILE, const std::string& name);
   explicit    CS(WHOLE_FILE, const std::string& name);
-  explicit    CS(STRING, const std::string& s);
+// needed?  explicit    CS(STRING, const std::string& s);
+  explicit    CS(STRING, const IString& s);
   explicit    CS(const CS& p);
-  CS&	      operator=(const std::string& s);
+  //CS&	      operator=(const std::string& s);
+  CS&	      operator=(const IString& s);
   CS&	      operator=(const CS& p);
   CS&	      get_line(const std::string& prompt);
 	      ~CS()		{if (is_file()) {fclose(_file);}}
@@ -142,6 +145,11 @@ public:
   CS&         operator>>(unsigned& x)	 {x=ctou();return *this;}
   CS&         operator>>(double& x)	 {x=ctof();return *this;}
   CS&	      operator>>(std::string& x) {x=ctos();return *this;}
+#ifdef USE_TRANSITIONAL_ICHAR
+  // IString==std::string, still
+#else
+  CS&	      operator>>(IString& x) {x=ctos();return *this;}
+#endif
 
   // skip (ap_skip.cc) possibly consuming, sets _ok
   CS&	      skip(int c=1) 

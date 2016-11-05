@@ -28,6 +28,7 @@
 #include "u_prblst.h"
 #include "u_xprobe.h"
 #include "e_base.h"
+#include "l_istring.h"
 /*--------------------------------------------------------------------------*/
 static char fix_case(char c)
 {
@@ -67,7 +68,7 @@ bool CKT_BASE::help(CS& Cmd, OMSTREAM& Out)const
 {
   if (help_text() != "") {
     unsigned here = Cmd.cursor();
-    std::string keyword;
+    IString keyword;
     Cmd >> keyword;
     CS ht(CS::_STRING, help_text());
     if (keyword == "") {

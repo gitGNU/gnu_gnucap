@@ -1,0 +1,14 @@
+verilog
+
+parameter ONE=1
+parameter two=ONE+1
+resistor #(two) r(1,2)
+
+list
+
+spice
+.print op r(r)
+.op
+.options noinsensitive
+.op
+.end

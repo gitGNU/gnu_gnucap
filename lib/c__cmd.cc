@@ -48,7 +48,7 @@ void CMD::cmdproc(CS& cmd, CARD_LIST* scope)
   }
 
   unsigned here = cmd.cursor();
-  std::string s;
+  IString s;
 
   // Map possible short names to full ones.
   // If this if/else block is removed, the only loss is the short names.
@@ -108,7 +108,7 @@ void CMD::cmdproc(CS& cmd, CARD_LIST* scope)
 void CMD::command(const std::string& cs, CARD_LIST* scope)
 {
   CS cmd(CS::_STRING, cs); // from string, full command
-  std::string s;
+  IString s;
   cmd >> s;
 
   CMD* c = command_dispatcher[s];

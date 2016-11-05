@@ -42,7 +42,7 @@ void LANGUAGE::parse_top_item(CS& cmd, CARD_LIST* Scope)
   CMD::cmdproc(cmd, Scope);
 }
 /*--------------------------------------------------------------------------*/
-const CARD* LANGUAGE::find_proto(const std::string& Name, const CARD* Scope)
+const CARD* LANGUAGE::find_proto(const IString& Name, const CARD* Scope)
 {
   const CARD* p = NULL;
   if (Scope) {

@@ -25,12 +25,13 @@
 #ifndef U_NODEMAP_H
 #define U_NODEMAP_H
 #include "md.h"
+#include "l_istring.h"
 /*--------------------------------------------------------------------------*/
 class NODE;
 /*--------------------------------------------------------------------------*/
 class NODE_MAP {
 private:
-  std::map<const std::string, NODE*> _node_map;
+  std::map<IString, NODE*> _node_map;
   explicit  NODE_MAP(const NODE_MAP&);
 
 public:
@@ -39,8 +40,8 @@ public:
   NODE*     operator[](std::string);
   NODE*     new_node(std::string);
 
-  typedef std::map<const std::string, NODE*>::iterator iterator;
-  typedef std::map<const std::string, NODE*>::const_iterator const_iterator;
+  typedef std::map<IString, NODE*>::iterator iterator;
+  typedef std::map<IString, NODE*>::const_iterator const_iterator;
 
   const_iterator begin()const		{return _node_map.begin();}
   const_iterator end()const		{return _node_map.end();}

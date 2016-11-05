@@ -98,7 +98,7 @@ void Expression::leaf(CS& File)
   Name_String name(File);
   if (!File.stuck(&here)) {
     arglist(File);
-    push_back(new Token_SYMBOL(name, ""));
+    push_back(new Token_SYMBOL(IString(name), ""));
   }else{itested();
     throw Exception_CS("what's this?", File);
   }

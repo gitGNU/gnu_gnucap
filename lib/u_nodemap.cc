@@ -68,16 +68,12 @@ NODE_MAP::~NODE_MAP()
  */
 NODE* NODE_MAP::operator[](std::string s)
 {
-  const_iterator i = _node_map.find(s);
+  const_iterator i = find_in_map(_node_map, s);
   if (i != _node_map.end()) {
     return i->second;
-  }else if (OPT::case_insensitive) {
-    notstd::to_lower(&s);
-    i = _node_map.find(s);
   }else{
     return NULL;
   }
-  return (i != _node_map.end()) ? i->second : NULL;
 }
 /*--------------------------------------------------------------------------*/
 /* return a pointer to a node given a string

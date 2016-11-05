@@ -37,15 +37,11 @@ void PARAM_LIST::parse(CS& cmd)
       break;
     }else{
     }
-    std::string Name;
+    IString Name;
     PARAMETER<double> Value;
     cmd >> Name >> '=' >> Value;
     if (cmd.stuck(&here)) {untested();
       break;
-    }else{
-    }
-    if (OPT::case_insensitive) {
-      notstd::to_lower(&Name);
     }else{
     }
     _pl[Name] = Value;
@@ -121,10 +117,7 @@ void PARAM_LIST::eval_copy(PARAM_LIST& p, const CARD_LIST* scope)
 /*--------------------------------------------------------------------------*/
 const PARAMETER<double>& PARAM_LIST::deep_lookup(std::string Name)const
 {
-  if (OPT::case_insensitive) {
-    notstd::to_lower(&Name);
-  }else{
-  }
+  // hmm, report close misses and ambiguities?
   PARAMETER<double> & rv = _pl[Name];
   if (rv.has_hard_value()) {
     // found a value, return it
