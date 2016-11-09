@@ -145,11 +145,7 @@ public:
   CS&         operator>>(unsigned& x)	 {x=ctou();return *this;}
   CS&         operator>>(double& x)	 {x=ctof();return *this;}
   CS&	      operator>>(std::string& x) {x=ctos();return *this;}
-#ifdef USE_TRANSITIONAL_ICHAR
-  // IString==std::string, still
-#else
   CS&	      operator>>(IString& x) {x=ctos();return *this;}
-#endif
 
   // skip (ap_skip.cc) possibly consuming, sets _ok
   CS&	      skip(int c=1) 

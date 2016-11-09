@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  *------------------------------------------------------------------
- * parameter dictionaries for (in) sensitive lookup
+ * Characters and Strings with optional case (in)sensitivity
  */
 
 #ifndef L_ISTRING_H
@@ -33,7 +33,6 @@
 #include "l_stlextra.h"
 #include "io_trace.h"
 /*--------------------------------------------------------------------------*/
-// TODO: move to l_istring.h (or something like that)
 struct Ichar{
   Ichar() {untested();}
   Ichar(char c) : _c(c) {untested();}
@@ -108,12 +107,12 @@ public:
   IString(const base& s) : base(s) { untested(); }
   IString(const Ichar* s) : base(s) { untested(); }
 public: // construct from conventional types
-  IString(const char* s) : base((Ichar*)s) { untested(); }
-  IString(const std::string& s) : base((Ichar*)s.c_str()) { untested(); }
+  IString(const char* s) : base((const Ichar*)s) { untested(); }
+  IString(const std::string& s) : base((Ichar const*)s.c_str()) { untested(); }
 public: // views
   operator const std::string&() const
   { untested();
-    return reinterpret_cast<std::string const&>(*this); 
+    return reinterpret_cast<std::string const&>(*this);
   }
 };
 /*--------------------------------------------------------------------------*/
@@ -139,38 +138,38 @@ inline bool operator!=(const IString& s, const char* c)
 /*--------------------------------------------------------------------------*/
 inline std::string operator+(IString s, char x)
 { untested();
-  return std::string((char*) s.c_str()) + x;
+  return std::string(s) + x;
 }
 /*--------------------------------------------------------------------------*/
-inline std::string operator+(IString s, const char x[])
+inline std::string operator+(IString s, const char* x)
 { untested();
-  return std::string((char*) s.c_str()) + x;
+  return std::string(s) + x;
 }
 /*--------------------------------------------------------------------------*/
 inline std::string operator+(char x, IString s)
 { untested();
-  return x + std::string((char*) s.c_str());
+  return x + std::string(s);
 }
 /*--------------------------------------------------------------------------*/
 inline std::string operator+(const char* x, IString s)
 { untested();
-  return x + std::string((char*) s.c_str());
+  return x + std::string(s);
 }
 /*--------------------------------------------------------------------------*/
 inline std::string operator+(IString s, std::string x)
 { untested();
-  return std::string((char*) s.c_str()) + x;
+  return std::string(s) + x;
 }
 /*--------------------------------------------------------------------------*/
 inline std::string operator+(std::string x, IString s)
 { untested();
-  return x + std::string((char*) s.c_str());
+  return x + std::string(s);
 }
 /*--------------------------------------------------------------------------*/
 template<class S>
 inline S& operator<< (S& o, const IString& s)
 {untested();
-  o << s.c_str();
+  o << std::string(s);
   return o;
 }
 /*--------------------------------------------------------------------------*/

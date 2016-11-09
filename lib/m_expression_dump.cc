@@ -63,7 +63,7 @@ void Expression::dump(std::ostream& out)const
 	  unreachable();
 	}
       }
-      Token* t = new Token_PARLIST(IString((Ichar*)tmp.c_str()));
+      Token* t = new Token_PARLIST(tmp);
       locals.push_back(t);
       stack.push_back(t);
     }else if (dynamic_cast<const Token_CONSTANT*>(*i)|| dynamic_cast<const Token_SYMBOL*>(*i)) {
@@ -88,7 +88,7 @@ void Expression::dump(std::ostream& out)const
       const Token* t1 = stack.back();
       stack.pop_back();
       std::string tmp('(' + t1->full_name() + ' ' + (**i).name() + ' ' + t2->full_name() + ')');
-      Token* t = new Token_SYMBOL((Ichar*)tmp.c_str(), "");
+      Token* t = new Token_SYMBOL(tmp, "");
       locals.push_back(t);
       stack.push_back(t);
     }else if (dynamic_cast<const Token_UNARY*>(*i)) {
