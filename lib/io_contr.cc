@@ -122,9 +122,9 @@ OMSTREAM* outset(CS& cmd, OMSTREAM* out)
       (*out).attach(fn);
     }else if (cmd.umatch("\\|")) {untested();
       // open a pipe
-      IString command;
+      std::string command;
       cmd >> command;
-      to_pipe = popen((char*)command.c_str(), "w");
+      to_pipe = popen(command.c_str(), "w");
       assert(to_pipe);
       (*out).attach(to_pipe);
 
