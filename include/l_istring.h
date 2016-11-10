@@ -131,8 +131,13 @@ inline std::string operator+(std::string x, IString s)
   return x + std::string(s);
 }
 /*--------------------------------------------------------------------------*/
-template<class S>
-inline S& operator<< (S& o, const IString& s)
+inline std::ostream& operator<< (std::ostream& o, IString s)
+{untested();
+  o << std::string(s);
+  return o;
+}
+/*--------------------------------------------------------------------------*/
+inline OMSTREAM& operator<< (OMSTREAM& o, IString s)
 {untested();
   o << std::string(s);
   return o;
