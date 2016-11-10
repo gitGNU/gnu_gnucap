@@ -63,41 +63,6 @@ struct Ichar{
   char _c;
 };
 /*--------------------------------------------------------------------------*/
-#if 0 // redundant, but recheck
-namespace mystd{
-struct char_traits_Ichar : std::char_traits<Ichar>{
-  typedef char_traits<char> base;
-  typedef Ichar char_type;
-  typedef int int_type;
-  typedef std::streamoff off_type;
-  typedef std::streampos pos_type;
-  static bool lt(const Ichar& a, const Ichar& b)
-  { untested();
-    return a < b; // use operator< defined above
-  }
-  static bool eq(const Ichar& a, const Ichar& b)
-  { untested();
-    return a == b; // use operator== defined above
-  }
-  static int compare (const char_type* p, const char_type* q, size_t n)
-  {untested();
-    while (n--) { untested();
-      if (!eq(*p,*q)) return lt(*p,*q)?-1:1; ++p; ++q;
-    }
-    return 0;
-  }
-  static void copy(Ichar* x, const Ichar* y, size_t s)
-  { untested();
-    base::copy((char*) x, (char*) y, s);
-  }
-  static size_t length(const Ichar* x)
-  { untested();
-    return base::length((char*) x);
-  }
-};
-} // std
-#endif
-/*--------------------------------------------------------------------------*/
 class IString : public std::basic_string<Ichar> { //
 private:
   typedef std::basic_string<Ichar> base;
