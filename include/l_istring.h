@@ -34,7 +34,8 @@
 #include "io_trace.h"
 /*--------------------------------------------------------------------------*/
 struct Ichar{
-  Ichar() {untested();}
+  Ichar() : _c('\0') {untested();}
+  Ichar(const Ichar& c) : _c(c._c) {untested();}
   Ichar(char c) : _c(c) {untested();}
   // Ichar(const Ichar& c) : _c(c._c) {untested();}
   bool operator==(char o) const
