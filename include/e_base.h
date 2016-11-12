@@ -25,6 +25,7 @@
 #ifndef E_BASE_H
 #define E_BASE_H
 #include "md.h"
+#include "l_istring.h"
 /*--------------------------------------------------------------------------*/
 // external
 class XPROBE;
@@ -32,17 +33,20 @@ class WAVE;
 class OMSTREAM;
 class SIM_DATA;
 class PROBE_LISTS;
+class IString;
 /*--------------------------------------------------------------------------*/
 class INTERFACE CKT_BASE {
 private:
   mutable int	_probes;		/* number of probes set */
-  std::string	_label;
+  IString	_label;
 public:
   static SIM_DATA* _sim;
   static PROBE_LISTS* _probe_lists;
   //--------------------------------------------------------------------
 protected: // create and destroy
   explicit CKT_BASE()			  :_probes(0), _label() {}
+// not yet.
+//  explicit CKT_BASE(const IString& s) :_probes(0), _label(s.to_string()) {}
   explicit CKT_BASE(const std::string& s) :_probes(0), _label(s) {}
   explicit CKT_BASE(const CKT_BASE& p)	  :_probes(0), _label(p._label) {}
   virtual  ~CKT_BASE();
@@ -53,20 +57,22 @@ public: // user stuff
   virtual std::string status()const {untested();return "";}
   //--------------------------------------------------------------------
 public: // probes
-	  double      probe_num(const std::string&)const;
-	  double      ac_probe_num(const std::string&)const;
+	  double      probe_num(const IString&)const;
+	  double      ac_probe_num(const IString&)const;
   virtual double      tr_probe_num(const std::string&)const;
   virtual XPROBE      ac_probe_ext(const std::string&)const;
 	  void	      inc_probes()const	{++_probes;}
 	  void	      dec_probes()const	{assert(_probes>0); --_probes;}
 	  bool	      has_probes()const	{return _probes > 0;}
-  static  double      probe(const CKT_BASE*,const std::string&);
-  static  WAVE*	      find_wave(const std::string& probe_name);
+  static  double      probe(const CKT_BASE*,const IString&);
+  static  WAVE*	      find_wave(const IString& probe_name);
   //--------------------------------------------------------------------
 public: // label
-  bool operator!=(const std::string& n)const {return strcasecmp(_label.c_str(),n.c_str())!=0;}
+  bool operator!=(const IString& n)const {untested();
+    return _label != n;
+  }
   virtual const std::string long_label()const;
-  const std::string&  short_label()const {return _label;}
+  const IString& short_label()const {return _label;}
   void	set_label(const std::string& s) {_label = s;}
 };
 /*--------------------------------------------------------------------------*/

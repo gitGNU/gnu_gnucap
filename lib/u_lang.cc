@@ -70,7 +70,7 @@ const CARD* LANGUAGE::find_proto(const IString& Name, const CARD* Scope)
     return p;
   }else{
     assert(!p);
-    std::string s;
+    IString s;
     /* */if (Umatch(Name, "b{uild} "))      {untested(); s = "build";}
     else if (Umatch(Name, "del{ete} "))     {		 s = "delete";}
     else if (Umatch(Name, "fo{urier} "))    {untested(); s = "fourier";}
@@ -104,7 +104,7 @@ void LANGUAGE::new__instance(CS& cmd, BASE_SUBCKT* owner, CARD_LIST* Scope)
   if (cmd.is_end()) {untested();
     // nothing
   }else{
-    std::string type = find_type_in_string(cmd);
+    IString type = IString(find_type_in_string(cmd));
     if (const CARD* proto = find_proto(type, owner)) {
       CARD* new_instance = proto->clone_instance();
       assert(new_instance);
@@ -179,7 +179,7 @@ OMSTREAM& operator<<(OMSTREAM& o, LANGUAGE* x)
   }
 }
 /*--------------------------------------------------------------------------*/
-bool Get(CS& cmd, const std::string& key, LANGUAGE** val)
+bool Get(CS& cmd, const IString& key, LANGUAGE** val)
 {
   if (cmd.umatch(key + " {=}")) {
     LANGUAGE* lang = language_dispatcher[cmd];

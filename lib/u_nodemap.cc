@@ -66,7 +66,7 @@ NODE_MAP::~NODE_MAP()
 /* return a pointer to a node given a string
  * returns NULL pointer if no match
  */
-NODE* NODE_MAP::operator[](std::string s)
+NODE* NODE_MAP::operator[](IString s)
 {
   const_iterator i = find_in_map(_node_map, s);
   if (i != _node_map.end()) {
@@ -79,12 +79,8 @@ NODE* NODE_MAP::operator[](std::string s)
 /* return a pointer to a node given a string
  * creates a new one if it isn't already there.
  */
-NODE* NODE_MAP::new_node(std::string s)
-{  
-  if (OPT::case_insensitive) {
-    notstd::to_lower(&s);
-  }else{
-  }
+NODE* NODE_MAP::new_node(IString s)
+{
   NODE* node = _node_map[s];
 
   // increments how_many() when lookup fails (new s)  

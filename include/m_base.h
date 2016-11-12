@@ -156,7 +156,7 @@ private:
 public:
   /*implicit*/ Float(const Float& p) :Base(), _data(p._data) {untested();}
   explicit Float(CS& file)		{untested();parse(file);}
-  explicit Float(const std::string& s)	{CS cs(CS::_STRING, s); parse(cs);}
+  explicit Float(const IString& s)	{CS cs(CS::_STRING, s.to_string()); parse(cs);}
   Float(double x=NOT_INPUT) :_data(x) {}
   void parse(CS&);
   double value()const			{return _data;}
@@ -209,6 +209,7 @@ public:
   bool  is_NA()const			{untested();return _data == NOT_INPUT;}
 };
 /*--------------------------------------------------------------------------*/
+// Strings can be file names. better don't use Istring
 class String
   :public Base
 {

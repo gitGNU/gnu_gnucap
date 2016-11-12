@@ -91,8 +91,9 @@ void MODEL_LOGIC::precalc_first()
   range = vmax - vmin;
 }
 /*--------------------------------------------------------------------------*/
-void MODEL_LOGIC::set_param_by_index(int i, std::string& value, int offset)
+void MODEL_LOGIC::set_param_by_index(int i, std::string& v, int offset)
 {
+  IString value(v);
   switch (MODEL_LOGIC::param_count() - 1 - i) {
   case 0: delay = value; break;
   case 1: vmax = value; break;
@@ -107,7 +108,7 @@ void MODEL_LOGIC::set_param_by_index(int i, std::string& value, int offset)
   case 10: mr = value; break;
   case 11: mf = value; break;
   case 12: over = value; break;
-  default: MODEL_CARD::set_param_by_index(i, value, offset); break;
+  default: MODEL_CARD::set_param_by_index(i, v, offset); break;
   }
 }
 /*--------------------------------------------------------------------------*/

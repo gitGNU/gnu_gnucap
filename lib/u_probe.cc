@@ -27,7 +27,7 @@
 #include "e_base.h"
 #include "u_probe.h"
 /*--------------------------------------------------------------------------*/
-PROBE::PROBE(const std::string& what,const CKT_BASE *brh)
+PROBE::PROBE(const IString& what, const CKT_BASE *brh)
   :CKT_BASE(),
    _what(what),
    _brh(brh),
@@ -89,7 +89,7 @@ void PROBE::detach()
  * (suitable for printing)
  * It has nothing to do with whether it was selected or not
  */
-const std::string PROBE::label(void)const
+const IString PROBE::label()const
 {
   if (_brh) {
     return _what + '(' + _brh->long_label() + ')';

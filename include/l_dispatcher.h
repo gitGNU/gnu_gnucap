@@ -93,9 +93,9 @@ public:
       }else if ((*_map)[name]) {
 	// duplicate .. stash the old one so we can get it back
 	error(bWARNING, name + ": already installed, replacing\n");
-	IString save_name = name + ":0";
+	IString save_name = name + IString(":0");
 	for (int ii = 0; (*_map)[save_name]; ++ii) {untested();
-	  save_name = name + ":" + to_string(ii);
+	  save_name = name + IString(":") + to_string(ii);
 	}
 	(*_map)[save_name] = (*_map)[name];	
 	error(bWARNING, "stashing as " + save_name + "\n");
@@ -204,6 +204,16 @@ public:
       assert(p);
       _d->install(_name, p);
     }
+    // // same as above, but cannot delegate yet
+    // INSTALL(DISPATCHER<TT>* d, const std::string& name, TT* p) :
+    //   _name(IString(name)),
+    //   _d(d),
+    //   _p(p)
+    // {
+    //   assert(_d);
+    //   assert(p);
+    //   _d->install(_name, p);
+    // }
     
     ~INSTALL() {
       //_d->uninstall(_name);

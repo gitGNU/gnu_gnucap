@@ -681,11 +681,6 @@ void LANG_SPICE::parse_top_item(CS& cmd, CARD_LIST* Scope)
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-static char fix_case(char c)
-{
-  return ((OPT::case_insensitive) ? (static_cast<char>(tolower(c))) : (c));
-}
-/*--------------------------------------------------------------------------*/
 void LANG_SPICE_BASE::print_paramset(OMSTREAM& o, const MODEL_CARD* x)
 {
   assert(x);
@@ -763,7 +758,7 @@ void LANG_SPICE_BASE::print_type(OMSTREAM& o, const COMPONENT* x)
   assert(x);
   if (x->print_type_in_spice()) {
     o << "  " << x->dev_type();
-  }else if (fix_case(x->short_label()[0]) != fix_case(x->id_letter())) {untested();
+  }else if (Ichar(x->short_label()[0]) != Ichar(x->id_letter())) {untested();
     o << "  " << x->dev_type();
   }else{
     // don't print type

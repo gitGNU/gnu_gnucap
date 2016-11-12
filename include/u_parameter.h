@@ -36,7 +36,7 @@ class LANGUAGE;
 /*--------------------------------------------------------------------------*/
 class PARA_BASE {
 protected:
-  std::string _s;
+  IString _s;
   
 public:
   PARA_BASE( ): _s(){}
@@ -48,7 +48,7 @@ public:
   virtual bool	has_good_value()const = 0;
 
   virtual void	parse(CS& cmd) = 0;
-  virtual void	operator=(const std::string& s) = 0;
+  virtual void	operator=(const IString& s) = 0;
 };
 /*--------------------------------------------------------------------------*/
 template <class T>
@@ -75,7 +75,7 @@ public:
     }else if (_s == "") {
       return "NA(" + to_string(_v) + ")";
     }else{
-      return _s;
+      return _s.to_string();
     }
   }
   void	print(OMSTREAM& o)const		{o << string();}
@@ -84,9 +84,15 @@ public:
   void	operator=(const T& v)		{_v = v; _s = "#";}
   //void	operator=(const std::string& s)	{untested();_s = s;}
 
-  void	operator=(const std::string& s)	{
-    if (strchr("'\"{", s[0])) {
-      CS cmd(CS::_STRING, s);
+  void	operator=(const char* s)	{ untested();
+    operator=(IString(s));
+  }
+  void	operator=(const std::string& s)	{ untested();
+    operator=(IString(s));
+  }
+  void	operator=(const IString& s)	{ untested();
+    if (strchr("'\"{", s[0].to_char())) {
+      CS cmd(CS::_STRING, s.to_string());
       _s = cmd.ctos("", "'\"{", "'\"}");
     }else if (s == "NA") {
       _s = "";
@@ -211,14 +217,14 @@ public:
   size_t size()const {return _pl.size();}
   //bool is_empty()const {untested();return _pl.empty();}
   bool	 is_printable(int)const;
-  std::string name(int)const;
+  IString name(int)const;
   std::string value(int)const;
 
   void	eval_copy(PARAM_LIST&, const CARD_LIST*);
   bool  operator==(const PARAM_LIST& p)const {return _pl == p._pl;}
-  const PARAMETER<double>& deep_lookup(std::string)const;
-  const PARAMETER<double>& operator[](std::string i)const {return deep_lookup(i);}
-  void set(std::string, const std::string&);
+  const PARAMETER<double>& deep_lookup(IString)const;
+  const PARAMETER<double>& operator[](IString i)const {return deep_lookup(i);}
+  void set(IString, const IString&);
   void set_try_again(PARAM_LIST* t) {_try_again = t;}
 
   iterator begin() {return _pl.begin();}
@@ -231,14 +237,14 @@ private:
 template <>
 inline bool PARAMETER<bool>::lookup_solve(const bool&, const CARD_LIST*)const
 {
-  CS cmd(CS::_STRING, _s);
+  CS cmd(CS::_STRING, _s.to_string());
   return cmd.ctob();
 }
 /*--------------------------------------------------------------------------*/
 template <class T>
 inline T PARAMETER<T>::lookup_solve(const T& def, const CARD_LIST* scope)const
 {
-  CS cmd(CS::_STRING, _s);
+  CS cmd(CS::_STRING, _s.to_string());
   Expression e(cmd);
   Expression reduced(e, scope);
   T v = T(reduced.eval());
@@ -265,7 +271,7 @@ T PARAMETER<T>::e_val(const T& def, const CARD_LIST* scope)const
   assert(scope);
 
   static int recursion=0;
-  static const std::string* first_name = NULL;
+  static const IString* first_name = NULL;
   if (recursion == 0) {
     first_name = &_s;
   }else{

@@ -36,31 +36,40 @@
 struct Ichar{
   Ichar() : _c('\0') {untested();}
   Ichar(const Ichar& c) : _c(c._c) {untested();}
-  Ichar(char c) : _c(c) {untested();}
-  // Ichar(const Ichar& c) : _c(c._c) {untested();}
-  bool operator==(char o) const
-  { untested();
+  explicit Ichar(char c) : _c(c) {untested();}
+  bool operator==(char o) const { untested();
     if(OPT::case_insensitive){
       return tolower(_c)==tolower(o);
     }else{
       return o == _c;
     }
   }
-  bool operator==(Ichar o) const
-  { untested();
+  bool operator!=(char o) const { untested();
+    return(!operator==(o));
+  }
+  bool operator==(Ichar o) const { untested();
     if(OPT::case_insensitive){
-      return tolower(_c)==tolower(o);
+      return tolower(_c)==tolower(o._c);
     }else{
       return o == _c;
     }
   }
-  bool operator<(const Ichar& o) const
-  { untested();
+  bool operator!=(Ichar o) const { untested();
+    return(!operator==(o));
+  }
+  bool operator<(const Ichar& o) const { untested();
     return((!OPT::case_insensitive && tolower(_c)==tolower(o._c))
       ? _c<o._c : tolower(_c)<tolower(o._c));
   }
-  operator char const&() const{untested(); return _c;}
-  operator char&(){untested(); return _c;}
+  bool operator>(const Ichar& o) const { untested();
+    return((!OPT::case_insensitive && tolower(_c)==tolower(o._c))
+      ? _c>o._c : tolower(_c)>tolower(o._c));
+  }
+  bool operator!() const{ untested();
+    return !_c;
+  }
+  char const& to_char() const{untested(); return _c;}
+private:
   char _c;
 };
 /*--------------------------------------------------------------------------*/
@@ -71,15 +80,41 @@ public:
   IString() { untested(); }
   IString(const IString& s) : base(s) { untested(); }
   IString(const base& s) : base(s) { untested(); }
-  IString(const Ichar* s) : base(s) { untested(); }
-public: // construct from conventional types
+public: // these are better implicit.
   IString(const char* s) : base((const Ichar*)s) { untested(); }
   IString(const std::string& s) : base((Ichar const*)s.c_str()) { untested(); }
-public: // views
-  operator const std::string&() const
+public: // ops
+  IString& operator=(const std::string& s){ untested();
+    base::operator=(IString(s));
+    return *this;
+  }
+  IString& operator=(const char* s){ untested();
+    base::operator=((Ichar const*)s);
+    return *this;
+  }
+  IString& operator+=(const std::string& s){ untested();
+    base::operator+=(IString(s));
+    return *this;
+  }
+public: // more conventional type bridge
+  size_type find(char x, size_type y) const { untested();
+    return base::find(Ichar(x), y);
+  }
+  size_type find(char x) const { untested();
+    return base::find(Ichar(x));
+  }
+  size_type find_first_of(char const* x) const { untested();
+    return base::find_first_of((Ichar const*)x);
+  }
+  std::string const& to_string() const
   { untested();
     return reinterpret_cast<std::string const&>(*this);
   }
+public: // implicit conversion
+//   operator const std::string&() const
+//   { untested();
+//     return reinterpret_cast<std::string const&>(*this);
+//   }
 };
 /*--------------------------------------------------------------------------*/
 inline bool operator==(const IString& s, char c)
@@ -104,43 +139,43 @@ inline bool operator!=(const IString& s, const char* c)
 /*--------------------------------------------------------------------------*/
 inline std::string operator+(IString s, char x)
 { untested();
-  return std::string(s) + x;
+  return s.to_string() + x;
 }
 /*--------------------------------------------------------------------------*/
 inline std::string operator+(IString s, const char* x)
 { untested();
-  return std::string(s) + x;
+  return s.to_string() + x;
 }
 /*--------------------------------------------------------------------------*/
 inline std::string operator+(char x, IString s)
 { untested();
-  return x + std::string(s);
+  return x + s.to_string();
 }
 /*--------------------------------------------------------------------------*/
 inline std::string operator+(const char* x, IString s)
 { untested();
-  return x + std::string(s);
+    return x + s.to_string();
 }
 /*--------------------------------------------------------------------------*/
 inline std::string operator+(IString s, std::string x)
 { untested();
-  return std::string(s) + x;
+  return s.to_string() + x;
 }
 /*--------------------------------------------------------------------------*/
 inline std::string operator+(std::string x, IString s)
 { untested();
-  return x + std::string(s);
+  return x + s.to_string();
 }
 /*--------------------------------------------------------------------------*/
 inline std::ostream& operator<< (std::ostream& o, IString s)
 {untested();
-  o << std::string(s);
+  o << s.to_string();
   return o;
 }
 /*--------------------------------------------------------------------------*/
 inline OMSTREAM& operator<< (OMSTREAM& o, IString s)
 {untested();
-  o << std::string(s);
+  o << s.to_string();
   return o;
 }
 /*--------------------------------------------------------------------------*/

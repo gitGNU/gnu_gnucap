@@ -26,6 +26,8 @@
 #define E_CARDLIST_H
 #include "md.h"
 /*--------------------------------------------------------------------------*/
+class IString;
+/*--------------------------------------------------------------------------*/
 // defined here
 class CARD_LIST;
 /*--------------------------------------------------------------------------*/
@@ -80,15 +82,15 @@ public:
   // return an iterator
   iterator begin()			{return _cl.begin();}
   iterator end()			{return _cl.end();}
-  iterator find_again(const std::string& short_name, iterator);
-  iterator find_(const std::string& short_name) 
+  iterator find_again(const IString& short_name, iterator);
+  iterator find_(const IString& short_name)
 					{return find_again(short_name, begin());}
 
   // return a const_iterator
   const_iterator begin()const		{return _cl.begin();}
   const_iterator end()const		{return _cl.end();}
-  const_iterator find_again(const std::string& short_name, const_iterator)const;
-  const_iterator find_(const std::string& short_name)const
+  const_iterator find_again(const IString& short_name, const_iterator)const;
+  const_iterator find_(const IString& short_name)const
 					{return find_again(short_name, begin());}
 
   // add to it

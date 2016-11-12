@@ -90,7 +90,7 @@ private: // inhibited
   explicit NODE(const NODE& p);
 public:
   explicit NODE(const NODE* p); // u_nodemap.cc:49 (deep copy)
-  explicit NODE(const std::string& s, int n);
+  explicit NODE(const IString& s, int n);
   ~NODE() {}
 
 public: // raw data access (rvalues)
@@ -268,7 +268,7 @@ public:
   NODE*	      n_()	{return _nnn;}
 
   
-  const std::string  short_label()const {return ((n_()) ? (n_()->short_label()) : "?????");}
+  const IString short_label()const {return ((n_()) ? (n_()->short_label()) : "?????");}
   void	set_to_ground(CARD*);
   void	new_node(const std::string&, const CARD*);
   void	new_model_node(const std::string& n, CARD* d);

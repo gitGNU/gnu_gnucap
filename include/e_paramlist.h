@@ -39,7 +39,9 @@ public:
   std::string	name()const		{untested();return "";}
   static int	count()			{untested();return _count;}
 
-  void set_param_by_name(std::string Name, std::string Value) {_params.set(Name, Value);}
+  void set_param_by_name(std::string Name, std::string Value) {
+    _params.set(IString(Name), IString(Value));
+  }
   bool		param_is_printable(int)const;
   std::string	param_name(int)const;
   std::string	param_name(int,int)const;

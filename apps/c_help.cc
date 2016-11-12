@@ -48,7 +48,7 @@ public:
   {
     unsigned tail = Cmd.cursor();
     
-    std::string topic;
+    IString topic;
     Cmd >> topic;
 
     bool did_something = false;

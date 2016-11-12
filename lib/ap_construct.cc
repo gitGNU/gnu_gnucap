@@ -91,7 +91,7 @@ CS::CS(CS::WHOLE_FILE, const std::string& name)
   close(f);
 }
 /*--------------------------------------------------------------------------*/
-CS::CS(CS::STRING, const IString& s)
+CS::CS(CS::STRING, const std::string& s)
   :_file(NULL),
    _name(),
    _cmd(s),
@@ -120,7 +120,7 @@ CS::CS(const CS& p)
 }
 #endif
 /*--------------------------------------------------------------------------*/
-CS& CS::operator=(const IString& s)
+CS& CS::operator=(const std::string& s)
 {untested();
   assert(!_file);
   _cmd = s;

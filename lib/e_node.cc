@@ -121,8 +121,8 @@ NODE::NODE(const NODE* p)
 /*--------------------------------------------------------------------------*/
 /* usual initializing constructor : name and index
  */
-NODE::NODE(const std::string& s, int n)
-  :CKT_BASE(s),
+NODE::NODE(const IString& s, int n)
+  :CKT_BASE(s.to_string()),
    _user_number(n)
    //_flat_number(n)
    //_matrix_number(INVALID_NODE)

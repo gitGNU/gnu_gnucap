@@ -34,13 +34,13 @@ class Token
 private:
   IString _name;
   const Base* _data;
-  std::string _aRgs;
+  IString _aRgs;
 public:
   void parse(CS&) {unreachable();}
 public:
   void dump(std::ostream&)const;
 protected:
-  explicit Token(const IString Name, const Base* Data, const std::string Args)
+  explicit Token(const IString Name, const Base* Data, const IString Args)
     : _name(Name), _data(Data), _aRgs(Args) {}
   explicit Token(const Token& P)
     : Base(), _name(P._name), _data(P._data), _aRgs(P._aRgs) {assert(!_data);}
@@ -51,8 +51,8 @@ delete _data;}else{
   virtual Token*     clone()const = 0;
   const IString&     name()const {return _name;}
   const Base*	     data()const {return _data;}
-  const std::string& aRgs()const {return _aRgs;}
-  const std::string  full_name()const {return name() + aRgs();}
+  const IString& aRgs()const {return _aRgs;}
+  const IString  full_name()const {return name() + aRgs();}
   virtual void	     stack_op(Expression*)const {unreachable();}
   bool operator==(const Token& P) {return (typeid(*this)==typeid(P))
       && (data()==P.data()) && (name()==P.name()) && (aRgs()==P.aRgs());}
@@ -61,7 +61,7 @@ delete _data;}else{
 class Token_SYMBOL : public Token
 {
 public:
-  explicit Token_SYMBOL(const IString Name, const std::string Args)
+  explicit Token_SYMBOL(IString Name, const IString Args)
     : Token(Name, NULL, Args) {}
   explicit Token_SYMBOL(const Token_SYMBOL& P) : Token(P) {untested();}
   Token* clone()const {untested();return new Token_SYMBOL(*this);}
@@ -71,7 +71,7 @@ public:
 class Token_BINOP : public Token
 {
 public:
-  explicit Token_BINOP(const IString Name)
+  explicit Token_BINOP(const std::string Name)
     : Token(Name, NULL, "") {}
   explicit Token_BINOP(const Token_BINOP& P) : Token(P) {}
   Token* clone()const {return new Token_BINOP(*this);}
@@ -82,7 +82,7 @@ public:
 class Token_STOP : public Token
 {
 public:
-  explicit Token_STOP(const IString Name)
+  explicit Token_STOP(const std::string Name)
     : Token(Name, NULL, "") {}
   explicit Token_STOP(const Token_STOP& P) : Token(P) {}
   Token* clone()const {return new Token_STOP(*this);}
@@ -92,7 +92,7 @@ public:
 class Token_PARLIST : public Token
 {
 public:
-  explicit Token_PARLIST(const IString Name)
+  explicit Token_PARLIST(const std::string Name)
     : Token(Name, NULL, "") {}
   explicit Token_PARLIST(const Token_PARLIST& P) : Token(P) {untested();}
   Token* clone()const {untested();return new Token_PARLIST(*this);}
@@ -102,7 +102,7 @@ public:
 class Token_UNARY : public Token
 {
 public:
-  explicit Token_UNARY(const IString Name)
+  explicit Token_UNARY(const std::string Name)
     : Token(Name, NULL, "") {}
   explicit Token_UNARY(const Token_UNARY& P) : Token(P) {untested();}
   Token* clone()const {untested();return new Token_UNARY(*this);}
@@ -113,7 +113,7 @@ public:
 class Token_CONSTANT : public Token
 {
 public:
-  explicit Token_CONSTANT(const IString Name, const Base* Data, const std::string Args)
+  explicit Token_CONSTANT(const IString Name, const Base* Data, const IString Args)
     : Token(Name, Data, Args) {}
   explicit Token_CONSTANT(const Token_CONSTANT& P) : Token(P) {untested();}
   Token* clone()const {untested();return new Token_CONSTANT(*this);}

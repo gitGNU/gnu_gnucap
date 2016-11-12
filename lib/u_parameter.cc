@@ -72,7 +72,7 @@ bool PARAM_LIST::is_printable(int i)const
   return false;
 }
 /*--------------------------------------------------------------------------*/
-std::string PARAM_LIST::name(int i)const
+IString PARAM_LIST::name(int i)const
 {
   //BUG// ugly linear search
   int i_try = 0;
@@ -115,7 +115,7 @@ void PARAM_LIST::eval_copy(PARAM_LIST& p, const CARD_LIST* scope)
   }
 }
 /*--------------------------------------------------------------------------*/
-const PARAMETER<double>& PARAM_LIST::deep_lookup(std::string Name)const
+const PARAMETER<double>& PARAM_LIST::deep_lookup(IString Name)const
 {
   // hmm, report close misses and ambiguities?
   PARAMETER<double> & rv = _pl[Name];
@@ -133,12 +133,8 @@ const PARAMETER<double>& PARAM_LIST::deep_lookup(std::string Name)const
   }
 }
 /*--------------------------------------------------------------------------*/
-void PARAM_LIST::set(std::string Name, const std::string& Value)
+void PARAM_LIST::set(IString Name, const IString& Value)
 {
-  if (OPT::case_insensitive) {
-    notstd::to_lower(&Name);
-  }else{
-  }
   _pl[Name] = Value;
 }
 /*--------------------------------------------------------------------------*/

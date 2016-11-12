@@ -33,10 +33,10 @@ class CMD_MEASURE : public CMD {
 public:
   void do_it(CS& Cmd, CARD_LIST* Scope)
   {
-    std::string assign_to, function;
+    IString assign_to, function;
     Cmd >> assign_to >> '=' >> function >> '(';
     if (FUNCTION* f = measure_dispatcher[function]) {
-      std::string value = f->eval(Cmd, Scope);
+      IString value = IString(f->eval(Cmd, Scope));
       if (!Cmd.skip1b(')')) {
 	Cmd.warn(bWARNING, "need )");
       }else{
@@ -47,7 +47,7 @@ public:
       PARAM_LIST* pl = Scope->params();
       pl->set(assign_to, value);
     }else{
-      throw Exception_No_Match(function);
+      throw Exception_No_Match(function.to_string());
     }
   }
 } p0;

@@ -62,11 +62,11 @@ public:
   explicit    CS(STDIN);
   explicit    CS(INC_FILE, const std::string& name);
   explicit    CS(WHOLE_FILE, const std::string& name);
-// needed?  explicit    CS(STRING, const std::string& s);
-  explicit    CS(STRING, const IString& s);
-  explicit    CS(const CS& p);
-  //CS&	      operator=(const std::string& s);
-  CS&	      operator=(const IString& s);
+  explicit    CS(STRING, const std::string& s);
+//  explicit    CS(STRING, const IString& s);
+ // explicit    CS(const CS& p);
+  CS&	      operator=(const std::string& s);
+//  CS&	      operator=(const IString& s);
   CS&	      operator=(const CS& p);
   CS&	      get_line(const std::string& prompt);
 	      ~CS()		{if (is_file()) {fclose(_file);}}
@@ -100,7 +100,11 @@ public:
   CS&         warn(int i, const std::string& s)	{return warn(i,cursor(), s);}
 
   // string matching (ap_match.cc) possibly consuming, sets _ok
-  CS&	      umatch(const std::string&);
+//   CS&	      umatch(const IString&);
+//   { untested();
+//     return umatch(IString(s));
+//   }
+  CS&	      umatch(const std::string& s);
   CS&	      scan(const std::string&);
   std::string last_match()const;
   std::string trimmed_last_match(const std::string& = " ,=;")const;

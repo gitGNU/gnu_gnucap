@@ -26,6 +26,7 @@
 #define U_PRBLST_H
 #include "mode.h"
 #include "u_probe.h"
+#include "l_istring.h"
 /*--------------------------------------------------------------------------*/
 class CARD_LIST;
 /*--------------------------------------------------------------------------*/
@@ -41,7 +42,7 @@ public:
 
   typedef _container::iterator	     iterator;
   typedef _container::const_iterator const_iterator;
-  void	   listing(const std::string&)const;
+  void	   listing(const IString&)const;
   void     clear();
 
   void	   remove_list(CS&);
@@ -54,9 +55,9 @@ public:
   iterator end()		{return bag.end();}
 private:
   void	  erase(iterator b, iterator e) {bag.erase(b,e);}
-  void	  push_new_probe(const std::string& param, const CKT_BASE* object);
-  bool    add_branches(const std::string&,const std::string&,const CARD_LIST*);
-  void    add_all_nodes(const std::string&);
+  void	  push_new_probe(const IString& param, const CKT_BASE* object);
+  bool    add_branches(const IString&, const IString&, const CARD_LIST*);
+  void    add_all_nodes(const IString&);
 };
 /*--------------------------------------------------------------------------*/
 class INTERFACE PROBE_LISTS {

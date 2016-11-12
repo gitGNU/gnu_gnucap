@@ -39,7 +39,7 @@ void PROBE_LISTS::purge(CKT_BASE* brh)
   }
 }
 /*--------------------------------------------------------------------------*/
-void PROBELIST::listing(const std::string& label)const
+void PROBELIST::listing(const IString& label)const
 {
   IO::mstdout.form("%-7s", label.c_str());
   for (const_iterator p = begin();  p != end();  ++p) {
@@ -62,11 +62,11 @@ void PROBELIST::clear(void)
  * called by STL remove, below
  * both are needed to support different versions of STL
  */
-bool operator==(const PROBE& prb, const std::string& par)
+bool operator==(const PROBE& prb, const IString& par)
 {
   return wmatch(prb.label(), par);
 }
-bool operator!=(const PROBE& prb, const std::string& par)
+bool operator!=(const PROBE& prb, const IString& par)
 {untested();
   //return !wmatch(prb.label(), par);
   return !(prb == par);
@@ -78,7 +78,7 @@ bool operator!=(const PROBE& prb, const std::string& par)
 void PROBELIST::remove_list(CS& cmd)
 { 
   unsigned mark = cmd.cursor();
-  std::string parameter(cmd.ctos(TOKENTERM) + '(');
+  IString parameter(cmd.ctos(TOKENTERM) + '(');
   int paren = cmd.skip1b('(');
   parameter += cmd.ctos(TOKENTERM) + ')';
   paren -= cmd.skip1b(')');
@@ -130,7 +130,7 @@ void PROBELIST::remove_one(CKT_BASE *brh)
 void PROBELIST::add_list(CS& cmd)
 {
   int oldcount = size();
-  std::string what(cmd.ctos(TOKENTERM));/* parameter */
+  IString what(cmd.ctos(TOKENTERM));/* parameter */
   if (what.empty()) {untested();
     cmd.warn(bWARNING, "need a probe");
   }else{
@@ -188,18 +188,18 @@ void PROBELIST::add_list(CS& cmd)
   }
 }
 /*--------------------------------------------------------------------------*/
-void PROBELIST::push_new_probe(const std::string& param,const CKT_BASE* object)
+void PROBELIST::push_new_probe(const IString& param, const CKT_BASE* object)
 {
   bag.push_back(PROBE(param, object));
 }
 /*--------------------------------------------------------------------------*/
-void PROBELIST::add_all_nodes(const std::string& what)
+void PROBELIST::add_all_nodes(const IString& what)
 {
   for (NODE_MAP::const_iterator
        i = CARD_LIST::card_list.nodes()->begin();
        i != CARD_LIST::card_list.nodes()->end();
        ++i) {
-    if ((i->first != "0") && (i->first.find('.') == std::string::npos)) {
+    if ((i->first != "0") && (i->first.find('.') == IString::npos)) {
       NODE* node = i->second;
       assert (node);
       push_new_probe(what, node);
@@ -211,19 +211,19 @@ void PROBELIST::add_all_nodes(const std::string& what)
 /* add_branches: add net elements to probe list
  * 	all matching a label with wildcards
  */
-bool PROBELIST::add_branches(const std::string&device, 
-			     const std::string&param,
+bool PROBELIST::add_branches(const IString& device,
+			     const IString& param,
 			     const CARD_LIST* scope)
 {
   assert(scope);
   bool found_something = false;
 
-  std::string::size_type dotplace = device.find_first_of(".");
-  if (dotplace != std::string::npos) {
+  IString::size_type dotplace = device.find_first_of(".");
+  if (dotplace != IString::npos) {
     // has a dot, look deeper
     { // forward (Verilog style)
-      std::string dev = device.substr(dotplace+1, std::string::npos);
-      std::string container = device.substr(0, dotplace);
+      IString dev = device.substr(dotplace+1, IString::npos);
+      IString container = device.substr(0, dotplace);
       for (CARD_LIST::const_iterator
 	     i = scope->begin();  i != scope->end();  ++i) {
 	CARD* card = *i;
@@ -236,9 +236,9 @@ bool PROBELIST::add_branches(const std::string&device,
       }
     }
     { // reverse (ACS style)
-      dotplace = device.find_last_of(".");
-      std::string container = device.substr(dotplace+1, std::string::npos);
-      std::string dev = device.substr(0, dotplace);
+      dotplace = device.find_last_of(Ichar('.'));
+      IString container = device.substr(dotplace+1, IString::npos);
+      IString dev = device.substr(0, dotplace);
       for (CARD_LIST::const_iterator
 	     i = scope->begin();  i != scope->end();  ++i) {
 	CARD* card = *i;
@@ -252,7 +252,7 @@ bool PROBELIST::add_branches(const std::string&device,
     }
   }else{
     // no dots, look here
-    if (device.find_first_of("*?") != std::string::npos) {
+    if (device.find_first_of("*?") != IString::npos) {
       // there's a wild card.  do linear search for all
       { // nodes
 	for (NODE_MAP::const_iterator 

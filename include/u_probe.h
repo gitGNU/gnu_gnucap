@@ -26,15 +26,16 @@
 #define U_PROBE_H
 #include "e_base.h"
 #include "l_compar.h" // inorder
+#include "l_istring.h"
 /*--------------------------------------------------------------------------*/
 class INTERFACE PROBE : public CKT_BASE {
 private:
-  std::string	_what;    
+  IString _what;
   const CKT_BASE* _brh;
   double	_lo,_hi;
   explicit  PROBE() {unreachable(); incomplete();}
 public:
-  explicit  PROBE(const std::string& what, const CKT_BASE *brh);
+  explicit  PROBE(const IString& what, const CKT_BASE *brh);
 	    PROBE(const PROBE& p);
 	    ~PROBE()				{detach();}
 
@@ -42,7 +43,7 @@ public:
   void	    detach();
   PROBE&    operator=(const PROBE& p);
 
-  const std::string label()const;
+  const IString   label()const;
   double	  value()const;
   const CKT_BASE* object()const	 {return _brh;}
   double	  lo()const	 {return _lo;}
