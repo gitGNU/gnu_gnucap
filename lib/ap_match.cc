@@ -55,9 +55,6 @@ CS& CS::umatch(const std::string& s)
     }else if (peek() == *str2) {
       skip();
       ++str2;
-    }else if ((OPT::case_insensitive) && (tolower(peek()) == tolower(*str2))) {
-      skip();
-      ++str2;
     }else if (optional) {
       while (*str2 != '}') {
 	++str2;

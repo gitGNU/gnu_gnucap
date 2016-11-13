@@ -36,9 +36,6 @@ class CARD_LIST;
 class INTERFACE LANGUAGE : public CKT_BASE {
 public:
   const CARD* find_proto(const IString&, const CARD*);
-  const CARD* find_proto(const std::string&s, const CARD*c){ untested();
-    return find_proto(IString(s), c);
-  }
 public:
   void new__instance(CS& cmd, BASE_SUBCKT* owner, CARD_LIST* Scope);
 

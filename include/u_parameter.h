@@ -49,6 +49,9 @@ public:
 
   virtual void	parse(CS& cmd) = 0;
   virtual void	operator=(const IString& s) = 0;
+  void	operator=(const std::string& s)	{ untested();
+    operator=(IString(s));
+  }
 };
 /*--------------------------------------------------------------------------*/
 template <class T>
@@ -85,9 +88,6 @@ public:
   //void	operator=(const std::string& s)	{untested();_s = s;}
 
   void	operator=(const char* s)	{ untested();
-    operator=(IString(s));
-  }
-  void	operator=(const std::string& s)	{ untested();
     operator=(IString(s));
   }
   void	operator=(const IString& s)	{ untested();
