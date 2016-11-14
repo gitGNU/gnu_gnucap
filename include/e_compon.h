@@ -99,7 +99,7 @@ public:
   virtual std::string param_value(int)const;
   virtual void set_param_by_name(std::string, std::string);
   void Set_param_by_name(std::string, std::string); //BUG// see implementation
-  virtual void set_param_by_index(int, std::string&, int);
+  virtual void set_param_by_index(int, std::string /*const*/ &, int);
   virtual int param_count()const {return 4;}
 public:
   virtual void precalc_first(const CARD_LIST*)	{}
@@ -255,7 +255,7 @@ public:	// ports
   //--------------------------------------------------------------------
 public: // parameters
   void set_param_by_name(std::string, std::string);
-  void set_param_by_index(int, std::string&, int);
+  void set_param_by_index(int, std::string /*const*/ &, int);
   int  param_count()const
 	{return ((has_common()) ? (common()->param_count()) : (2 + CARD::param_count()));}
   bool param_is_printable(int)const;
