@@ -306,7 +306,7 @@ bool COMMON_COMPONENT::operator==(const COMMON_COMPONENT& x)const
 }
 /*--------------------------------------------------------------------------*/
 void COMMON_COMPONENT::set_param_by_name(std::string Name, std::string Value)
-{
+{ untested();
   if (has_parse_params_obsolete_callback()) {untested();
     std::string args(Name + "=" + Value);
     CS cmd(CS::_STRING, args); //obsolete_callback
@@ -315,14 +315,14 @@ void COMMON_COMPONENT::set_param_by_name(std::string Name, std::string Value)
       throw Exception_No_Match(Name);
     }else{untested();
     }
-  }else{
+  }else{ untested();
     //BUG// ugly linear search
-    for (int i = param_count() - 1;  i >= 0;  --i) {
-      for (int j = 0;  param_name(i,j) != "";  ++j) {
-	if (Umatch(Name, param_name(i,j) + ' ')) {
+    for (int i = param_count() - 1;  i >= 0;  --i) { untested();
+      for (int j = 0;  param_name(i,j) != "";  ++j) { untested();
+	if (Umatch(Name, param_name(i,j) + ' ')) { untested();
 	  set_param_by_index(i, Value, 0/*offset*/);
 	  return; //success
-	}else{
+	}else{ untested();
 	  //keep looking
 	}
       }
@@ -641,13 +641,13 @@ void COMPONENT::set_value(double v, COMMON_COMPONENT* c)
 }
 /*--------------------------------------------------------------------------*/
 void COMPONENT::set_param_by_name(std::string Name, std::string Value)
-{
-  if (has_common()) {
+{ untested();
+  if (has_common()) { untested();
     COMMON_COMPONENT* c = common()->clone();
     assert(c);
     c->set_param_by_name(Name, Value);
     attach_common(c);
-  }else{
+  }else{ untested();
     CARD::set_param_by_name(Name, Value);
   }
 }

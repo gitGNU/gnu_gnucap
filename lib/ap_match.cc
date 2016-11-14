@@ -29,43 +29,47 @@
  */
 CS& CS::umatch(const std::string& s)
 {
+  trace1("umatch", s);
   unsigned start = cursor();
   skipbl();
   unsigned begin_match = cursor();
-  const char* str2 = s.c_str();
+  const Ichar* str2 = (Ichar const*)s.c_str();
+  trace1("umatchhuh", s.c_str());
   bool optional = 0;
 
-  for (;;) {
-    if ((!*str2) || (*str2 == '|')) {
+  for (;;) { untested();
+    trace1("loop", *str2);
+    if ((!*str2) || (*str2 == '|')) { untested();
       _ok = true;
       break;
-    }else if ((str2[0] == '\\') && (peek() == str2[1])) {
+    }else if ((str2[0] == '\\') && (Ichar(peek()) == str2[1])) { untested();
       skip();
       str2 += 2;
-    }else if ((!optional) && (*str2 == '{')) {
+    }else if ((!optional) && (*str2 == '{')) { untested();
       ++str2;
       optional = true;
-    }else if ((optional) && (*str2 == '}')) {
+    }else if ((optional) && (*str2 == '}')) { untested();
       ++str2;
       optional = false;
-    }else if ((*str2 == ' ') && is_term()) {
+    }else if ((*str2 == ' ') && is_term()) { untested();
       // blank in ref string matches anything that delimits tokens
       skipbl();
       ++str2;
-    }else if (peek() == *str2) {
+    }else if (Ichar(peek()) == *str2) { untested();
       skip();
       ++str2;
-    }else if (optional) {
-      while (*str2 != '}') {
+    }else if (optional) { untested();
+      while (*str2 != '}') { untested();
+	trace1("opt", *str2);
 	++str2;
       }
-    }else{
+    }else{ untested();
       // mismatch
-      const char* bar = strchr(str2, '|');
-      if (bar && (bar[-1] != '\\')) {
+      const Ichar* bar = (const Ichar*) strchr((const char*) str2, '|');
+      if (bar && (*(bar-1) != '\\')) { untested();
 	str2 = bar+1;
 	reset(start);
-      }else{
+      }else{ untested();
 	_ok = false;
 	break;
       }

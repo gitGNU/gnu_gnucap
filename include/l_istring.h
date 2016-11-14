@@ -56,6 +56,9 @@ struct Ichar{
       return o._c == _c;
     }
   }
+  bool operator!=(char o) const { untested();
+    return(!operator==(o));
+  }
   bool operator!=(Ichar o) const { untested();
     return(!operator==(o));
   }
@@ -68,16 +71,27 @@ struct Ichar{
       ? _c>o._c : tolower(_c)>tolower(o._c));
   }
   bool operator!() const{ untested();
-    return !_c;
+    return !bool(_c);
   }
-  operator bool() const{ untested();
+  char const& to_char() const{itested();
     return _c;
   }
-  char const& to_char() const{itested(); return _c;}
-  char to_lower() const{untested(); return (char)tolower(_c);}
+  char to_lower() const{untested();
+    return (char)tolower(_c);
+  }
+public: //dangerous
+//  operator bool() const{ untested();
+//    return bool(_c);
+//  }
 private:
   char _c;
 };
+/*--------------------------------------------------------------------------*/
+inline std::ostream& operator<<(std::ostream& o, const Ichar* s)
+{
+  o << (char const*) s;
+  return o;
+}
 /*--------------------------------------------------------------------------*/
 namespace detail{
 struct ichar_traits : std::char_traits<Ichar>{
@@ -105,7 +119,7 @@ struct ichar_traits : std::char_traits<Ichar>{
     char_type const* j=q;
 
     ord_t ord=same;
-    for(; *i; ++i, ++j){ untested();
+    for(; *i!='\0'; ++i, ++j){ untested();
       if(*j=='\0'){ untested();
 	// a is a proper prefix of b
 	ord = gt;

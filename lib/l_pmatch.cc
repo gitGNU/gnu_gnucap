@@ -38,7 +38,7 @@ bool Umatch(const IString& str1, const std::string& str2)
   if (cmd.umatch(str2)) {
     return true;
   }else{
-    return 0;
+    return false;
   }
 }
 /*--------------------------------------------------------------------------*/
