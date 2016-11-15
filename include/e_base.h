@@ -38,7 +38,7 @@ class IString;
 class INTERFACE CKT_BASE {
 private:
   mutable int	_probes;		/* number of probes set */
-  IString	_label;
+  std::string	_label;
 public:
   static SIM_DATA* _sim;
   static PROBE_LISTS* _probe_lists;
@@ -69,10 +69,10 @@ public: // probes
   //--------------------------------------------------------------------
 public: // label
   bool operator!=(const IString& n)const {untested();
-    return _label != n;
+    return IString(_label) != n;
   }
   virtual const std::string long_label()const;
-  const IString& short_label()const {return _label;}
+  const std::string& short_label()const {return _label;}
   void	set_label(const std::string& s) {_label = s;}
 };
 /*--------------------------------------------------------------------------*/
