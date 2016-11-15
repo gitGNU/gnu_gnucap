@@ -170,6 +170,10 @@ public: // these are better implicit.
   IString(const char* s) : base((const Ichar*)s) { untested(); }
   IString(const std::string& s) : base((Ichar const*)s.c_str()) { untested(); }
 public: // ops
+  IString& operator=(Ichar s){ untested();
+    base::operator=(s);
+    return *this;
+  }
   IString& operator=(const std::string& s){ untested();
     base::operator=(IString(s));
     return *this;
