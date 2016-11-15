@@ -22,8 +22,6 @@
 #ifndef U_LANG_H
 #define U_LANG_H
 #include "e_base.h"
-#include "u_opt.h"
-#include "l_istring.h"
 /*--------------------------------------------------------------------------*/
 class COMPONENT;
 class BASE_SUBCKT;

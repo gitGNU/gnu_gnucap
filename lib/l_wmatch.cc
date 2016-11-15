@@ -27,9 +27,6 @@
  * recursive
  */
 //testing=script 2006.07.13
-#include <cctype>
-#include "u_opt.h"
-#include "l_lib.h"
 #include "l_istring.h"
 /*--------------------------------------------------------------------------*/
 bool wmatch_by_ptr(const Ichar *s2, const Ichar *s1)

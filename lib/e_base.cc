@@ -28,7 +28,6 @@
 #include "u_prblst.h"
 #include "u_xprobe.h"
 #include "e_base.h"
-#include "l_istring.h"
 /*--------------------------------------------------------------------------*/
 static char fix_case(char c)
 {

@@ -24,7 +24,6 @@
 //testing=script,sparse 2006.07.17
 #ifndef AP_H
 #define AP_H
-#include "md.h"
 #include "l_istring.h"
 /*--------------------------------------------------------------------------*/
 INTERFACE char* getcmd(const char*,char*,int);

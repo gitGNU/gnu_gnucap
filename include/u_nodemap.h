@@ -24,7 +24,6 @@
 //testing=script,complete 2006.07.14
 #ifndef U_NODEMAP_H
 #define U_NODEMAP_H
-#include "md.h"
 #include "l_istring.h"
 /*--------------------------------------------------------------------------*/
 class NODE;

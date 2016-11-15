@@ -25,9 +25,6 @@
 #ifndef L_DISPATCHER_H
 #define L_DISPATCHER_H
 #include "e_base.h"
-#include "l_istring.h"
-#include "l_stlextra.h"
-#include "u_opt.h"
 #include "ap.h"
 /*--------------------------------------------------------------------------*/
 class DISPATCHER_BASE {

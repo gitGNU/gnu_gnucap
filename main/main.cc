@@ -80,7 +80,7 @@ static void read_startup_files(void)
   }else{untested();
     // already have a language specified in a startup file
   }
-  if (OPT::language) {untested();
+  if (OPT::language) {
     OPT::case_insensitive = OPT::language->case_insensitive();
     OPT::units            = OPT::language->units();
   }else{untested();

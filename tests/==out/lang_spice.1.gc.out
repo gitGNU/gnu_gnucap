@@ -13,16 +13,16 @@ Cout ( c out )  1.u
 Rin ( in 0 )  100.K
 Rout ( out 0 )  100.K
 .ends foo
-X1 ( v_cc amp_in out )  foo  r=10k
+X1 ( V_cc amp_in out )  foo  r=10k
 Rin1 ( in amp_in ) 10*(1-gain)
 Rin2 ( amp_in 0 ) 10*gain
-Vcc ( v_cc 0 )  DC  20.
+Vcc ( V_cc 0 )  DC  20.
 Vin ( in 0 )  AC  0.2
-#           v(v_cc)    v(in)      v(out)     iter(0)    vc(X1.q1)  vce(X1.q1)
+#           v(V_cc)    v(in)      v(out)     iter(0)    vc(X1.q1)  vce(X1.q1)
  27.        20.        0.         0.         16.        10.213     9.2279    
-#Freq       v(v_cc)    v(in)      v(amp_in)  v(out)    
+#Freq       v(V_cc)    v(in)      v(amp_in)  v(out)    
  1.K        869.54p    0.2        0.099968   0.87954   
-#           v(v_cc)    v(in)      v(out)     iter(0)   
+#           v(V_cc)    v(in)      v(out)     iter(0)   
  27.        20.        0.         0.         16.       
-#Freq       v(v_cc)    v(in)      v(amp_in)  v(out)    
+#Freq       v(V_cc)    v(in)      v(amp_in)  v(out)    
  1.K        796.25p    0.2        0.099968   0.80624   

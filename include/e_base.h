@@ -24,7 +24,6 @@
 //testing=script 2014.07.04
 #ifndef E_BASE_H
 #define E_BASE_H
-#include "md.h"
 #include "l_istring.h"
 /*--------------------------------------------------------------------------*/
 // external

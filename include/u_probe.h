@@ -26,7 +26,6 @@
 #define U_PROBE_H
 #include "e_base.h"
 #include "l_compar.h" // inorder
-#include "l_istring.h"
 /*--------------------------------------------------------------------------*/
 class INTERFACE PROBE : public CKT_BASE {
 private:

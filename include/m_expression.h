@@ -22,7 +22,6 @@
  */
 //testing=script 2014.07.04
 #include "m_base.h"
-#include "l_istring.h"
 /*--------------------------------------------------------------------------*/
 //class Symbol_Table;
 class CARD_LIST;
