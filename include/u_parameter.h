@@ -85,11 +85,6 @@ public:
   void	set_default(const T& v)		{_v = v; _s = "";}
   void	operator=(const PARAMETER& p)	{_v = p._v; _s = p._s;}
   void	operator=(const T& v)		{_v = v; _s = "#";}
-  //void	operator=(const std::string& s)	{untested();_s = s;}
-
-  void	operator=(const char* s)	{ untested();
-    operator=(IString(s));
-  }
   void	operator=(const IString& s)	{ untested();
     if (strchr("'\"{", s[0].to_char())) {
       CS cmd(CS::_STRING, s.to_string());
