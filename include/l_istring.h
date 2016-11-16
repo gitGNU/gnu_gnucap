@@ -1,6 +1,7 @@
 /*                           -*- C++ -*-
  * Copyright (C) 2016 Felix Salfelder
- * Author: Felix Salfelder <felix@salfelder.org>
+ * Authors: Felix Salfelder <felix@salfelder.org>
+ *          Albert Davis <aldavis@gnu.org>
  *
  * This file is part of "Gnucap", the Gnu Circuit Analysis Package
  *
@@ -40,9 +41,6 @@ struct Ichar{
       return false;
     }
   }
- // bool operator!=(char o) const {untested();
- //   return(!operator==(o));
- // }
   bool operator==(Ichar o) const {
     if(OPT::case_insensitive){
       return tolower(_c)==tolower(o._c);
@@ -73,10 +71,6 @@ struct Ichar{
   char to_lower() const{
     return (char)tolower(_c);
   }
-public: //dangerous
-//  operator bool() const{untested();
-//    return bool(_c);
-//  }
 private:
   char _c;
 };
@@ -112,12 +106,12 @@ struct ichar_traits : std::char_traits<Ichar>{
     char_type const* i=p;
     char_type const* j=q;
 
-    ord_t ret1 = same;
+    ord_t ret = same;
     ord_t try_ord = same;
     for (;;) {
       if (!*i && !*j) {
 	// both end, matched
-	ret1 =  (OPT::case_insensitive) ? same : try_ord;
+	ret =  (OPT::case_insensitive) ? same : try_ord;
 	break;
       }else if (*i == *j) {
 	// sensitive match, move on
@@ -130,11 +124,11 @@ struct ichar_traits : std::char_traits<Ichar>{
 	++j;
       }else if (*i < *j) {
 	// includes *i, p ends
-	ret1 =  lt;
+	ret =  lt;
 	break;
       }else if (*i > *j) {
 	// includes *j, q ends
-	ret1 =  gt;
+	ret =  gt;
 	break;
       }else{untested();
 	unreachable();
@@ -142,61 +136,7 @@ struct ichar_traits : std::char_traits<Ichar>{
       }
     }
 
-    bool bb=false;
-    ord_t ret2 = same;
-    ord_t ord=same;
-    for(; *i!='\0'; ++i, ++j){
-      if(*j=='\0'){
-	// a is a proper prefix of b
-	ord = gt;
-	trace3("done1", (char const*)(p), (char const*)(q), ord);
-	ret2 =  ord;
-	bb = true;
-	break;
-      }else if(i->to_char()==j->to_char()){untested();
-      }else if(i->to_lower() < j->to_lower()){
-	ord = lt;
-	trace3("done2", (char const*)(p), (char const*)(q), ord);
-	ret2 =  ord;
-	bb = true;
-	break;
-      }else if(j->to_lower() < i->to_lower()){
-	ord = gt;
-	trace3("done2", (char const*)(p), (char const*)(q), ord);
-	ret2 =  ord;
-	bb = true;
-	break;
-      }else if(OPT::case_insensitive){untested();
-      }else if(ord!=same){untested();
-      }else if(i->to_char() == j->to_lower()){untested();
-	ord = gt; // lower case before upper case...
-      }else if(i->to_lower() == j->to_char()){untested();
-	ord = lt;
-      }else{untested();
-      }
-    }
-
-    if (!bb) {
-      // b is a prefix of a...
-      if(OPT::case_insensitive){
-	ord = (*j=='\0')? same: gt;
-      }else{
-      }
-      if(*j=='\0'){
-	// same length. order aAAaa before aaaaa
-	trace3("samelen sensitive", (char const*)(p), (char const*)(q), ord);
-	// ret2 =  ord;
-      }else{
-	ord = lt;
-      }
-      trace3("done", (char const*)(p), (char const*)(q), ord);
-      ret2 =  ord;
-    }else{
-      // early return
-    }
-
-    assert (ret1 == ret2);
-    return ret1;
+    return ret;
   }
 };
 }
@@ -257,14 +197,6 @@ public: // more conventional type bridge
   {
     return reinterpret_cast<std::string const&>(*this);
   }
-public: // implicit conversion
- // operator bool() const {untested();
- //   return size();
- // }
-//   operator const std::string&() const
-//   {untested();
-//     return reinterpret_cast<std::string const&>(*this);
-//   }
 }; // IString
 /*--------------------------------------------------------------------------*/
 inline std::string operator+(IString s, char x)
@@ -310,9 +242,9 @@ inline OMSTREAM& operator<< (OMSTREAM& o, IString s)
 }
 /*--------------------------------------------------------------------------*/
 template<class MAP, class key>
-typename MAP::const_iterator find_in_map(MAP const&d, key k)
+inline typename MAP::const_iterator find_in_map(MAP const&d, key k)
 {
-  // TODO: report close misses and ambiguous matches
+  // later: report close misses and ambiguous matches
   return d.find(k);
 }
 /*--------------------------------------------------------------------------*/
