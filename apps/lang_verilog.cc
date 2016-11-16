@@ -505,7 +505,7 @@ DISPATCHER<CMD>::INSTALL d2(&command_dispatcher, "module|macromodule", &p2);
 class CMD_VERILOG : public CMD {
 public:
   void do_it(CS&, CARD_LIST* Scope)
-  {untested();
+  {
     command("options lang=verilog", Scope);
   }
 } p8;

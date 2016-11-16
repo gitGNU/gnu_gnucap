@@ -268,7 +268,7 @@ public:
   NODE*	      n_()	{return _nnn;}
 
   
-  const IString short_label()const {return ((n_()) ? (n_()->short_label()) : "?????");}
+  const std::string short_label()const {return ((n_()) ? (n_()->short_label()) : "?????");}
   void	set_to_ground(CARD*);
   void	new_node(const std::string&, const CARD*);
   void	new_model_node(const std::string& n, CARD* d);

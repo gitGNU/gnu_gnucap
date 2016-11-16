@@ -216,7 +216,7 @@ public: // ops
     base::operator=(s);
     return *this;
   }
-  IString& operator=(const std::string& s){ untested();
+  IString& operator=(const std::string& s){
     base::operator=(IString(s));
     return *this;
   }

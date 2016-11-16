@@ -67,7 +67,7 @@ public: // probes
   static  WAVE*	      find_wave(const IString& probe_name);
   //--------------------------------------------------------------------
 public: // label
-  bool operator!=(const IString& n)const {untested();
+  bool operator!=(const IString& n)const {
     return IString(_label) != n;
   }
   virtual const std::string long_label()const;
