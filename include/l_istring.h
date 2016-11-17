@@ -119,7 +119,11 @@ struct ichar_traits : std::char_traits<Ichar>{
 	++j;
       }else if (i->to_lower() == j->to_lower()) {
 	// insensitive match, move on, but remember
-	try_ord = (*i < *j) ? lt : gt;
+	if (try_ord==same){ untested();
+	  try_ord = (*i < *j) ? lt : gt;
+	}else{ untested();
+	  // don't touch. the left most difference decides
+	}
 	++i;
 	++j;
       }else if (*i < *j) {
