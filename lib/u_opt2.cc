@@ -22,11 +22,13 @@
  * command and functions to access OPT class
  */
 //testing=script,complete 2006.07.14
+#include "io_.h"
 #include "globals.h"
 #include "c_comand.h"
 #include "u_lang.h"
 #include "l_compar.h"
 #include "ap.h"
+#include "u_opt.h"
 /*--------------------------------------------------------------------------*/
 void OPT::command(CS& cmd)
 {

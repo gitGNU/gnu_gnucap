@@ -102,7 +102,7 @@ double PROBE::value(void)const
 {
   // _brh is either a node or a "branch", which is really any device
   if (_brh) {
-    return _brh->probe_num(_what);
+    return _brh->probe_num(to_string(_what));
   }else{
     return probe_node();
   }

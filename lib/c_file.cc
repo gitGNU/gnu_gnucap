@@ -28,6 +28,7 @@
 #include "u_lang.h"
 #include "c_comand.h"
 #include "globals.h"
+#include "io_.h"
 /*--------------------------------------------------------------------------*/
 extern OMSTREAM mout;		/* > file bitmap		*/
 extern OMSTREAM mlog;		/* log file bitmap		*/

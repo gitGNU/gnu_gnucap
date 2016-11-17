@@ -24,6 +24,7 @@
 //testing=script,complete 2006.09.28
 #ifndef U_PRBLST_H
 #define U_PRBLST_H
+#include "mode.h"
 #include "u_probe.h"
 /*--------------------------------------------------------------------------*/
 class CARD_LIST;

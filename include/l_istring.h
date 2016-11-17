@@ -26,8 +26,14 @@
 #ifndef L_ISTRING_H
 #define L_ISTRING_H
 /*--------------------------------------------------------------------------*/
-#include "u_opt.h"
+#include "u_opt_base.h" // OPT
+#include "l_lib.h"      // OMSTREAM
 /*--------------------------------------------------------------------------*/
+// #define OLDCHAR // switch to old type here, for cross checking
+/*--------------------------------------------------------------------------*/
+#ifdef OLDCHAR
+typedef char Ichar;
+#else
 struct Ichar{
   Ichar() : _c('\0') {}
   Ichar(const Ichar& c) : _c(c._c) {}
@@ -75,12 +81,19 @@ private:
   char _c;
 };
 /*--------------------------------------------------------------------------*/
+inline Ichar const* strchr(const char *s, Ichar c)
+{ untested();
+  return (Ichar const*) strchr(s, c.to_char());
+}
+#endif
+/*--------------------------------------------------------------------------*/
 inline std::ostream& operator<<(std::ostream& o, const Ichar* s)
 {untested();
   o << (char const*) s;
   return o;
 }
 /*--------------------------------------------------------------------------*/
+#ifndef OLDCHAR
 namespace detail{
 struct ichar_traits : std::char_traits<Ichar>{
   typedef char_traits<char> base;
@@ -144,7 +157,11 @@ struct ichar_traits : std::char_traits<Ichar>{
   }
 };
 }
+#endif
 /*--------------------------------------------------------------------------*/
+#ifdef OLDCHAR
+typedef std::string IString;
+#else
 class IString : public std::basic_string<Ichar, detail::ichar_traits> { //
 private:
   typedef std::basic_string<Ichar, detail::ichar_traits> base;
@@ -245,11 +262,37 @@ inline OMSTREAM& operator<< (OMSTREAM& o, IString s)
   return o;
 }
 /*--------------------------------------------------------------------------*/
+inline std::string const& to_string(const IString& s)
+{ untested();
+  return s.to_string();
+}
+/*--------------------------------------------------------------------------*/
+inline bool Umatch(const char*s, const std::string&t)
+{ untested();
+  return Umatch(std::string(s), t);
+}
+/*--------------------------------------------------------------------------*/
+inline bool Umatch(const IString&s, const std::string&t)
+{ untested();
+  return Umatch(s.to_string(), t);
+}
+/*--------------------------------------------------------------------------*/
+inline bool wmatch(const IString& s1, const IString& s2)
+{
+  return wmatch(s1.to_string(), s2.to_string());
+}
+#endif
+/*--------------------------------------------------------------------------*/
 template<class MAP, class key>
 inline typename MAP::const_iterator find_in_map(MAP const&d, key k)
 {
   // later: report close misses and ambiguous matches
   return d.find(k);
+}
+/*--------------------------------------------------------------------------*/
+inline std::string const& to_string(const std::string& s)
+{ untested();
+  return s;
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

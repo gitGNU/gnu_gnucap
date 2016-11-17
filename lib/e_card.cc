@@ -58,11 +58,11 @@ CARD::~CARD()
 /*--------------------------------------------------------------------------*/
 const std::string CARD::long_label()const
 {
-  IString buffer(short_label());
+  std::string buffer(short_label());
   for (const CARD* brh = owner();  brh;  brh = brh->owner()) {
     buffer = brh->short_label() + '.' + buffer;
   }
-  return buffer.to_string();
+  return buffer;
 }
 /*--------------------------------------------------------------------------*/
 /* connects_to: does this part connect to this node?
@@ -115,7 +115,7 @@ CARD* CARD::find_in_my_scope(const IString& name)
 
   CARD_LIST::iterator i = scope()->find_(name);
   if (i == scope()->end()) {
-    throw Exception_Cant_Find(long_label(), name.to_string(),
+    throw Exception_Cant_Find(long_label(), to_string(name),
 			      ((owner()) ? owner()->long_label() : "(root)"));
   }else{
   }
@@ -134,7 +134,7 @@ const CARD* CARD::find_in_my_scope(const IString& name)const
 
   CARD_LIST::const_iterator i = scope()->find_(name);
   if (i == scope()->end()) {
-    throw Exception_Cant_Find(long_label(), name.to_string(),
+    throw Exception_Cant_Find(long_label(), to_string(name),
 			      ((owner()) ? owner()->long_label() : "(root)"));
   }else{
   }
@@ -154,7 +154,7 @@ const CARD* CARD::find_in_parent_scope(const IString& name)const
 
   CARD_LIST::const_iterator i = p_scope->find_(name);
   if (i == p_scope->end()) {
-    throw Exception_Cant_Find(long_label(), name.to_string());
+    throw Exception_Cant_Find(long_label(), to_string(name));
   }else{
   }
   return *i;

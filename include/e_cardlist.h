@@ -25,8 +25,7 @@
 #ifndef E_CARDLIST_H
 #define E_CARDLIST_H
 #include "md.h"
-/*--------------------------------------------------------------------------*/
-class IString;
+#include "l_istring.h"
 /*--------------------------------------------------------------------------*/
 // defined here
 class CARD_LIST;

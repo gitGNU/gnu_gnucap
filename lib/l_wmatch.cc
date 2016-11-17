@@ -28,6 +28,7 @@
  */
 //testing=script 2006.07.13
 #include "l_istring.h"
+#include "u_opt.h"
 /*--------------------------------------------------------------------------*/
 bool wmatch_by_ptr(const Ichar *s2, const Ichar *s1)
 {
@@ -52,9 +53,10 @@ bool wmatch_by_ptr(const Ichar *s2, const Ichar *s1)
   }
 }
 /*--------------------------------------------------------------------------*/
-bool wmatch(const IString& s1, const IString& s2)
+bool wmatch(const std::string& s1, const std::string& s2)
 {
-  return wmatch_by_ptr(s1.c_str(), s2.c_str());
+  return wmatch_by_ptr((const Ichar*)s1.c_str(),
+                       (const Ichar*)s2.c_str());
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

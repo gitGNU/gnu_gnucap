@@ -24,6 +24,7 @@
 //testing=none 2006.07.17
 #include "c_comand.h"
 #include "globals.h"
+#include "io_.h"
 extern int swp_count[], swp_steps[];
 extern int swp_type[];
 extern int swp_nest;

@@ -121,19 +121,19 @@ void Token_SYMBOL::stack_op(Expression* E)const
     if (FUNCTION* f = function_dispatcher[name()]) {
       const Token* T1 = E->back(); // arglist
       E->pop_back();
-      CS cmd(CS::_STRING, T1->name().to_string());      
+      CS cmd(CS::_STRING, to_string(T1->name()));
       IString value = IString(f->eval(cmd, E->_scope));
       const Float* v = new Float(value);
       E->push_back(new Token_CONSTANT(value, v, ""));
       delete T1;
     }else{
-      throw Exception_No_Match(name().to_string()); //BUG// memory leak
+      throw Exception_No_Match(to_string(name())); //BUG// memory leak
       unreachable();
       E->push_back(clone());
     }
   }else{
     // has no parameters (scalar)
-    if (strchr("0123456789.", name()[0].to_char())) {
+    if (strchr("0123456789.", name()[0])) {
       // a number
       Float* n = new Float(name());
       E->push_back(new Token_CONSTANT(name(), n, ""));
@@ -147,7 +147,7 @@ void Token_SYMBOL::stack_op(Expression* E)const
 	E->push_back(new Token_CONSTANT(n->val_string(), n, ""));
       }else{
 	// no value - push name (and accept incomplete solution later)
-	String* s = new String(name().to_string());
+	String* s = new String(to_string(name()));
 	E->push_back(new Token_CONSTANT(name(), s, ""));	
       }
     }
@@ -174,7 +174,7 @@ void Token_BINOP::stack_op(Expression* E)const
 	delete t1;
       }else{
 	// fail - one arg is unknown, push back args
-	if (strchr("+*", name()[0].to_char())
+	if (strchr("+*", name()[0])
 	    && !dynamic_cast<const Float*>(t1->data())) {
 	  // change order to enable later optimization
 	  E->push_back(t1);
@@ -186,7 +186,7 @@ void Token_BINOP::stack_op(Expression* E)const
 	E->push_back(clone()); //op
 	delete t;
       }
-    }else if (((*t2) == (*this)) && strchr("+*", name()[0].to_char())
+    }else if (((*t2) == (*this)) && strchr("+*", name()[0])
 	      && dynamic_cast<Token_CONSTANT*>(E->back())) {
       // have # + # + .. becomes result + (previous unknown, try to optimize)
       Token* t3 = E->back();

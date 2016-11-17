@@ -47,7 +47,7 @@ public:
       PARAM_LIST* pl = Scope->params();
       pl->set(assign_to, value);
     }else{
-      throw Exception_No_Match(function.to_string());
+      throw Exception_No_Match(to_string(function));
     }
   }
 } p0;

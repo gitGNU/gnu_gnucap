@@ -156,7 +156,7 @@ private:
 public:
   /*implicit*/ Float(const Float& p) :Base(), _data(p._data) {untested();}
   explicit Float(CS& file)		{untested();parse(file);}
-  explicit Float(const IString& s)	{CS cs(CS::_STRING, s.to_string()); parse(cs);}
+  explicit Float(const IString& s)	{CS cs(CS::_STRING, to_string(s)); parse(cs);}
   Float(double x=NOT_INPUT) :_data(x) {}
   void parse(CS&);
   double value()const			{return _data;}

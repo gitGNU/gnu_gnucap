@@ -293,7 +293,7 @@ bool PROBELIST::add_branches(const IString& device,
 	}
       }
       { //components
-	CARD_LIST::const_iterator i = scope->find_(device);
+	CARD_LIST::const_iterator i = scope->find_(to_string(device));
 	if (i != scope->end()) {
 	  push_new_probe(param, *i);
 	  found_something = true;

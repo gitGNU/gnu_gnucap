@@ -25,8 +25,8 @@
 #ifndef MODE_H
 #define MODE_H
 #include "io_.h"
+#include "mode_base.h"
 /*--------------------------------------------------------------------------*/
-enum smode_t   {moUNKNOWN=0, moANALOG=1, moDIGITAL, moMIXED};
 inline OMSTREAM& operator<<(OMSTREAM& o, smode_t t) {
   const std::string s[] = {"unknown", "analog", "digital", "mixed"};
   assert(t >= int(moUNKNOWN));

@@ -411,7 +411,7 @@ void LANG_SPICE_BASE::parse_type(CS& cmd, CARD* x)
   assert(x);
   IString new_type;
   cmd >> new_type;
-  x->set_dev_type(new_type.to_string());
+  x->set_dev_type(to_string(new_type));
 }
 /*--------------------------------------------------------------------------*/
 void LANG_SPICE_BASE::parse_args(CS& cmd, CARD* x)
@@ -426,12 +426,12 @@ void LANG_SPICE_BASE::parse_args(CS& cmd, CARD* x)
     if (xx && cmd.is_float()) {		// simple unnamed value
       IString value;
       cmd >> value;
-      x->set_param_by_name(xx->value_name(), value.to_string());
+      x->set_param_by_name(xx->value_name(), to_string(value));
     }else if (cmd.match1("'{")) {	// quoted unnamed value
       IString value;
       cmd >> value; // strips off the quotes
       value = '{' + value + '}'; // put them back
-      x->set_param_by_name(xx->value_name(), value.to_string());
+      x->set_param_by_name(xx->value_name(), to_string(value));
     }else{				// only name=value pairs
     }
     unsigned here = cmd.cursor();
@@ -453,7 +453,7 @@ void LANG_SPICE_BASE::parse_args(CS& cmd, CARD* x)
 	      cmd.warn(bDANGER, there, x->long_label() + ": " + Name + " has no value?");
 	    }else{
 	    }
-	    x->set_param_by_name(Name.to_string(), value);
+	    x->set_param_by_name(to_string(Name), value);
 	  }catch (Exception_No_Match&) {untested();
 	    cmd.warn(bDANGER, there, x->long_label() + ": bad parameter " + Name + " ignored");
 	  }
@@ -573,7 +573,7 @@ void LANG_SPICE_BASE::parse_module_body(CS& cmd, BASE_SUBCKT* x, CARD_LIST* Scop
       cmd.get_line(prompt);
       
       if ((exit_on_blank==EXIT_ON_BLANK && cmd.is_end()) 
-	  || cmd.umatch(exit_key.to_string())) {
+	  || cmd.umatch(to_string(exit_key))) {
 	break;
       }else{
 	skip_pre_stuff(cmd);

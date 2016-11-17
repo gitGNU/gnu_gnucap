@@ -25,6 +25,7 @@
 #ifndef E_BASE_H
 #define E_BASE_H
 #include "l_istring.h"
+#include "u_opt.h"
 /*--------------------------------------------------------------------------*/
 // external
 class XPROBE;
@@ -32,7 +33,6 @@ class WAVE;
 class OMSTREAM;
 class SIM_DATA;
 class PROBE_LISTS;
-class IString;
 /*--------------------------------------------------------------------------*/
 class INTERFACE CKT_BASE {
 private:
@@ -56,8 +56,8 @@ public: // user stuff
   virtual std::string status()const {untested();return "";}
   //--------------------------------------------------------------------
 public: // probes
-	  double      probe_num(const IString&)const;
-	  double      ac_probe_num(const IString&)const;
+	  double      probe_num(const std::string&)const;
+	  double      ac_probe_num(const std::string&)const;
   virtual double      tr_probe_num(const std::string&)const;
   virtual XPROBE      ac_probe_ext(const std::string&)const;
 	  void	      inc_probes()const	{++_probes;}

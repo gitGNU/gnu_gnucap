@@ -22,6 +22,7 @@
 #ifndef U_LANG_H
 #define U_LANG_H
 #include "e_base.h"
+#include "io_.h"
 /*--------------------------------------------------------------------------*/
 class COMPONENT;
 class BASE_SUBCKT;
@@ -33,7 +34,7 @@ class CARD_LIST;
 /*--------------------------------------------------------------------------*/
 class INTERFACE LANGUAGE : public CKT_BASE {
 public:
-  const CARD* find_proto(const IString&, const CARD*);
+  const CARD* find_proto(const std::string&, const CARD*);
 public:
   void new__instance(CS& cmd, BASE_SUBCKT* owner, CARD_LIST* Scope);
 

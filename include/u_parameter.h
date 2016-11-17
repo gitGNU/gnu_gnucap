@@ -48,9 +48,6 @@ public:
 
   virtual void	parse(CS& cmd) = 0;
   virtual void	operator=(const IString& s) = 0;
-  void	operator=(const std::string& s)	{ untested();
-    operator=(IString(s));
-  }
 };
 /*--------------------------------------------------------------------------*/
 template <class T>
@@ -77,7 +74,11 @@ public:
     }else if (_s == "") {
       return "NA(" + to_string(_v) + ")";
     }else{
+#ifdef OLDCHAR // avoid. how?!
+      return _s;
+#else
       return _s.to_string();
+#endif
     }
   }
   void	print(OMSTREAM& o)const		{o << string();}
@@ -85,8 +86,8 @@ public:
   void	operator=(const PARAMETER& p)	{_v = p._v; _s = p._s;}
   void	operator=(const T& v)		{_v = v; _s = "#";}
   void	operator=(const IString& s) {
-    if (strchr("'\"{", s[0].to_char())) {
-      CS cmd(CS::_STRING, s.to_string());
+    if (strchr("'\"{", s[0])) {
+      CS cmd(CS::_STRING, to_string(s));
       _s = cmd.ctos("", "'\"{", "'\"}");
     }else if (s == "NA") {
       _s = "";
@@ -231,14 +232,14 @@ private:
 template <>
 inline bool PARAMETER<bool>::lookup_solve(const bool&, const CARD_LIST*)const
 {
-  CS cmd(CS::_STRING, _s.to_string());
+  CS cmd(CS::_STRING, to_string(_s));
   return cmd.ctob();
 }
 /*--------------------------------------------------------------------------*/
 template <class T>
 inline T PARAMETER<T>::lookup_solve(const T& def, const CARD_LIST* scope)const
 {
-  CS cmd(CS::_STRING, _s.to_string());
+  CS cmd(CS::_STRING, to_string(_s));
   Expression e(cmd);
   Expression reduced(e, scope);
   T v = T(reduced.eval());
