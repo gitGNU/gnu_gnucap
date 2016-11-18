@@ -48,6 +48,16 @@ public:
 
   virtual void	parse(CS& cmd) = 0;
   virtual void	operator=(const IString& s) = 0;
+public: // hack/workaround
+#ifdef OLDCHAR
+//  IString == std::string
+#else
+  // other code requires this one.
+  // ..implicit conversion? (maybe not, try again later.)
+  void	operator=(const std::string& s) { untested();
+    return operator=(reinterpret_cast<const IString&>(s));
+  }
+#endif
 };
 /*--------------------------------------------------------------------------*/
 template <class T>
