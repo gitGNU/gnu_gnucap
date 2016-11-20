@@ -96,7 +96,7 @@ struct ichar_traits : std::char_traits<Ichar>{
 
   // compare needs to be different. default to insensitive order.
   // if enabled, use sensitive order as a tie break.
-  static int compare (const char_type* p, const char_type* q, size_t)
+  static int compare_old (const char_type* p, const char_type* q, size_t)
   {
     typedef enum{
       lt  =-1,
@@ -119,7 +119,7 @@ struct ichar_traits : std::char_traits<Ichar>{
 	++j;
       }else if (i->to_lower() == j->to_lower()) {
 	// insensitive match, move on, but remember
-	if (try_ord==same){ untested();
+	if (try_ord==same){ itested();
 	  try_ord = (*i < *j) ? lt : gt;
 	}else{ untested();
 	  // don't touch. the left most difference decides
@@ -140,6 +140,59 @@ struct ichar_traits : std::char_traits<Ichar>{
       }
     }
 
+    return ret;
+  }
+  // return +-1 if substrings compare to less or more.
+  // zero means, they are equal
+  // result multiplied by two if tie break is not required.
+  static int compare_new (const char_type* i, const char_type* j, size_t n)
+  {
+    typedef enum{
+      lt  =-1,
+      same=0,
+      gt  =1
+    }ord_t;
+
+    ord_t try_ord = same;
+    for (unsigned I=0; I<n; ++I) {
+      assert (*i!='\0');
+      assert (*j!='\0');
+
+      if (i->to_char() == j->to_char()) {
+	// sensitive match, move on
+	++i;
+	++j;
+      }else if (i->to_char() == j->to_lower()) {
+	// insensitive match, move on, but remember
+	if (try_ord==same){ itested();
+	  try_ord = gt;
+	}else{ itested();
+	  // don't touch. the left most difference decides
+	}
+	++i;
+	++j;
+      }else if (i->to_lower() == j->to_char()) {
+	// insensitive match, move on, but remember
+	if (try_ord==same){ itested();
+	  try_ord = lt;
+	}else{ itested();
+	  // don't touch. the left most difference decides
+	}
+	++i;
+	++j;
+      }else if (*i < *j) {
+	return 2*lt;
+      }else{
+	assert (*i > *j);
+	return 2*gt;
+      }
+    }
+
+    return (OPT::case_insensitive)? same : try_ord;
+  }
+  static int compare (const char_type* p, const char_type* q, size_t n){
+    int ret=compare_new(p, q, n);
+    assert(!ret || ret * compare_old(p, q, n) > 0);
     return ret;
   }
 };
@@ -201,7 +254,52 @@ public: // more conventional type bridge
   {
     return reinterpret_cast<std::string const&>(*this);
   }
+public: // more compare logic
+  int compare(const IString& str) const
+  { itested();
+    const size_type size = this->size();
+    const size_type osize = str.size();
+    const size_type len = std::min(size, osize);
+
+    int r = traits_type::compare(data(), str.data(), len);
+    trace1("strcmp", *this);
+    trace3("strcmp", str, len, r);
+    if (r == 2 || r == -2){ untested();
+      // traits_type::compare is really sure
+      return r;
+    }else if(size == osize){
+      // same length, use tie break
+      return r;
+    }else if(size < osize){
+      return -1;
+    }else{
+      assert(size > osize);
+      return 1;
+    }
+  }
 }; // IString
+/*--------------------------------------------------------------------------*/
+inline bool operator<(const IString& lhs, const IString& rhs)
+{ itested();
+  return lhs.compare(rhs) < 0;
+}
+/*--------------------------------------------------------------------------*/
+template<typename CharT>
+inline bool operator<(const IString lhs, const CharT* rhs)
+{ untested();
+  return lhs.compare(rhs) < 0;
+}
+/*--------------------------------------------------------------------------*/
+inline bool operator>(const IString& lhs, const IString& rhs)
+{ untested();
+  return lhs.compare(rhs) > 0;
+}
+/*--------------------------------------------------------------------------*/
+template<typename CharT>
+inline bool operator>(const IString lhs, const CharT* rhs)
+{ untested();
+  return lhs.compare(rhs) > 0;
+}
 /*--------------------------------------------------------------------------*/
 inline std::string operator+(IString s, char x)
 {
