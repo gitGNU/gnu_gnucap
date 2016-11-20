@@ -29,13 +29,13 @@
 //testing=script 2006.07.13
 #include "l_istring.h"
 /*--------------------------------------------------------------------------*/
-bool wmatch_by_ptr(const Ichar *s2, const Ichar *s1)
+bool wmatch_by_ptr(const char *s2, const char *s1)
 {
   if (!*s2 && !*s1) {			// both end together -- match
     return true;
   }else if (!*s2 || !*s1) {		// ends don't match
     return false;
-  }else if (*s2 == *s1) { // one char matches - move on
+  }else if (Ichar(*s2) == Ichar(*s1)) { // one char matches - move on
     return wmatch_by_ptr(s2+1, s1+1);
   }else if (*s1 == '?') {		// ? wild card match - move on
     return wmatch_by_ptr(s2+1, s1+1);
@@ -52,7 +52,7 @@ bool wmatch_by_ptr(const Ichar *s2, const Ichar *s1)
   }
 }
 /*--------------------------------------------------------------------------*/
-bool wmatch(const IString& s1, const IString& s2)
+bool wmatch(const std::string& s1, const std::string& s2)
 {
   return wmatch_by_ptr(s1.c_str(), s2.c_str());
 }

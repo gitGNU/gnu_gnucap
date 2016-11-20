@@ -27,8 +27,8 @@
 class IString;
 /*--------------------------------------------------------------------------*/
 	  char*		trim(char*);
-INTERFACE bool		Umatch(const IString&, const std::string&);
-INTERFACE bool		wmatch(const IString& s1, const IString& s2);
+INTERFACE bool		Umatch(const std::string&, const std::string&);
+INTERFACE bool		wmatch(const std::string& s1, const std::string& s2);
 INTERFACE std::string	to_string(unsigned);
 INTERFACE std::string	to_string(int);
 INTERFACE std::string	to_string(double);

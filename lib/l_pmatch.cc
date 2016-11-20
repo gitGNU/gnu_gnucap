@@ -32,9 +32,9 @@
 #include "ap.h"
 #include "l_lib.h"
 /*--------------------------------------------------------------------------*/
-bool Umatch(const IString& str1, const std::string& str2)
+bool Umatch(const std::string& str1, const std::string& str2)
 {
-  CS cmd(CS::_STRING, str1.to_string()); //call to CS member on string
+  CS cmd(CS::_STRING, str1); //call to CS member on string
   if (cmd.umatch(str2)) {
     return true;
   }else{

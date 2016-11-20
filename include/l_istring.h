@@ -240,6 +240,20 @@ public: // ops
   bool operator!=(char const* c) const {
     return !(operator==(c));
   }
+  std::string operator+(char x) const
+  { untested();
+    return to_string() + x;
+  }
+  std::string operator+(const char* x) const
+  { untested();
+    return to_string() + x;
+  }
+  std::string operator+(std::string x) const
+  {
+    return to_string() + x;
+  }
+/*--------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*/
 public: // more conventional type bridge
   size_type find(char x, size_type y) const {
     return base::find(Ichar(x), y);
@@ -250,6 +264,7 @@ public: // more conventional type bridge
   size_type find_first_of(char const* x) const {
     return base::find_first_of((Ichar const*)x);
   }
+public: // explicit conversion
   std::string const& to_string() const
   {
     return reinterpret_cast<std::string const&>(*this);
@@ -301,15 +316,6 @@ inline bool operator>(const IString lhs, const CharT* rhs)
   return lhs.compare(rhs) > 0;
 }
 /*--------------------------------------------------------------------------*/
-inline std::string operator+(IString s, char x)
-{
-  return s.to_string() + x;
-}
-/*--------------------------------------------------------------------------*/
-inline std::string operator+(IString s, const char* x)
-{
-  return s.to_string() + x;
-}
 /*--------------------------------------------------------------------------*/
 inline std::string operator+(char x, IString s)
 {
@@ -319,11 +325,6 @@ inline std::string operator+(char x, IString s)
 inline std::string operator+(const char* x, IString s)
 {
     return x + s.to_string();
-}
-/*--------------------------------------------------------------------------*/
-inline std::string operator+(IString s, std::string x)
-{
-  return s.to_string() + x;
 }
 /*--------------------------------------------------------------------------*/
 inline std::string operator+(std::string x, IString s)
@@ -341,6 +342,22 @@ inline OMSTREAM& operator<< (OMSTREAM& o, IString s)
 {
   o << s.to_string();
   return o;
+}
+/*--------------------------------------------------------------------------*/
+// no implicit conversion, need *match wrappers.
+inline bool Umatch(const char*s, const std::string&t)
+{ untested();
+  return Umatch(std::string(s), t);
+}
+/*--------------------------------------------------------------------------*/
+inline bool Umatch(const IString&s, const std::string&t)
+{ untested();
+  return Umatch(s.to_string(), t);
+}
+/*--------------------------------------------------------------------------*/
+inline bool wmatch(const IString& s1, const IString& s2)
+{ untested();
+  return wmatch(s1.to_string(), s2.to_string());
 }
 /*--------------------------------------------------------------------------*/
 template<class MAP, class key>

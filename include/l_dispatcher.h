@@ -92,7 +92,7 @@ public:
 	error(bWARNING, name + ": already installed, replacing\n");
 	IString save_name = name + IString(":0");
 	for (int ii = 0; (*_map)[save_name]; ++ii) {untested();
-	  save_name = name + IString(":") + to_string(ii);
+	  save_name = name + ":" + to_string(ii);
 	}
 	(*_map)[save_name] = (*_map)[name];	
 	error(bWARNING, "stashing as " + save_name + "\n");
