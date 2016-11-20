@@ -201,14 +201,23 @@ struct ichar_traits : std::char_traits<Ichar>{
 class IString : public std::basic_string<Ichar, detail::ichar_traits> { //
 private:
   typedef std::basic_string<Ichar, detail::ichar_traits> base;
-public:
+public: // construct
   IString() {}
   IString(const IString& s) : base(s) {}
   IString(const base& s) : base(s) {}
-public: // these are better implicit.
   IString(const char* s) : base((const Ichar*)s) {}
   IString(const std::string& s) : base((Ichar const*)s.c_str()) {}
-public: // ops
+#if __cplusplus >= 201103L
+public: // move construct
+  IString(const IString&& s) : base(s) {untested();}
+  IString(const base&& s) : base(s) {untested();}
+  IString(const std::string&& s) : base(reinterpret_cast<const IString&&>(s)) {untested();}
+#endif
+public: // assign
+  IString& operator=(const IString& s){ untested();
+    base::operator=(s);
+    return *this;
+  }
   IString& operator=(Ichar s){ untested();
     base::operator=(s);
     return *this;
@@ -221,6 +230,18 @@ public: // ops
     base::operator=((Ichar const*)s);
     return *this;
   }
+#if __cplusplus >= 201103L
+public: //move assign
+  IString& operator=(const IString&& s){
+    base::operator=(s);
+    return *this;
+  }
+  IString& operator=(const std::string&& s){
+    base::operator=(reinterpret_cast<const IString&&>(s));
+    return *this;
+  }
+#endif
+public:
   bool operator==(const IString& s) const{
     return base(*this)==base(s);
   }
