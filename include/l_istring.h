@@ -201,13 +201,13 @@ struct ichar_traits : std::char_traits<Ichar>{
 class IString : public std::basic_string<Ichar, detail::ichar_traits> { //
 private:
   typedef std::basic_string<Ichar, detail::ichar_traits> base;
-public:
+public: // construct
   IString() {}
   IString(const IString& s) : base(s) {}
   IString(const base& s) : base(s) {}
-public: // these are better implicit.
   IString(const char* s) : base((const Ichar*)s) {}
-  IString(const std::string& s) : base((Ichar const*)s.c_str()) {}
+  IString(const std::string& s) :
+    base(reinterpret_cast<const IString&>(s)) {}
 public: // ops
   IString& operator=(Ichar s){ untested();
     base::operator=(s);
