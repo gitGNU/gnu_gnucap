@@ -207,7 +207,7 @@ public: // construct
   IString(const base& s) : base(s) {}
   IString(const char* s) : base((const Ichar*)s) {}
   IString(const std::string& s) :
-    base(reinterpret_cast<const IString&>(s)) {}
+    base((const Ichar*)s.data(), s.size()) {}
 public: // ops
   IString& operator=(Ichar s){ untested();
     base::operator=(s);
