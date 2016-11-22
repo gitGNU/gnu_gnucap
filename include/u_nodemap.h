@@ -37,7 +37,11 @@ public:
   explicit  NODE_MAP();
 	   ~NODE_MAP();
   NODE*     operator[](IString);
-  NODE*     new_node(IString);
+  NODE*     operator[](std::string x);
+  NODE*     operator[](const char* x){
+    return operator[](IString(x));
+  }
+  NODE*     new_node(std::string);
 
   typedef std::map<IString, NODE*>::iterator iterator;
   typedef std::map<IString, NODE*>::const_iterator const_iterator;

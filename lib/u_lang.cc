@@ -42,7 +42,7 @@ void LANGUAGE::parse_top_item(CS& cmd, CARD_LIST* Scope)
   CMD::cmdproc(cmd, Scope);
 }
 /*--------------------------------------------------------------------------*/
-const CARD* LANGUAGE::find_proto(const IString& Name, const CARD* Scope)
+const CARD* LANGUAGE::find_proto(const std::string& Name, const CARD* Scope)
 {
   const CARD* p = NULL;
   if (Scope) {
@@ -104,7 +104,7 @@ void LANGUAGE::new__instance(CS& cmd, BASE_SUBCKT* owner, CARD_LIST* Scope)
   if (cmd.is_end()) {untested();
     // nothing
   }else{
-    IString type = IString(find_type_in_string(cmd));
+    std::string type(find_type_in_string(cmd));
     if (const CARD* proto = find_proto(type, owner)) {
       CARD* new_instance = proto->clone_instance();
       assert(new_instance);

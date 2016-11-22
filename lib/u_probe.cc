@@ -92,9 +92,9 @@ void PROBE::detach()
 const IString PROBE::label()const
 {
   if (_brh) {
-    return _what + '(' + _brh->long_label() + ')';
+    return IString(_what + '(' + _brh->long_label() + ')');
   }else{
-    return _what + "(0)";
+    return IString(_what + "(0)");
   }
 }
 /*--------------------------------------------------------------------------*/
@@ -102,7 +102,7 @@ double PROBE::value(void)const
 {
   // _brh is either a node or a "branch", which is really any device
   if (_brh) {
-    return _brh->probe_num(_what);
+    return _brh->probe_num(_what.to_string());
   }else{
     return probe_node();
   }

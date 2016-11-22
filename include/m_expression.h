@@ -70,7 +70,7 @@ public:
 class Token_BINOP : public Token
 {
 public:
-  explicit Token_BINOP(const std::string Name)
+  explicit Token_BINOP(const IString Name)
     : Token(Name, NULL, "") {}
   explicit Token_BINOP(const Token_BINOP& P) : Token(P) {}
   Token* clone()const {return new Token_BINOP(*this);}
@@ -81,7 +81,7 @@ public:
 class Token_STOP : public Token
 {
 public:
-  explicit Token_STOP(const std::string Name)
+  explicit Token_STOP(const IString Name)
     : Token(Name, NULL, "") {}
   explicit Token_STOP(const Token_STOP& P) : Token(P) {}
   Token* clone()const {return new Token_STOP(*this);}
@@ -91,7 +91,7 @@ public:
 class Token_PARLIST : public Token
 {
 public:
-  explicit Token_PARLIST(const std::string Name)
+  explicit Token_PARLIST(const IString Name)
     : Token(Name, NULL, "") {}
   explicit Token_PARLIST(const Token_PARLIST& P) : Token(P) {untested();}
   Token* clone()const {untested();return new Token_PARLIST(*this);}
@@ -101,7 +101,7 @@ public:
 class Token_UNARY : public Token
 {
 public:
-  explicit Token_UNARY(const std::string Name)
+  explicit Token_UNARY(const IString Name)
     : Token(Name, NULL, "") {}
   explicit Token_UNARY(const Token_UNARY& P) : Token(P) {untested();}
   Token* clone()const {untested();return new Token_UNARY(*this);}

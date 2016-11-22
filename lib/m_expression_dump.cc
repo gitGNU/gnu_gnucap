@@ -41,7 +41,7 @@ void Expression::dump(std::ostream& out)const
     }else if (dynamic_cast<const Token_PARLIST*>(*i)) {
       // pop*n  push
       bool been_here = false;
-      std::string tmp(")");
+      IString tmp(")");
       for (;;) {
 	if (stack.empty()) {untested();
 	  throw Exception("bad expression");
@@ -87,7 +87,7 @@ void Expression::dump(std::ostream& out)const
       assert(!stack.empty());
       const Token* t1 = stack.back();
       stack.pop_back();
-      std::string tmp('(' + t1->full_name() + ' ' + (**i).name() + ' ' + t2->full_name() + ')');
+      IString tmp('(' + t1->full_name() + ' ' + (**i).name() + ' ' + t2->full_name() + ')');
       Token* t = new Token_SYMBOL(tmp, "");
       locals.push_back(t);
       stack.push_back(t);

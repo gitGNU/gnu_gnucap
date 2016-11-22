@@ -90,7 +90,7 @@ private: // inhibited
   explicit NODE(const NODE& p);
 public:
   explicit NODE(const NODE* p); // u_nodemap.cc:49 (deep copy)
-  explicit NODE(const IString& s, int n);
+  explicit NODE(const std::string& s, int n);
   ~NODE() {}
 
 public: // raw data access (rvalues)

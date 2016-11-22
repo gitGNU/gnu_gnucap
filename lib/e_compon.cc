@@ -225,10 +225,10 @@ void COMMON_COMPONENT::print_common_obsolete_callback(OMSTREAM& o, LANGUAGE* lan
 void COMMON_COMPONENT::set_param_by_index(int i, std::string& Value, int Offset)
 {
   switch (i) {
-  case 0:untested();  _tnom_c = Value; break;
-  case 1:untested();  _dtemp = Value; break;
-  case 2:untested();  _temp_c = Value; break;
-  case 3:  _mfactor = Value; break;
+  case 0:untested();  _tnom_c = IString(Value); break;
+  case 1:untested();  _dtemp = IString(Value); break;
+  case 2:untested();  _temp_c = IString(Value); break;
+  case 3:  _mfactor = IString(Value); break;
   default:untested(); throw Exception_Too_Many(i, 3, Offset); break;
   }
 }

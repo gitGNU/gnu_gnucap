@@ -88,19 +88,20 @@ bool CKT_BASE::help(CS& Cmd, OMSTREAM& Out)const
   }
 }
 /*--------------------------------------------------------------------------*/
-double CKT_BASE::probe_num(const IString& what)const
+double CKT_BASE::probe_num(const std::string& what)const
 {
   double x;
   if (_sim->analysis_is_ac()) {
-    x = ac_probe_num(what.to_string());
+    x = ac_probe_num(what);
   }else{
-    x = tr_probe_num(what.to_string());
+    x = tr_probe_num(what);
   }
   return (std::abs(x)>=1) ? x : floor(x/OPT::floor + .5) * OPT::floor;
 }
 /*--------------------------------------------------------------------------*/
-double CKT_BASE::ac_probe_num(const IString& what)const
+double CKT_BASE::ac_probe_num(const std::string& what_)const
 {
+  IString what(what_);
   size_t length = what.length();
   mod_t modifier = mtNONE;
   bool want_db = false;
@@ -138,7 +139,7 @@ double CKT_BASE::ac_probe_num(const IString& what)const
   return xp(modifier, want_db);
 }
 /*--------------------------------------------------------------------------*/
-/*static*/ double CKT_BASE::probe(const CKT_BASE *This, const IString& what)
+/*static*/ double CKT_BASE::probe(const CKT_BASE *This, const std::string& what)
 {
   if (This) {
     return This->probe_num(what);
@@ -147,7 +148,7 @@ double CKT_BASE::ac_probe_num(const IString& what)const
   }					/* don't have all parts */
 }
 /*--------------------------------------------------------------------------*/
-/*static*/ WAVE* CKT_BASE::find_wave(const IString& probe_name)
+/*static*/ WAVE* CKT_BASE::find_wave(const std::string& probe_name)
 {
   int ii = 0;
   for (PROBELIST::const_iterator

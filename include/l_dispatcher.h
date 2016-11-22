@@ -157,10 +157,16 @@ public:
     }
   }
 
-  TT* operator[](IString s) {
+  TT* operator[](IString const& s) {
     assert(_map);
     CKT_BASE* rv = (*_map)[s];
     return prechecked_cast<TT*>(rv);
+  }
+  TT* operator[](std::string s) {
+    return operator[](IString(s));
+  }
+  TT* operator[](const char* s) {
+    return operator[](IString(s));
   }
 
   TT* operator[](CS& cmd) {
@@ -192,7 +198,7 @@ public:
     DISPATCHER<TT>* _d;
     TT* _p;
   public:
-    INSTALL(DISPATCHER<TT>* d, const IString& name, TT* p) :
+    INSTALL(DISPATCHER<TT>* d, const std::string& name, TT* p) :
       _name(name),
       _d(d),
       _p(p)

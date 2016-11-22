@@ -108,7 +108,7 @@ void Expression::factor(CS& File)
 {
   Token* t = 0;
   if (File >> "-|+|!") {
-    std::string name(File.last_match());
+    IString name(File.last_match());
     t = new Token_UNARY(name);
   }else{
   }
@@ -130,7 +130,7 @@ void Expression::factor(CS& File)
 void Expression::termtail(CS& File)
 {
   if (File >> "*|/") {
-    std::string name(File.last_match());
+    IString name(File.last_match());
     factor(File);
     push_back(new Token_BINOP(name));
     termtail(File);
@@ -147,7 +147,7 @@ void Expression::term(CS& File)
 void Expression::addexptail(CS& File)
 {
   if (File >> "+|-") {
-    std::string name(File.last_match());
+    IString name(File.last_match());
     term(File);
     push_back(new Token_BINOP(name));
     addexptail(File);
@@ -164,7 +164,7 @@ void Expression::addexp(CS& File)
 void Expression::logicaltail(CS& File)
 {
   if (File >> "<=|<|>=|>|==|!=") {
-    std::string name(File.last_match());
+    IString name(File.last_match());
     addexp(File);
     push_back(new Token_BINOP(name));
     logicaltail(File);
@@ -181,7 +181,7 @@ void Expression::logical(CS& File)
 void Expression::andtail(CS& File)
 {
   if (File >> "&&") {
-    std::string name(File.last_match());
+    IString name(File.last_match());
     logical(File);
     push_back(new Token_BINOP(name));
     andtail(File);
@@ -198,7 +198,7 @@ void Expression::andarg(CS& File)
 void Expression::exptail(CS& File)
 {
   if (File >> "\\|\\|") { // "||"
-    std::string name(File.last_match());
+    IString name(File.last_match());
     andarg(File);
     push_back(new Token_BINOP(name));
     exptail(File);

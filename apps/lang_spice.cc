@@ -52,7 +52,7 @@ public: // override virtual, called by commands
   std::string	find_type_in_string(CS&);
 public: // "local?", called by own commands
   void parse_module_body(CS&, BASE_SUBCKT*, CARD_LIST*, const std::string&,
-			 EOB, const IString&);
+			 EOB, const std::string&);
 private: // local
   void parse_type(CS&, CARD*);
   void parse_args(CS&, CARD*);
@@ -441,7 +441,7 @@ void LANG_SPICE_BASE::parse_args(CS& cmd, CARD* x)
       }else if (!cmd.more()) {
 	break;
       }else{
-	IString Name  = cmd.ctos("=", "", "");
+	IString Name(cmd.ctos("=", "", ""));
 	cmd >> '=';
 	std::string value = cmd.ctos(",=;)", "\"'{(", "\"'})");
 	unsigned there = here;
@@ -566,14 +566,14 @@ BASE_SUBCKT* LANG_SPICE_BASE::parse_module(CS& cmd, BASE_SUBCKT* x)
 }
 /*--------------------------------------------------------------------------*/
 void LANG_SPICE_BASE::parse_module_body(CS& cmd, BASE_SUBCKT* x, CARD_LIST* Scope,
-		const std::string& prompt, EOB exit_on_blank, const IString& exit_key)
+		const std::string& prompt, EOB exit_on_blank, const std::string& exit_key)
 {
   try {
     for (;;) {
       cmd.get_line(prompt);
       
       if ((exit_on_blank==EXIT_ON_BLANK && cmd.is_end()) 
-	  || cmd.umatch(exit_key.to_string())) {
+	  || cmd.umatch(exit_key)) {
 	break;
       }else{
 	skip_pre_stuff(cmd);

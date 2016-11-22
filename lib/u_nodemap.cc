@@ -76,18 +76,24 @@ NODE* NODE_MAP::operator[](IString s)
   }
 }
 /*--------------------------------------------------------------------------*/
+// legacy interface.
+NODE* NODE_MAP::operator[](std::string s)
+{ untested();
+  return operator[](IString(s));
+}
+/*--------------------------------------------------------------------------*/
 /* return a pointer to a node given a string
  * creates a new one if it isn't already there.
  */
-NODE* NODE_MAP::new_node(IString s)
+NODE* NODE_MAP::new_node(std::string s)
 {
-  NODE* node = _node_map[s];
+  NODE* node = _node_map[IString(s)];
 
   // increments how_many() when lookup fails (new s)  
   if (!node) {
     node = new NODE(s, how_many());
     //                 ^^^^ is really the map number of the new node
-    _node_map[s] = node;
+    _node_map[IString(s)] = node;
   }
   assert(node);
   return node;

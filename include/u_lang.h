@@ -33,7 +33,7 @@ class CARD_LIST;
 /*--------------------------------------------------------------------------*/
 class INTERFACE LANGUAGE : public CKT_BASE {
 public:
-  const CARD* find_proto(const IString&, const CARD*);
+  const CARD* find_proto(const std::string&, const CARD*);
 public:
   void new__instance(CS& cmd, BASE_SUBCKT* owner, CARD_LIST* Scope);
 
@@ -82,7 +82,7 @@ void print_pair(OMSTREAM& o, LANGUAGE* lang, const IString& name,
 {
   if (test) {
     if (lang) {
-      IString front = lang->arg_front() + name + lang->arg_mid();
+      IString front(lang->arg_front() + name + lang->arg_mid());
       o << front << value << lang->arg_back();
     }else{
       o << ' ' + name + '=' << value;

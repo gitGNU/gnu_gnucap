@@ -208,7 +208,8 @@ public: // construct
   IString(const IString& s) : base(s) {}
   IString(const base& s) : base(s) {}
   IString(const char* s) : base((const Ichar*)s) {}
-  IString(const std::string& s) :
+//  IString(const char* s, size_type t) : base((const Ichar*)s, t) {}
+  explicit IString(const std::string& s) :
     base((const Ichar*)s.data(), s.size()) {}
 public: // ops
   IString& operator=(Ichar s){ untested();
@@ -357,16 +358,37 @@ inline bool Umatch(const IString&s, const std::string&t)
   return Umatch(s.to_string(), t);
 }
 /*--------------------------------------------------------------------------*/
+inline bool wmatch(const std::string& s1, const IString& s2)
+{ untested();
+  return wmatch(s1, s2.to_string());
+}
+/*--------------------------------------------------------------------------*/
+inline bool wmatch(const IString& s1, const std::string& s2)
+{ untested();
+  return wmatch(s1.to_string(), s2);
+}
+/*--------------------------------------------------------------------------*/
 inline bool wmatch(const IString& s1, const IString& s2)
 {
   return wmatch(s1.to_string(), s2.to_string());
 }
 /*--------------------------------------------------------------------------*/
-template<class MAP, class key>
-inline typename MAP::const_iterator find_in_map(MAP const&d, key k)
+inline bool wmatch(const std::string& s1, const char* s2)
 {
+  return wmatch(s1, IString(s2));
+}
+/*--------------------------------------------------------------------------*/
+template<class MAP>
+inline typename MAP::const_iterator find_in_map(MAP const&d, IString const& k)
+{ untested();
   // later: report close misses and ambiguous matches
   return d.find(k);
+}
+/*--------------------------------------------------------------------------*/
+template<class MAP>
+inline typename MAP::const_iterator find_in_map(MAP const&d, std::string const& k)
+{ untested();
+  return find_in_map(d, reinterpret_cast<const IString&>(k));
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

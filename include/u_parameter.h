@@ -94,6 +94,12 @@ public:
       _s = s;
     }
   }
+  void	operator=(const std::string& s) { untested();
+    return operator=(IString(s));
+  }
+  void	operator=(const char* s) { untested();
+    return operator=(IString(s));
+  }
   bool  operator==(const PARAMETER& p)const {
     return (_v == p._v  &&  _s == p._s);
   }

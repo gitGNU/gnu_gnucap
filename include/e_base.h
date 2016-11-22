@@ -56,19 +56,23 @@ public: // user stuff
   virtual std::string status()const {untested();return "";}
   //--------------------------------------------------------------------
 public: // probes
-	  double      probe_num(const IString&)const;
-	  double      ac_probe_num(const IString&)const;
+	  double      probe_num(const std::string&)const;
+	  double      ac_probe_num(const std::string&)const;
   virtual double      tr_probe_num(const std::string&)const;
   virtual XPROBE      ac_probe_ext(const std::string&)const;
 	  void	      inc_probes()const	{++_probes;}
 	  void	      dec_probes()const	{assert(_probes>0); --_probes;}
 	  bool	      has_probes()const	{return _probes > 0;}
-  static  double      probe(const CKT_BASE*,const IString&);
-  static  WAVE*	      find_wave(const IString& probe_name);
+  static  double      probe(const CKT_BASE*, const std::string&);
+  static  WAVE*	      find_wave(const std::string& probe_name);
   //--------------------------------------------------------------------
 public: // label
   bool operator!=(const IString& n)const {
     return IString(_label) != n;
+  }
+  // legacy
+  bool operator!=(const std::string& n)const {
+    return IString(_label) != IString(n);
   }
   virtual const std::string long_label()const;
   const std::string& short_label()const {return _label;}

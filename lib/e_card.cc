@@ -108,14 +108,14 @@ const CARD_LIST* CARD::scope()const
  * capable of finding me.
  * throws exception if can't find.
  */
-CARD* CARD::find_in_my_scope(const IString& name)
+CARD* CARD::find_in_my_scope(const std::string& name)
 {
   assert(name.size());
   assert(scope());
 
   CARD_LIST::iterator i = scope()->find_(name);
   if (i == scope()->end()) {
-    throw Exception_Cant_Find(long_label(), name.to_string(),
+    throw Exception_Cant_Find(long_label(), name,
 			      ((owner()) ? owner()->long_label() : "(root)"));
   }else{
   }
@@ -127,14 +127,14 @@ CARD* CARD::find_in_my_scope(const IString& name)
  * capable of finding me.
  * throws exception if can't find.
  */
-const CARD* CARD::find_in_my_scope(const IString& name)const
+const CARD* CARD::find_in_my_scope(const std::string& name)const
 {
   assert(name != "");
   assert(scope());
 
   CARD_LIST::const_iterator i = scope()->find_(name);
   if (i == scope()->end()) {
-    throw Exception_Cant_Find(long_label(), name.to_string(),
+    throw Exception_Cant_Find(long_label(), name,
 			      ((owner()) ? owner()->long_label() : "(root)"));
   }else{
   }
@@ -147,14 +147,14 @@ const CARD* CARD::find_in_my_scope(const IString& name)const
  * If there is no parent (I'm an original), use my scope.
  * throws exception if can't find.
  */
-const CARD* CARD::find_in_parent_scope(const IString& name)const
+const CARD* CARD::find_in_parent_scope(const std::string& name)const
 {
   assert(name != "");
   const CARD_LIST* p_scope = (scope()->parent()) ? scope()->parent() : scope();
 
   CARD_LIST::const_iterator i = p_scope->find_(name);
   if (i == p_scope->end()) {
-    throw Exception_Cant_Find(long_label(), name.to_string());
+    throw Exception_Cant_Find(long_label(), name);
   }else{
   }
   return *i;
@@ -164,7 +164,7 @@ const CARD* CARD::find_in_parent_scope(const IString& name)const
  * capable of finding me, or anything back to root.
  * throws exception if can't find.
  */
-const CARD* CARD::find_looking_out(const IString& name)const
+const CARD* CARD::find_looking_out(const std::string& name)const
 {
   try {
     return find_in_parent_scope(name);

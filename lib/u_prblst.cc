@@ -146,7 +146,8 @@ void PROBELIST::add_list(CS& cmd)
   }else if (cmd.is_alnum() || cmd.match1("*?")) {
     // branches or named nodes
     unsigned here1 = cmd.cursor();
-    bool found_something = add_branches(cmd.ctos(),what,&CARD_LIST::card_list);
+    bool found_something = add_branches(IString(cmd.ctos()),
+	what, &CARD_LIST::card_list);
     if (!found_something) {
       cmd.warn(bWARNING, here1, "no match");
     }else{
@@ -158,7 +159,8 @@ void PROBELIST::add_list(CS& cmd)
       }else{
       }
       unsigned here2 = cmd.cursor();
-      found_something = add_branches(cmd.ctos(),what,&CARD_LIST::card_list);
+      found_something = add_branches(IString(cmd.ctos()),
+	  what, &CARD_LIST::card_list);
       if (!found_something) {itested();
 	cmd.reset(here2);
 	break;
@@ -222,8 +224,8 @@ bool PROBELIST::add_branches(const IString& device,
   if (dotplace != IString::npos) {
     // has a dot, look deeper
     { // forward (Verilog style)
-      IString dev = device.substr(dotplace+1, IString::npos);
-      IString container = device.substr(0, dotplace);
+      IString dev(device.substr(dotplace+1, IString::npos));
+      IString container(device.substr(0, dotplace));
       for (CARD_LIST::const_iterator
 	     i = scope->begin();  i != scope->end();  ++i) {
 	CARD* card = *i;
@@ -293,7 +295,7 @@ bool PROBELIST::add_branches(const IString& device,
 	}
       }
       { //components
-	CARD_LIST::const_iterator i = scope->find_(device);
+	CARD_LIST::const_iterator i = scope->find_(reinterpret_cast<std::string const&>(device));
 	if (i != scope->end()) {
 	  push_new_probe(param, *i);
 	  found_something = true;

@@ -76,7 +76,7 @@ Token* Token_BINOP::op(const Token* T1, const Token* T2)const
     if (T2->aRgs() == "") {
     }else{untested();
     }
-    return new Token_CONSTANT(b->val_string(), b, (T1->aRgs()+T2->aRgs()));
+    return new Token_CONSTANT(IString(b->val_string()), b, (T1->aRgs()+T2->aRgs()));
   }else{
     // can get here if either T1 or T2 has no data
     return new Token_CONSTANT("false", NULL, "");
@@ -105,7 +105,7 @@ Token* Token_UNARY::op(const Token* T1)const
     if (T1->aRgs() == "") {
     }else{untested();
     }
-    return new Token_CONSTANT(b->val_string(), b, (T1->aRgs()));
+    return new Token_CONSTANT(IString(b->val_string()), b, (T1->aRgs()));
   }else{untested();
     // can get here if T1 has no data
     return new Token_CONSTANT("false", NULL, "");
@@ -144,7 +144,7 @@ void Token_SYMBOL::stack_op(Expression* E)const
 	// can find value - push value
 	double v = p.e_val(NOT_INPUT, E->_scope);
 	Float* n = new Float(v);
-	E->push_back(new Token_CONSTANT(n->val_string(), n, ""));
+	E->push_back(new Token_CONSTANT(IString(n->val_string()), n, ""));
       }else{
 	// no value - push name (and accept incomplete solution later)
 	String* s = new String(name().to_string());
@@ -232,7 +232,7 @@ void Token_PARLIST::stack_op(Expression* E)const
   assert(E);
   // replace multiple tokens of a PARLIST with a single token
   bool been_here = false;
-  std::string tmp;//(")");
+  IString tmp;//(")");
   for (;;) {
     const Token* t = E->back();
     E->pop_back();
