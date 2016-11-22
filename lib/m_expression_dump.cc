@@ -88,7 +88,7 @@ void Expression::dump(std::ostream& out)const
       const Token* t1 = stack.back();
       stack.pop_back();
       IString tmp('(' + t1->full_name() + ' ' + (**i).name() + ' ' + t2->full_name() + ')');
-      Token* t = new Token_SYMBOL(tmp, "");
+      Token* t = new Token_SYMBOL(tmp, IString(""));
       locals.push_back(t);
       stack.push_back(t);
     }else if (dynamic_cast<const Token_UNARY*>(*i)) {
@@ -97,7 +97,7 @@ void Expression::dump(std::ostream& out)const
       const Token* t1 = stack.back();
       stack.pop_back();
       IString tmp('(' + (**i).name() + ' ' + t1->full_name() + ')');
-      Token* t = new Token_SYMBOL(tmp, "");
+      Token* t = new Token_SYMBOL(tmp, IString(""));
       locals.push_back(t);
       stack.push_back(t);
     }else{

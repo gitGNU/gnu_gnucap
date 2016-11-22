@@ -79,7 +79,7 @@ Token* Token_BINOP::op(const Token* T1, const Token* T2)const
     return new Token_CONSTANT(IString(b->val_string()), b, (T1->aRgs()+T2->aRgs()));
   }else{
     // can get here if either T1 or T2 has no data
-    return new Token_CONSTANT("false", NULL, "");
+    return new Token_CONSTANT(IString("false"), NULL, IString());
   }
 }
 /*--------------------------------------------------------------------------*/
@@ -108,7 +108,7 @@ Token* Token_UNARY::op(const Token* T1)const
     return new Token_CONSTANT(IString(b->val_string()), b, (T1->aRgs()));
   }else{untested();
     // can get here if T1 has no data
-    return new Token_CONSTANT("false", NULL, "");
+    return new Token_CONSTANT(IString("false"), NULL, IString());
   }
 }
 /*--------------------------------------------------------------------------*/
@@ -124,7 +124,7 @@ void Token_SYMBOL::stack_op(Expression* E)const
       CS cmd(CS::_STRING, T1->name().to_string());      
       IString value = IString(f->eval(cmd, E->_scope));
       const Float* v = new Float(value);
-      E->push_back(new Token_CONSTANT(value, v, ""));
+      E->push_back(new Token_CONSTANT(value, v, IString()));
       delete T1;
     }else{
       throw Exception_No_Match(name().to_string()); //BUG// memory leak
@@ -136,7 +136,7 @@ void Token_SYMBOL::stack_op(Expression* E)const
     if (strchr("0123456789.", name()[0].to_char())) {
       // a number
       Float* n = new Float(name());
-      E->push_back(new Token_CONSTANT(name(), n, ""));
+      E->push_back(new Token_CONSTANT(name(), n, IString()));
     }else{
       // a name
       PARAMETER<double> p = (*(E->_scope->params()))[name()];
@@ -144,11 +144,11 @@ void Token_SYMBOL::stack_op(Expression* E)const
 	// can find value - push value
 	double v = p.e_val(NOT_INPUT, E->_scope);
 	Float* n = new Float(v);
-	E->push_back(new Token_CONSTANT(IString(n->val_string()), n, ""));
+	E->push_back(new Token_CONSTANT(IString(n->val_string()), n, IString()));
       }else{
 	// no value - push name (and accept incomplete solution later)
 	String* s = new String(name().to_string());
-	E->push_back(new Token_CONSTANT(name(), s, ""));	
+	E->push_back(new Token_CONSTANT(name(), s, IString()));	
       }
     }
   }

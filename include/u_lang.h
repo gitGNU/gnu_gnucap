@@ -71,13 +71,13 @@ private: // called by print_item
   virtual void print_command(OMSTREAM&, const DEV_DOT*) = 0;
 };
 OMSTREAM& operator<<(OMSTREAM& o, LANGUAGE* x);
-bool Get(CS&, const IString& key, LANGUAGE** val);
+bool Get(CS&, const std::string& key, LANGUAGE** val);
 /*--------------------------------------------------------------------------*/
 // This is for backward compatibility only.
 // It will be removed in the future.
 // Do not use in new code.
 template <class T>
-void print_pair(OMSTREAM& o, LANGUAGE* lang, const IString& name,
+void print_pair(OMSTREAM& o, LANGUAGE* lang, const std::string& name,
 		T value, bool test=true)
 {
   if (test) {
@@ -89,6 +89,12 @@ void print_pair(OMSTREAM& o, LANGUAGE* lang, const IString& name,
     }
   }else{
   }
+}
+template <class T>
+void print_pair(OMSTREAM& o, LANGUAGE* lang, const IString& name,
+		T value, bool test=true)
+{ untested();
+  return print_pair(o, lang, name.to_string(), value, test);
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

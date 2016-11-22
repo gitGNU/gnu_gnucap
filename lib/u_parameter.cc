@@ -82,7 +82,7 @@ IString PARAM_LIST::name(int i)const
     }else{
     }
   }
-  return "";
+  return IString();
 }
 /*--------------------------------------------------------------------------*/
 std::string PARAM_LIST::value(int i)const
@@ -115,8 +115,9 @@ void PARAM_LIST::eval_copy(PARAM_LIST& p, const CARD_LIST* scope)
   }
 }
 /*--------------------------------------------------------------------------*/
-const PARAMETER<double>& PARAM_LIST::deep_lookup(IString Name)const
+const PARAMETER<double>& PARAM_LIST::deep_lookup(std::string Name_)const
 {
+  IString Name(Name_);
   // hmm, report close misses and ambiguities?
   PARAMETER<double> & rv = _pl[Name];
   if (rv.has_hard_value()) {
@@ -124,7 +125,7 @@ const PARAMETER<double>& PARAM_LIST::deep_lookup(IString Name)const
     return rv;
   }else if (_try_again) {
     // didn't find one, look in enclosing scope
-    return _try_again->deep_lookup(Name);
+    return _try_again->deep_lookup(Name_);
   }else{
     // no enclosing scope to look in
     // really didn't find it, give up

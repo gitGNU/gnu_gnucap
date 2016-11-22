@@ -30,7 +30,7 @@ NODE ground_node("0",0);
 NODE_MAP::NODE_MAP()
   : _node_map()
 {
-  _node_map["0"] = &ground_node;
+  _node_map[IString("0")] = &ground_node;
 }
 /*--------------------------------------------------------------------------*/
 /* copy constructor: deep copy

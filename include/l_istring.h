@@ -207,7 +207,7 @@ public: // construct
   IString() {}
   IString(const IString& s) : base(s) {}
   IString(const base& s) : base(s) {}
-  IString(const char* s) : base((const Ichar*)s) {}
+  explicit IString(const char* s) : base((const Ichar*)s) {}
 //  IString(const char* s, size_type t) : base((const Ichar*)s, t) {}
   explicit IString(const std::string& s) :
     base((const Ichar*)s.data(), s.size()) {}

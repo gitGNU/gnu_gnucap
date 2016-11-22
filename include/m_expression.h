@@ -71,7 +71,7 @@ class Token_BINOP : public Token
 {
 public:
   explicit Token_BINOP(const IString Name)
-    : Token(Name, NULL, "") {}
+    : Token(Name, NULL, IString("")) {}
   explicit Token_BINOP(const Token_BINOP& P) : Token(P) {}
   Token* clone()const {return new Token_BINOP(*this);}
   Token* op(const Token* t1, const Token* t2)const;
@@ -82,7 +82,7 @@ class Token_STOP : public Token
 {
 public:
   explicit Token_STOP(const IString Name)
-    : Token(Name, NULL, "") {}
+    : Token(Name, NULL, IString("")) {}
   explicit Token_STOP(const Token_STOP& P) : Token(P) {}
   Token* clone()const {return new Token_STOP(*this);}
   void stack_op(Expression*)const;
@@ -92,7 +92,7 @@ class Token_PARLIST : public Token
 {
 public:
   explicit Token_PARLIST(const IString Name)
-    : Token(Name, NULL, "") {}
+    : Token(Name, NULL, IString("")) {}
   explicit Token_PARLIST(const Token_PARLIST& P) : Token(P) {untested();}
   Token* clone()const {untested();return new Token_PARLIST(*this);}
   void stack_op(Expression*)const;
@@ -102,7 +102,7 @@ class Token_UNARY : public Token
 {
 public:
   explicit Token_UNARY(const IString Name)
-    : Token(Name, NULL, "") {}
+    : Token(Name, NULL, IString("")) {}
   explicit Token_UNARY(const Token_UNARY& P) : Token(P) {untested();}
   Token* clone()const {untested();return new Token_UNARY(*this);}
   Token* op(const Token* t1)const;

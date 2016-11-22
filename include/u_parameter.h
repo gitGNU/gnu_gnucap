@@ -222,8 +222,9 @@ public:
 
   void	eval_copy(PARAM_LIST&, const CARD_LIST*);
   bool  operator==(const PARAM_LIST& p)const {return _pl == p._pl;}
-  const PARAMETER<double>& deep_lookup(IString)const;
-  const PARAMETER<double>& operator[](IString i)const {return deep_lookup(i);}
+  const PARAMETER<double>& deep_lookup(std::string)const;
+  const PARAMETER<double>& operator[](std::string i)const {return deep_lookup(i);}
+  const PARAMETER<double>& operator[](IString i)const {return deep_lookup(i.to_string());}
   void set(IString, const IString&);
   void set_try_again(PARAM_LIST* t) {_try_again = t;}
 
@@ -252,7 +253,7 @@ inline T PARAMETER<T>::lookup_solve(const T& def, const CARD_LIST* scope)const
     return v;
   }else{
     const PARAM_LIST* pl = scope->params();
-    return T(pl->deep_lookup(_s).e_val(def, scope));
+    return T(pl->deep_lookup(_s.to_string()).e_val(def, scope));
   }
 }
 /*--------------------------------------------------------------------------*/

@@ -53,6 +53,11 @@ void PROBELIST::listing(const IString& label)const
   IO::mstdout << '\n';
 }
 /*--------------------------------------------------------------------------*/
+void PROBELIST::listing(const std::string& label)const
+{
+  listing(IString(label));
+}
+/*--------------------------------------------------------------------------*/
 void PROBELIST::clear(void)
 {
   erase(begin(), end());

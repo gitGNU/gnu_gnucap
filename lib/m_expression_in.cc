@@ -70,7 +70,7 @@ void Expression::arglisttail(CS& File)
 void Expression::arglist(CS& File)
 {
   if (File.skip1b("(")) {
-    push_back(new Token_STOP("("));
+    push_back(new Token_STOP(IString("(")));
     if (!File.skip1b(")")) {
       expression(File);
       arglisttail(File);
@@ -80,7 +80,7 @@ void Expression::arglist(CS& File)
       }
     }else{
     }
-    push_back(new Token_PARLIST(")"));
+    push_back(new Token_PARLIST(IString(")")));
   }else{
   }
 }
@@ -98,7 +98,7 @@ void Expression::leaf(CS& File)
   Name_String name(File);
   if (!File.stuck(&here)) {
     arglist(File);
-    push_back(new Token_SYMBOL(IString(name), ""));
+    push_back(new Token_SYMBOL(IString(name), IString()));
   }else{itested();
     throw Exception_CS("what's this?", File);
   }

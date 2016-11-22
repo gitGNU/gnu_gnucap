@@ -179,8 +179,9 @@ OMSTREAM& operator<<(OMSTREAM& o, LANGUAGE* x)
   }
 }
 /*--------------------------------------------------------------------------*/
-bool Get(CS& cmd, const IString& key, LANGUAGE** val)
+bool Get(CS& cmd, const std::string& key_, LANGUAGE** val)
 {
+  IString key(key_);
   if (cmd.umatch(key + " {=}")) {
     LANGUAGE* lang = language_dispatcher[cmd];
     if (lang) {
