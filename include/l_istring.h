@@ -241,11 +241,11 @@ public: // ops
     return !(operator==(c));
   }
   std::string operator+(char x) const
-  { untested();
+  {
     return to_string() + x;
   }
   std::string operator+(const char* x) const
-  { untested();
+  {
     return to_string() + x;
   }
   std::string operator+(std::string x) const
@@ -272,23 +272,23 @@ public: // explicit conversion
 public: // more compare logic
   int compare(const IString& str) const
   { itested();
-    const size_type size = this->size();
+    const size_type tsize = this->size();
     const size_type osize = str.size();
-    const size_type len = std::min(size, osize);
+    const size_type len = std::min(tsize, osize);
 
     int r = traits_type::compare(data(), str.data(), len);
     trace1("strcmp", *this);
     trace3("strcmp", str, len, r);
-    if (r == 2 || r == -2){ untested();
+    if (r == 2 || r == -2){
       // traits_type::compare is really sure
       return r;
-    }else if(size == osize){
+    }else if(tsize == osize){
       // same length, use tie break
       return r;
-    }else if(size < osize){
+    }else if(tsize < osize){
       return -1;
     }else{
-      assert(size > osize);
+      assert(tsize > osize);
       return 1;
     }
   }
@@ -346,17 +346,17 @@ inline OMSTREAM& operator<< (OMSTREAM& o, IString s)
 /*--------------------------------------------------------------------------*/
 // no implicit conversion, need *match wrappers.
 inline bool Umatch(const char*s, const std::string&t)
-{ untested();
+{
   return Umatch(std::string(s), t);
 }
 /*--------------------------------------------------------------------------*/
 inline bool Umatch(const IString&s, const std::string&t)
-{ untested();
+{
   return Umatch(s.to_string(), t);
 }
 /*--------------------------------------------------------------------------*/
 inline bool wmatch(const IString& s1, const IString& s2)
-{ untested();
+{
   return wmatch(s1.to_string(), s2.to_string());
 }
 /*--------------------------------------------------------------------------*/
