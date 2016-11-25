@@ -1,0 +1,12 @@
+Gnucap : The Gnu Circuit Analysis Package
+Never trust any version less than 1.0
+Copyright 1982-2013, Albert Davis
+Gnucap comes with ABSOLUTELY NO WARRANTY
+This is free software, and you are welcome
+to redistribute it under the terms of 
+the GNU General Public License, version 3 or later.
+See the file "COPYING" for details.
+main version: paramap-6 2016.11.21
+core-lib version: paramap-6 2016.11.21
+default plugins: paramap-6 2016.11.21
+.oN( 1.).ONE( 1.), .tw( 2.), .Two( 2.)
