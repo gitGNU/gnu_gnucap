@@ -192,7 +192,9 @@ struct ichar_traits : std::char_traits<Ichar>{
   }
   static int compare (const char_type* p, const char_type* q, size_t n){
     int ret=compare_new(p, q, n);
-    assert(!ret || ret * compare_old(p, q, n) > 0);
+    // compare_old ignores n, returns -1 for "v", "V?"
+    // compare_new (correctly) returns 1, as "v" is weakly greater than "V"
+    // assert(!ret || ret * compare_old(p, q, n) > 0);
     return ret;
   }
 };
