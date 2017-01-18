@@ -1,1 +1,1 @@
-#define PATCHLEVEL "unstable 2016.11.17"
+#define PATCHLEVEL "plugpath 2017.01.17"

@@ -40,7 +40,7 @@ LIBS = \
 -lgnucap \
 
 LDFLAGS = -rdynamic  \
--L../../lib/O-DEBUG
+-L../../lib/O-DEBUG -Xlinker -rpath /usr/local/lib
 
 %.SUFFIXES:
 .SUFFIXES: .o .cc
