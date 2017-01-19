@@ -49,7 +49,7 @@ VPATH = .:..
 CCC = g++
 TARGET_EXT = .so
 
-LDFLAGS = -shared
+LDFLAGS = -shared -Xlinker -rpath=\$(PREFIX)/lib/gnucap
 
 .SUFFIXES:
 .SUFFIXES: .o .cc

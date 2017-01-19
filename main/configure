@@ -56,7 +56,7 @@ CCC = g++
 TARGET_EXT =
 
 LDFLAGS = -rdynamic \
--L../../lib/O -Xlinker -rpath=\$(PREFIX)/lib/gnucap -Xlinker -rpath=\$(PREFIX)/lib
+-L../../lib/O -Xlinker -rpath=\$(PREFIX)/lib
 
 .SUFFIXES : .o .cc
 .cc.o:; \$(CCC) \$(CXXFLAGS) \$(CPPFLAGS) \$(CCFLAGS) -c \$<
