@@ -65,7 +65,11 @@ public:
     }else{
     }
   }
-  OMSTREAM& operator=(const OMSTREAM& x)  {_mask = x._mask; return *this;}
+  OMSTREAM& operator=(const OMSTREAM& x){ untested();
+    _mask = x._mask;
+    _format = x._format;
+    return *this;
+  }
   OMSTREAM& attach(const OMSTREAM& x)	{itested();_mask |= x._mask; return *this;}
   OMSTREAM& attach(FILE* f)		{itested();return attach(OMSTREAM(f));}
   OMSTREAM& detach(const OMSTREAM& x)	{_mask &= ~(x._mask); return *this;}
