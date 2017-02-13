@@ -27,7 +27,7 @@ AC_PREREQ(2.64)
 
 AC_INIT([gnucap], [20160724])
 AM_INIT_AUTOMAKE([-Wno-portability -Wall silent-rules])
-AC_CONFIG_MACRO_DIR([m4])
+AC_CONFIG_MACRO_DIR([autotools/m4])
 AM_CONFIG_HEADER([config.h])
 AM_SILENT_RULES([yes])
 
@@ -184,6 +184,7 @@ AC_CONFIG_FILES([main/gnucap-conf], [chmod +x main/gnucap-conf])
 AC_CONFIG_FILES([main/gnucap], [chmod +x main/gnucap])
 
 AC_CONFIG_FILES([
+	autotools/Makefile
 	GNUmakefile:autotools/GNUmakefile.in
 	apps/Makefile:autotools/apps.in
 	include/Makefile:autotools/include.in
