@@ -7,7 +7,8 @@
 
 [ -e configure.ac ] || ln -s autotools/configure.ac
 
-CONFIGURE_OUTPUT=-oconfigure.gnu
+# no. breaks AUR
+# CONFIGURE_OUTPUT=-oconfigure.gnu
 
 # for now avoid using bash as not everyone has that installed
 CONFIG_SHELL=/bin/sh
