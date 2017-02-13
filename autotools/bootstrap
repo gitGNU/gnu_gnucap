@@ -5,8 +5,9 @@
 # Run the various GNU autotools to bootstrap the build
 # system.  Should only need to be done once.
 
-# does not work (in case you wonder)
-#CONFIGURE_OUTPUT=-oconfigure.gnu
+[ -e configure.ac ] || ln -s autotools/configure.ac
+
+CONFIGURE_OUTPUT=-oconfigure.gnu
 
 # for now avoid using bash as not everyone has that installed
 CONFIG_SHELL=/bin/sh
@@ -18,7 +19,7 @@ case `uname` in
 esac
 
 echo "Running aclocal..."
-aclocal -Im4 || exit 1
+aclocal -Iautotools/m4 || exit 1
 
 echo "Running autoheader..."
 autoheader || exit 1

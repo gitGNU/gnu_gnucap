@@ -184,13 +184,13 @@ AC_CONFIG_FILES([main/gnucap-conf], [chmod +x main/gnucap-conf])
 AC_CONFIG_FILES([main/gnucap], [chmod +x main/gnucap])
 
 AC_CONFIG_FILES([
-	GNUmakefile
-	apps/Makefile
-	include/Makefile
-	lib/Makefile
-	main/Makefile
-	modelgen/Makefile
-	tests/Makefile
+	GNUmakefile:autotools/GNUmakefile.in
+	apps/Makefile:autotools/apps.in
+	include/Makefile:autotools/include.in
+	lib/Makefile:autotools/lib.in
+	main/Makefile:autotools/main.in
+	modelgen/Makefile:autotools/modelgen.in
+	tests/Makefile:autotools/tests.in
 	])
 
 AC_CONFIG_COMMANDS([default])

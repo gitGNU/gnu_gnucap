@@ -1,0 +1,5 @@
+$ cd .. # project/git/tarball root
+$ autotools/bootstrap
+
+will create "configure.gnu", which should behave much like a normal autotools
+"configure" script
