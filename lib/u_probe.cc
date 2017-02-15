@@ -26,13 +26,16 @@
 #include "u_status.h"
 #include "e_base.h"
 #include "u_probe.h"
+#include "u_xprobe.h"
 /*--------------------------------------------------------------------------*/
 PROBE::PROBE(const std::string& what,const CKT_BASE *brh)
   :CKT_BASE(),
    _what(what),
    _brh(brh),
    _lo(0.),
-   _hi(0.)
+   _hi(0.),
+   _type(pREAL),
+   _hack(0.)
 {
   if (_brh) {
     _brh->inc_probes();
@@ -45,7 +48,9 @@ PROBE::PROBE(const PROBE& p)
    _what(p._what),
    _brh(p._brh),
    _lo(p._lo),
-   _hi(p._hi)
+   _hi(p._hi),
+   _type(p._type),
+   _hack(p._hack)
 {
   if (_brh) {
     _brh->inc_probes();
@@ -89,12 +94,12 @@ void PROBE::detach()
  * (suitable for printing)
  * It has nothing to do with whether it was selected or not
  */
-const std::string PROBE::label(void)const
+const std::string PROBE::label(std::string infix)const
 {
   if (_brh) {
-    return _what + '(' + _brh->long_label() + ')';
+    return _what + infix + "(" + _brh->long_label() + ')';
   }else{
-    return _what + "(0)";
+    return _what + infix + "(0)";
   }
 }
 /*--------------------------------------------------------------------------*/

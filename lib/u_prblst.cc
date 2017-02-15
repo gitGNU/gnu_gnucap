@@ -29,13 +29,72 @@
 #include "ap.h"
 #include "u_prblst.h"
 /*--------------------------------------------------------------------------*/
+// _probelist stuff. better not here?
+#include "globals.h"
+#include "s__.h"
+/*--------------------------------------------------------------------------*/
+PROBE_LISTS::PROBE_LISTS()
+{
+  const std::string s[] = {"none", "ac", "op", "dc", "tran", "fourier"};
+
+  for(unsigned i=1; i<6; ++i){
+    probe_dispatcher.install("alarm:" + s[i], alarm+i);
+    probe_dispatcher.install("print:" + s[i], print+i);
+    probe_dispatcher.install("store:" + s[i], store+i);
+    probe_dispatcher.install("plot:"  + s[i], plot+i);
+  }
+}
+/*--------------------------------------------------------------------------*/
+PROBE_LISTS::~PROBE_LISTS()
+{
+  for(auto& i : _probelists){ untested();
+    probe_dispatcher.uninstall(&i);
+  }
+  for(unsigned i=1; i<6; ++i){
+    probe_dispatcher.uninstall(alarm+i);
+    probe_dispatcher.uninstall(print+i);
+    probe_dispatcher.uninstall(store+i);
+    probe_dispatcher.uninstall(plot+i);
+  }
+}
+/*--------------------------------------------------------------------------*/
+PROBELIST* PROBE_LISTS::install(std::string reason){
+  if(PROBELIST* p=probe_dispatcher[reason]){ untested();
+    trace1("probelist", reason);
+    return p;
+  }else{ untested();
+    _probelists.emplace_back();
+    PROBELIST* q=&_probelists.back();
+    probe_dispatcher.install(reason, q);
+    return q;
+  }
+}
+/*--------------------------------------------------------------------------*/
+#if 0
+PROBELIST* PROBE_LISTS::legacy(std::string what)
+{
+  const std::string s[] = {"none", "ac", "op", "dc", "tran", "fourier"};
+  what += "::" +s [CKT_BASE::_sim->_mode];
+  PROBELIST* p=probe_dispatcher[what];
+  assert(p); // legacy code is hardwired. so this should not happen.
+  return p;
+}
+#endif
+/*--------------------------------------------------------------------------*/
 void PROBE_LISTS::purge(CKT_BASE* brh)
 {
+  // legacy.. hmmm
   for (int i = 0;  i < sCOUNT;  ++i) {
     alarm[i].remove_one(brh);
     plot[i] .remove_one(brh);
     print[i].remove_one(brh);
     store[i].remove_one(brh);
+  }
+
+  for(auto& i : probe_dispatcher){
+    PROBELIST* l=prechecked_cast<PROBELIST*>(i.second);
+    assert(l);
+    l->remove_one(brh);
   }
 }
 /*--------------------------------------------------------------------------*/

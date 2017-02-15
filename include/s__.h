@@ -25,6 +25,7 @@
 #ifndef S___H
 #define S___H
 #include "u_opt.h"
+// #include "u_out.h"
 #include "c_comand.h"
 /*--------------------------------------------------------------------------*/
 class CARD;
@@ -33,6 +34,7 @@ class CS;
 class PROBELIST;
 class COMPONENT;
 class WAVE;
+class OUTPUT;
 /*--------------------------------------------------------------------------*/
 class SIM : public CMD {
   /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */ 
@@ -64,9 +66,11 @@ private:
   virtual void	finish()	{}
   virtual bool	is_step_rejected()const {return false;}
 
-  explicit SIM(const SIM&):CMD(),_scope(NULL) {unreachable(); incomplete();}
+  explicit SIM(const SIM&)
+    : CMD(),_scope(NULL), _output(NULL) {unreachable(); incomplete();}
 protected:
-  explicit SIM(): CMD(),_scope(NULL) {}
+  explicit SIM()
+    : CMD(), _scope(NULL), _output(NULL) { untested(); }
 public:
   ~SIM();
   /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */ 
@@ -81,9 +85,13 @@ protected:
 	 const PROBELIST& storelist()const;
   virtual void	outdata(double, int);
   virtual void	head(double,double,const std::string&);
+  virtual void	flush();
+protected: //legacy
   virtual void	print_results(double);
-  virtual void	alarm();
+//  virtual void	alarm();
   virtual void	store_results(double);
+private:
+  WAVE** _wavep;
 public:
   /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */ 
 protected:				/* s__solve.cc */
@@ -98,6 +106,15 @@ private:
 	void	set_damp();
 	void	load_matrix();
 	void	solve_equations();
+public:
+  static void purge_probes(CKT_BASE*) { incomplete(); }
+protected: // accessed from OUTPUT_CMD
+  OUTPUT* _output;
+public:
+  virtual OUTPUT* output(); // needed?
+  virtual OUTPUT* attach_output(OUTPUT*);
+private:
+  friend class PROBE_LISTS;
 };
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

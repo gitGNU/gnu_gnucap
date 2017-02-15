@@ -27,6 +27,10 @@
 #include "e_base.h"
 #include "l_compar.h" // inorder
 /*--------------------------------------------------------------------------*/
+class CKT_BASE;
+/*--------------------------------------------------------------------------*/
+enum pvalue_t {pREAL, pCOMPLEX};
+/*--------------------------------------------------------------------------*/
 class INTERFACE PROBE : public CKT_BASE {
 private:
   std::string	_what;    
@@ -42,8 +46,9 @@ public:
   void	    detach();
   PROBE&    operator=(const PROBE& p);
 
-  const std::string label()const;
+  const std::string label(std::string infix="")const;
   double	  value()const;
+  COMPLEX	  cvalue()const{return _hack;}; // fourier only (for now)
   const CKT_BASE* object()const	 {return _brh;}
   double	  lo()const	 {return _lo;}
   double	  hi()const	 {return _hi;}
@@ -51,6 +56,9 @@ public:
   bool		  in_range()const{return in_order(lo(),value(),hi());}
 private:
   double	  probe_node()const;
+public:
+  mutable pvalue_t _type;
+  mutable COMPLEX _hack;
 };
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

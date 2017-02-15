@@ -274,9 +274,8 @@ int main(int argc, const char *argv[])
   CMD::command("clear", &CARD_LIST::card_list);
   assert(CARD_LIST::card_list.is_empty());
   CMD::command("detach_all", &CARD_LIST::card_list);
-  delete CKT_BASE::_probe_lists;
-  CKT_BASE::_probe_lists = NULL;
   delete CKT_BASE::_sim;
+  delete CKT_BASE::_probe_lists;
   CKT_BASE::_sim = NULL;
   
   return 0;
