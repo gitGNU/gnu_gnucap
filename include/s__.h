@@ -108,8 +108,8 @@ private:
 public:
   static void purge_probes(CKT_BASE*) { incomplete(); }
 public:
-  virtual OUTPUT* output(); // needed?
-  virtual OUTPUT* attach_output(OUTPUT*);
+  OUTPUT* output();
+  OUTPUT* attach_output(OUTPUT*);
 protected: // accessed from OUTPUT_CMD
   OUTPUT* _output;
 private:
