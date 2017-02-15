@@ -1,6 +1,6 @@
-/*$Id: c_clear.cc,v 26.81 2008/05/27 05:34:00 al Exp $ -*- C++ -*-
- * Copyright (C) 2007 Albert Davis
- * Author: Albert Davis <aldavis@gnu.org>
+/*                                 -*- C++ -*-
+ * Copyright (C) 2014-17 Felix Salfelder
+ * Author: Felix Salfelder
  *
  * This file is part of "Gnucap", the Gnu Circuit Analysis Package
  *
@@ -19,37 +19,45 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  *------------------------------------------------------------------
- * delete and clear commands
  */
-//testing=script,complete 2006.07.16
-
 #include "c_comand.h"
+#include "u_parameter.h"
 #include "globals.h"
+#include "m_wave.h"
 /*--------------------------------------------------------------------------*/
-namespace {
+namespace { //
+
+#define endl '\n'
 /*--------------------------------------------------------------------------*/
-/* cmd_clear: clear the whole circuit, including faults, etc
- *   equivalent to unfault; unkeep; delete all; title = (blank)
- */
-class CMD_CLEAR : public CMD {
+class CMD_WAVE : public CMD {
 public:
-  void do_it(CS&, CARD_LIST* Scope)
+  void do_it(CS& cmd, CARD_LIST* scope)
   {
-    command("unfault", Scope);
-    command("unmark", Scope);
-    //command("ic clear", Scope);
-    //command("nodeset clear", Scope);
-    command("alarm clear", Scope);
-    command("plot clear", Scope);
-    command("print clear", Scope);
-    command("wave clear", Scope);
-    command("delete all", Scope);
-    command("title '", Scope);
+    std::string what;
+    cmd >> what;
+
+    if(what=="clear"){
+      for(auto const& l : wavelist_dispatcher){
+	WAVELIST*L=dynamic_cast<WAVELIST*>(l.second);
+
+	if(L){
+	  L->clear();
+	  delete L;
+	  wavelist_dispatcher.uninstall(L);
+	}else{ unreachable();
+	}
+      }
+    }else{
+      // lot more stuff in -uf...
+      incomplete();
+    }
+
   }
-} p0;
-DISPATCHER<CMD>::INSTALL d0(&command_dispatcher, "clear", &p0);
+} p5;
+/*--------------------------------------------------------------------------*/
+DISPATCHER<CMD>::INSTALL d5(&command_dispatcher, "wave", &p5);
 /*--------------------------------------------------------------------------*/
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
-// vim:ts=8:sw=2:noet:
+// vim:ts=8:sw=2:noet
