@@ -70,13 +70,13 @@ static	COMPLEX	find_max(COMPLEX*,int,int);
 static	double  db(COMPLEX);
 /*--------------------------------------------------------------------------*/
 void FOURIER::do_it(CS& Cmd, CARD_LIST* Scope)
-{
+{ untested();
   _scope = Scope;
   _sim->set_command_fourier();
   reset_timers();
   ::status.four.reset().start();
   
-  try {
+  try { untested();
     setup(Cmd);
     _sim->init();
     CARD_LIST::card_list.precalc_last();
@@ -91,7 +91,7 @@ void FOURIER::do_it(CS& Cmd, CARD_LIST* Scope)
     fftallocate();
     ::status.set_up.stop();
 
-    switch (ENV::run_mode) {
+    switch (ENV::run_mode) { untested();
     case rPRE_MAIN:	unreachable();		break;
     case rBATCH:	untested();
     case rINTERACTIVE:  itested();
@@ -118,30 +118,30 @@ void FOURIER::do_it(CS& Cmd, CARD_LIST* Scope)
 /* store: stash time domain data in preparation for Fourier Transform
  */
 void FOURIER::store_results(double X)
-{
+{ untested();
   TRANSIENT::store_results(X);
 
-  if (step_cause() == scUSER) {
+  if (step_cause() == scUSER) { untested();
     int ii = 0;
     for (PROBELIST::const_iterator
-	   p=printlist().begin();  p!=printlist().end();  ++p) {
+	   p=printlist().begin();  p!=printlist().end();  ++p) { untested();
       assert(_stepno < _timesteps);
       _fdata[ii][_stepno] = p->value();
       ++ii;
     }
-  }else{
+  }else{ untested();
   }
 }
 /*--------------------------------------------------------------------------*/
 /* foout:  print out the results of the transform
  */
 void FOURIER::foout()
-{
+{ untested();
   plclose();
   plclear();
   int ii = 0;
   for (PROBELIST::const_iterator
-	 p=printlist().begin();  p!=printlist().end();  ++p) {
+	 p=printlist().begin();  p!=printlist().end();  ++p) { untested();
     fohead(*p);
     fft(_fdata[ii], _timesteps-1,  0);
     foprint(_fdata[ii]);
@@ -153,7 +153,7 @@ void FOURIER::foout()
  * arg is index into probe array, to select probe name
  */
 void FOURIER::fohead(const PROBE& Prob)
-{
+{ untested();
   _out.form("# %-10s", Prob.label().c_str())
     << "--------- actual ---------  -------- relative --------\n"
     << "#freq       "
@@ -164,7 +164,7 @@ void FOURIER::fohead(const PROBE& Prob)
  * for all points at single probe
  */
 void FOURIER::foprint(COMPLEX *Data)
-{
+{ untested();
   int startstep = stepnum(0., _fstep, _fstart);
   assert(startstep >= 0);
   int stopstep  = stepnum(0., _fstep, _fstop );
@@ -172,10 +172,10 @@ void FOURIER::foprint(COMPLEX *Data)
   COMPLEX maxvalue = find_max(Data, std::max(1,startstep), stopstep);
   if (maxvalue == 0.) {untested();
     maxvalue = 1.;
-  }else{
+  }else{ untested();
   }
   Data[0] /= 2;
-  for (int ii = startstep;  ii <= stopstep;  ++ii) {
+  for (int ii = startstep;  ii <= stopstep;  ++ii) { untested();
     double frequency = _fstep * ii;
     assert(ii >= 0);
     assert(ii < _timesteps);
@@ -196,26 +196,26 @@ void FOURIER::foprint(COMPLEX *Data)
 /* stepnum: return step number given its frequency or time
  */
 static int stepnum(double Start, double Step, double Here)
-{
+{ untested();
   return int((Here-Start)/Step + .5);
 }
 /*--------------------------------------------------------------------------*/
 /* find_max: find the max magnitude in a COMPLEX array
  */
 static COMPLEX find_max(COMPLEX *Data, int Start, int Stop)
-{
+{ untested();
   COMPLEX maxvalue = 0.;
-  for (int ii = Start;  ii <= Stop;  ++ii) {
-    if (std::abs(Data[ii]) > std::abs(maxvalue)) {
+  for (int ii = Start;  ii <= Stop;  ++ii) { untested();
+    if (std::abs(Data[ii]) > std::abs(maxvalue)) { untested();
       maxvalue = Data[ii];
-    }else{
+    }else{ untested();
     }
   }
   return maxvalue;
 }
 /*--------------------------------------------------------------------------*/
 static double db(COMPLEX Value)
-{
+{ untested();
   return  20. * log10(std::max(std::abs(Value),VOLTMIN));
 }
 /*--------------------------------------------------------------------------*/
@@ -224,16 +224,16 @@ static double db(COMPLEX Value)
  * 	(options set by call to TRANSIENT::options)
  */
 void FOURIER::setup(CS& Cmd)
-{
+{ untested();
   _cont = true;
-  if (Cmd.match1("'\"({") || Cmd.is_pfloat()) {
+  if (Cmd.match1("'\"({") || Cmd.is_pfloat()) { untested();
     PARAMETER<double> arg1, arg2, arg3;
     Cmd >> arg1;
-    if (Cmd.match1("'\"({") || Cmd.is_float()) {
+    if (Cmd.match1("'\"({") || Cmd.is_float()) { untested();
       Cmd >> arg2;
     }else{untested();
     }
-    if (Cmd.match1("'\"({") || Cmd.is_float()) {
+    if (Cmd.match1("'\"({") || Cmd.is_float()) { untested();
       Cmd >> arg3;
     }else{untested();
     }
@@ -282,18 +282,18 @@ void FOURIER::setup(CS& Cmd)
   
   if (_fstep == 0.) {untested();
     throw Exception("frequency step = 0");
-  }else{
+  }else{ untested();
   }
   if (_fstop == 0.) {untested();
     _fstop = OPT::harmonics * _fstep;
-  }else{
+  }else{ untested();
   }
 
   _timesteps = to_pow_of_2(_fstop*2 / _fstep) + 1;
-  if (_cold  ||  _sim->_last_time <= 0.) {
+  if (_cold  ||  _sim->_last_time <= 0.) { untested();
     _cont = false;
     _tstart = 0.;
-  }else{
+  }else{ untested();
     _cont = true;
     _tstart = _sim->_last_time;
   }
@@ -308,7 +308,7 @@ void FOURIER::setup(CS& Cmd)
     _sim->_dtmin = _dtmin_in;
   }else if (_dtratio_in.has_hard_value()) {untested();
     _sim->_dtmin = _dtmax / _dtratio_in;
-  }else{
+  }else{ untested();
     // use smaller of soft values
     _sim->_dtmin = std::min(double(_dtmin_in), _dtmax/_dtratio_in);
   }
@@ -317,10 +317,10 @@ void FOURIER::setup(CS& Cmd)
 /* allocate:  allocate space for fft
  */
 void FOURIER::fftallocate()
-{
+{ untested();
   int probes = printlist().size();
   _fdata = new COMPLEX*[probes];
-  for (int ii = 0;  ii < probes;  ++ii) {
+  for (int ii = 0;  ii < probes;  ++ii) { untested();
     _fdata[ii] = new COMPLEX[_timesteps+100];
   }
 }
@@ -328,9 +328,9 @@ void FOURIER::fftallocate()
 /* unallocate:  unallocate space for fft
  */
 void FOURIER::fftunallocate()
-{
-  if (_fdata) {
-    for (int ii = 0;  ii < printlist().size();  ++ii) {
+{ untested();
+  if (_fdata) { untested();
+    for (int ii = 0;  ii < printlist().size();  ++ii) { untested();
       delete [] _fdata[ii];
     }
     delete [] _fdata;
@@ -343,10 +343,10 @@ void FOURIER::fftunallocate()
  * example: z=92 returns 128
  */
 static int to_pow_of_2(double Z)
-{
+{ untested();
   int x = static_cast<int>(floor(Z));
   int y;
-  for (y = 1; x > 0; x >>= 1) {
+  for (y = 1; x > 0; x >>= 1) { untested();
     y <<= 1;
   }
   return y;

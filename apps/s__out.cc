@@ -22,14 +22,16 @@
  * tr,dc analysis output functions (and some ac)
  */
 //testing=obsolete,script 2005.09.17
+#include "globals.h"
 #include "u_sim_data.h"
 #include "u_status.h"
+#include "u_out.h"
 #include "m_wave.h"
 #include "u_prblst.h"
 #include "declare.h"	/* plottr, plopen */
 #include "s__.h"
 /*--------------------------------------------------------------------------*/
-/* SIM::____list: access probe lists
+/* SIM::____list: access probe lists (legacy)
  */
 const PROBELIST& SIM::alarmlist()const
 {
@@ -55,24 +57,37 @@ const PROBELIST& SIM::storelist()const
  * keep = after the command is done, dcop for ac
  */
 void SIM::outdata(double x, int outflags)
-{
+{ untested();
   ::status.output.start();
-  if (outflags & ofKEEP) {
+  if (outflags & ofKEEP) { untested();
     _sim->keep_voltages();
+  }else{ untested();
+  }
+
+  if(!_output && (outflags & ofPRINT)) {
+    incomplete();
+    // legacy
+//    plottr(x, plotlist());
+    print_results(x);
   }else{
   }
-  if (outflags & ofPRINT) {
-    plottr(x, plotlist());
-    print_results(x);
+
+  if (!(outflags & ofPRINT)) { untested();
+    ++::status.hidden_steps;
+  }else{ untested();
+  }
+
+  if(_output){ untested();
+    _output->outdata(x, outflags);
+  }else{
+    incomplete();
+    //legacy?
+  }
+
+  if (outflags & ofPRINT) { untested();
     _sim->reset_iteration_counter(iPRINTSTEP);
     ::status.hidden_steps = 0;
-  }else{
-    ++::status.hidden_steps;
-  }
-  if (outflags & ofSTORE) {
-    alarm();
-    store_results(x);
-  }else{
+  }else{ untested();
   }
   ::status.output.stop();
 }
@@ -80,14 +95,16 @@ void SIM::outdata(double x, int outflags)
 /* SIM::head: print column headings and draw plot borders
  */
 void SIM::head(double start, double stop, const std::string& col1)
-{
-  if (_sim->_waves) {
-    delete [] _sim->_waves;
+{ untested();
+  if(_output){ untested();
+    _output->outset(_out);
+    _output->head(start, stop, col1);
+    return;
   }else{
+    // legacy
   }
 
-  _sim->_waves = new WAVE [storelist().size()];
-
+  // _sim->_waves = new WAVE [storelist().size()];
 
   if (!plopen(start, stop, plotlist())) {
     // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -112,6 +129,7 @@ void SIM::head(double start, double stop, const std::string& col1)
  */
 void SIM::print_results(double x)
 {
+  // legacy. OUTPUT?
   if (!IO::plotout.any()) {
     _out.setfloatwidth(OPT::numdgt, OPT::numdgt+6);
     assert(x != NOT_VALID);
@@ -125,28 +143,13 @@ void SIM::print_results(double x)
   }
 }
 /*--------------------------------------------------------------------------*/
-/* SIM::alarm: print a message when a probe is out of range
- */
-void SIM::alarm(void)
-{
-  _out.setfloatwidth(OPT::numdgt, OPT::numdgt+6);
-  for (PROBELIST::const_iterator
-	 p=alarmlist().begin();  p!=alarmlist().end();  ++p) {
-    if (!p->in_range()) {
-      _out << p->label() << '=' << p->value() << '\n';
-    }else{
-    }
-  }
-}
-/*--------------------------------------------------------------------------*/
-/* SIM::store: store data in preparation for post processing
- */
 void SIM::store_results(double x)
-{
+{ untested();
+//  trace1(("store_results " + label()).c_str(), x);
   int ii = 0;
   for (PROBELIST::const_iterator
-	 p=storelist().begin();  p!=storelist().end();  ++p) {
-    _sim->_waves[ii++].push(x, p->value());
+	 p=storelist().begin();  p!=storelist().end();  ++p) { untested();
+    _wavep[ii++]->push(x, p->value());
   }
 }
 /*--------------------------------------------------------------------------*/
@@ -168,4 +171,4 @@ OUTPUT* SIM::attach_output(OUTPUT* o)
   return o;
 }
 /*--------------------------------------------------------------------------*/
-// vim:ts=8:sw=2:noet:
+// vim:ts=8:sw=2:noet

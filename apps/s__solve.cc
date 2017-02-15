@@ -52,7 +52,8 @@ bool SIM::solve(OPT::ITL itl, TRACE trace)
  
   do{
     if (trace >= tITERATION) {
-      print_results(static_cast<double>(-_sim->iteration_number()));
+      incomplete(); // only some outputs?
+      outdata(static_cast<double>(-_sim->iteration_number()), ofPRINT); // ofTRACE?
     }
     set_flags();
     clear_arrays();
