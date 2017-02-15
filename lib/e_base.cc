@@ -23,11 +23,14 @@
  */
 //testing=script 2014.07.04
 #include "ap.h"
+#include "globals.h" // wavelist_dispatcher
 #include "u_sim_data.h"
 #include "m_wave.h"
 #include "u_prblst.h"
 #include "u_xprobe.h"
 #include "e_base.h"
+#include "u_out.h"
+#include "ap.h"
 /*--------------------------------------------------------------------------*/
 static char fix_case(char c)
 {
@@ -50,7 +53,10 @@ CKT_BASE::~CKT_BASE()
     _probe_lists->purge(this);
   }
   trace1("", _probes);
-  assert(_probes==0);
+  if(_probes){
+    incomplete();
+    unreachable();
+  }
 }
 /*--------------------------------------------------------------------------*/
 const std::string CKT_BASE::long_label()const
@@ -148,17 +154,27 @@ double CKT_BASE::ac_probe_num(const std::string& what)const
 /*--------------------------------------------------------------------------*/
 /*static*/ WAVE* CKT_BASE::find_wave(const std::string& probe_name)
 {
-  int ii = 0;
-  for (PROBELIST::const_iterator
-       p  = _probe_lists->store[_sim->_mode].begin();
-       p != _probe_lists->store[_sim->_mode].end();
-       ++p) {
-    if (wmatch(p->label(), probe_name)) {
-      return &(_sim->_waves[ii]);
-    }else{
-    }
-    ++ii;
+  trace2("find_wave", probe_name, _sim->_label);
+  WAVELIST* wl = wavelist_dispatcher[_sim->_label];
+  assert(wl);
+  WAVE* w = (*wl)[probe_name];
+  if(w) {
+    return w;
+  }else{ untested();
   }
+  std::string prefix;
+  std::string suffix;
+  CS cmd(CS::_STRING, probe_name);
+  prefix = cmd.ctos(":");
+  cmd >> ":";
+  suffix = cmd.ctos("");
+  trace0(("\"" + prefix + "\":\"" + suffix + "\"").c_str());
+  wl = wavelist_dispatcher[prefix];
+  if(wl){
+    return (*wl)[suffix];
+  }else{ untested();
+  }
+
   return NULL;
 }
 /*--------------------------------------------------------------------------*/

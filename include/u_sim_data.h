@@ -79,7 +79,7 @@ struct INTERFACE SIM_DATA {
   std::deque<CARD*>  _late_evalq; /* eval after everything else */
   std::deque<CARD*>* _evalq;   /* pointer to evalq to process */
   std::deque<CARD*>* _evalq_uc;/* pointer to evalq under construction */
-  WAVE *_waves;		/* storage for waveforms "store" command*/
+  std::string _label;
   SIM_MODE _has_op;
   SIM_DATA();
   ~SIM_DATA();
@@ -123,12 +123,12 @@ struct INTERFACE SIM_DATA {
     }else{
     }
   }
-  void set_command_none() {_mode = s_NONE;}
-  void set_command_ac()	  {_mode = s_AC;}
-  void set_command_dc()	  {_mode = s_DC;}
-  void set_command_op()	  {_mode = s_OP;}
-  void set_command_tran() {_mode = s_TRAN;}
-  void set_command_fourier() {_mode = s_FOURIER;}
+  void set_command_none() {_mode = s_NONE; _label="";}
+  void set_command_ac()	  {_mode = s_AC; _label="ac";}
+  void set_command_dc()	  {_mode = s_DC; _label="dc";}
+  void set_command_op()	  {_mode = s_OP; _label="op";}
+  void set_command_tran() {_mode = s_TRAN; _label="tran";}
+  void set_command_fourier() {_mode = s_FOURIER; _label="fourier";}
   SIM_MODE sim_mode()	   {return _mode;}
   bool command_is_ac()	   {return _mode == s_AC;}
   bool command_is_dc()	   {return _mode == s_DC;}

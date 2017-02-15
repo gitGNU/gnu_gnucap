@@ -48,6 +48,7 @@ DISPATCHER<FUNCTION> measure_dispatcher;
 DISPATCHER<CKT_BASE> status_dispatcher;
 DISPATCHER<CKT_BASE> help_dispatcher;
 DISPATCHER<PROBELIST> probe_dispatcher;
+DISPATCHER<WAVELIST> wavelist_dispatcher;
 
 // for the rest, order should not matter, but it is convenient here
 CARD_LIST CARD_LIST::card_list;	// root circuit 

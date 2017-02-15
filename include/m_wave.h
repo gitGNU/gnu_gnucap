@@ -24,12 +24,14 @@
 //testing=script 2006.07.13
 #include "l_denoise.h"
 #include "m_interp.h"
+#include "l_dispatcher.h"
 /*--------------------------------------------------------------------------*/
-class WAVE {
+class WAVE : public CKT_BASE {
 private:
   std::deque<DPAIR> _w;
   double _delay;
 public:
+  WAVE* clone()const{return new WAVE(*this);}
   typedef std::deque<DPAIR>::iterator iterator;
   typedef std::deque<DPAIR>::const_iterator const_iterator;
 
@@ -47,6 +49,19 @@ public:
   WAVE&	   operator*=(double x);
   const_iterator begin()const {return _w.begin();}
   const_iterator end()const {return _w.end();}
+};
+/*--------------------------------------------------------------------------*/
+class WAVELIST : public DISPATCHER<WAVE>, public CKT_BASE{
+public:
+  WAVELIST() : DISPATCHER<WAVE>(), CKT_BASE() {untested();}
+public:
+  void clear(){
+    for(auto& i : *this){
+      WAVE* w=prechecked_cast<WAVE*>(i.second);
+      delete w;
+      uninstall(w);
+    }
+  }
 };
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
@@ -69,8 +84,9 @@ inline WAVE& WAVE::initialize()
 }
 /*--------------------------------------------------------------------------*/
 inline WAVE::WAVE(const WAVE& w)
-  :_w(w._w),
-   _delay(w._delay)
+  : CKT_BASE(w),
+    _w(w._w),
+    _delay(w._delay)
 { untested();
 }
 /*--------------------------------------------------------------------------*/

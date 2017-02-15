@@ -29,12 +29,13 @@
 /*--------------------------------------------------------------------------*/
 class CARD_LIST;
 /*--------------------------------------------------------------------------*/
-class INTERFACE PROBELIST {
+class INTERFACE PROBELIST : public CKT_BASE {
 private:
   typedef std::vector<PROBE> _container;
   _container bag;
 
-  explicit PROBELIST(const PROBELIST&) {unreachable();incomplete();}
+  explicit PROBELIST(const PROBELIST&)
+   : CKT_BASE() {unreachable();incomplete();}
 public:
   explicit PROBELIST() {}
   ~PROBELIST() {}
@@ -60,11 +61,20 @@ private:
 };
 /*--------------------------------------------------------------------------*/
 class INTERFACE PROBE_LISTS {
+  PROBE_LISTS( const PROBE_LISTS&){ unreachable(); }
 public:
+  PROBE_LISTS();
+  ~PROBE_LISTS();
+public:
+  PROBELIST* install(std::string reason);
+public: // legacy
   PROBELIST alarm[sCOUNT]; // list of alarm probes
   PROBELIST plot[sCOUNT];  // list of plot probes
   PROBELIST print[sCOUNT]; // list of print probes
   PROBELIST store[sCOUNT]; // list of probes to store for postproc
+private: // new
+  std::list<PROBELIST> _probelists;
+public:
   void purge(CKT_BASE*);
 };
 /*--------------------------------------------------------------------------*/

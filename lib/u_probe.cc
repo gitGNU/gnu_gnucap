@@ -26,6 +26,7 @@
 #include "u_status.h"
 #include "e_base.h"
 #include "u_probe.h"
+#include "u_xprobe.h"
 /*--------------------------------------------------------------------------*/
 PROBE::PROBE(const std::string& what,const CKT_BASE *brh)
   :CKT_BASE(),
