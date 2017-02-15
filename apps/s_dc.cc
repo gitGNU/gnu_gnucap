@@ -158,7 +158,7 @@ void OP::setup(CS& Cmd)
   _trace = tNONE;
   _out = IO::mstdout;
   _out.reset(); //BUG// don't know why this is needed */
-  bool ploton = IO::plotset  &&  plotlist().size() > 0;
+  bool ploton = IO::plotset; incomplete();//  &&  plotlist().size() > 0;
 
   _zap[0] = NULL;
   _sweepval[0] = &(_sim->_temp_c);
@@ -196,7 +196,7 @@ void DC::setup(CS& Cmd)
   _trace = tNONE;
   _out = IO::mstdout;
   _out.reset(); //BUG// don't know why this is needed */
-  bool ploton = IO::plotset  &&  plotlist().size() > 0;
+  bool ploton = IO::plotset; incomplete();//  &&  plotlist().size() > 0;
 
   if (Cmd.more()) {
     for (_n_sweeps = 0; Cmd.more() && _n_sweeps < DCNEST; ++_n_sweeps) {

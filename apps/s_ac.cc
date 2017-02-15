@@ -115,7 +115,7 @@ void AC::setup(CS& Cmd)
   // Don't set temperature.  Keep whatever was there before,
   // from "op" or whatever.
 
-  bool ploton = IO::plotset  &&  plotlist().size() > 0;
+  bool ploton = IO::plotset; // incomplete  &&  plotlist().size() > 0;
 
   ONE_OF
     || (Get(Cmd, "*",		&_step_in) && (_stepmode = TIMES))

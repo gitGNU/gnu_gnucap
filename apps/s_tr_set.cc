@@ -178,7 +178,7 @@ void TRANSIENT::options(CS& Cmd)
   _out = IO::mstdout;
   _out.reset(); //BUG// don't know why this is needed
   _sim->_temp_c = OPT::temp_c;
-  bool ploton = IO::plotset  &&  plotlist().size() > 0;
+  bool ploton = IO::plotset; incomplete(); //  &&  plotlist().size() > 0;
   _sim->_uic = _cold = false;
   _trace = tNONE;
   unsigned here = Cmd.cursor();
