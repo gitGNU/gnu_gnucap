@@ -72,6 +72,9 @@ void SIM::outdata(double x, int outflags)
   }else{
   }
 
+  // needed in s_fo.
+  store_results(x);
+
   if (!(outflags & ofPRINT)) { untested();
     ++::status.hidden_steps;
   }else{ untested();
@@ -143,14 +146,14 @@ void SIM::print_results(double x)
   }
 }
 /*--------------------------------------------------------------------------*/
-void SIM::store_results(double x)
+void SIM::store_results(double)
 { untested();
-//  trace1(("store_results " + label()).c_str(), x);
-  int ii = 0;
-  for (PROBELIST::const_iterator
-	 p=storelist().begin();  p!=storelist().end();  ++p) { untested();
-    _wavep[ii++]->push(x, p->value());
-  }
+// //  trace1(("store_results " + label()).c_str(), x);
+//   int ii = 0;
+//   for (PROBELIST::const_iterator
+// 	 p=storelist().begin();  p!=storelist().end();  ++p) { untested();
+//     _wavep[ii++]->push(x, p->value());
+//   }
 }
 /*--------------------------------------------------------------------------*/
 void SIM::flush()
