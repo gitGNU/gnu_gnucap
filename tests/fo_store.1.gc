@@ -1,0 +1,13 @@
+spice
+
+
+v1 0 1 sin amplitude=1 frequency=1
+
+.print fo v(nodes)
+.store fo v(nodes)
+
+.fo 0.5 1.5 .5
+
+.measure m=max("v(1)" arg )
+
+.end

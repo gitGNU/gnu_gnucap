@@ -31,6 +31,7 @@
 #include "declare.h"	/* plclose, plclear, fft */
 #include "u_prblst.h"
 #include "s_tr.h"
+#include "u_out.h"
 /*--------------------------------------------------------------------------*/
 namespace {
 /*--------------------------------------------------------------------------*/
@@ -55,7 +56,7 @@ private:
   void	foout();	/* s_fo_out.cc */
   void	fohead(const PROBE&);
   void	foprint(COMPLEX*);
-  void	store_results(double); // override virtual
+  void	outdata(double, int c); // override virtual
 private:
   PARAMETER<double> _fstart;	/* user start frequency */
   PARAMETER<double> _fstop;	/* user stop frequency */
@@ -70,13 +71,13 @@ static	COMPLEX	find_max(COMPLEX*,int,int);
 static	double  db(COMPLEX);
 /*--------------------------------------------------------------------------*/
 void FOURIER::do_it(CS& Cmd, CARD_LIST* Scope)
-{ untested();
+{
   _scope = Scope;
   _sim->set_command_fourier();
   reset_timers();
   ::status.four.reset().start();
   
-  try { untested();
+  try {
     setup(Cmd);
     _sim->init();
     CARD_LIST::card_list.precalc_last();
@@ -91,7 +92,7 @@ void FOURIER::do_it(CS& Cmd, CARD_LIST* Scope)
     fftallocate();
     ::status.set_up.stop();
 
-    switch (ENV::run_mode) { untested();
+    switch (ENV::run_mode) {
     case rPRE_MAIN:	unreachable();		break;
     case rBATCH:	untested();
     case rINTERACTIVE:  itested();
@@ -117,54 +118,66 @@ void FOURIER::do_it(CS& Cmd, CARD_LIST* Scope)
 /*--------------------------------------------------------------------------*/
 /* store: stash time domain data in preparation for Fourier Transform
  */
-void FOURIER::store_results(double X)
-{ untested();
-  TRANSIENT::store_results(X);
+void FOURIER::outdata(double X, int c)
+{
+  TRANSIENT::outdata(X, c);
 
-  if (step_cause() == scUSER) { untested();
+  if (step_cause() == scUSER) {
     int ii = 0;
-    for (PROBELIST::const_iterator
-	   p=printlist().begin();  p!=printlist().end();  ++p) { untested();
+    assert(_outputs);
+    for (OUTPUT::iterator
+	   p=_outputs->begin();  p!=_outputs->end(); ++p) { untested();
+      trace3("", OUTPUT::how_many(),ii,_sim->_mode);
+      p->_type = pREAL;
+      assert(ii<OUTPUT::how_many());
       assert(_stepno < _timesteps);
       _fdata[ii][_stepno] = p->value();
       ++ii;
     }
-  }else{ untested();
+  }else{
   }
 }
 /*--------------------------------------------------------------------------*/
 /* foout:  print out the results of the transform
  */
 void FOURIER::foout()
-{ untested();
+{
+  int startstep = stepnum(0., _fstep, _fstart);
+  assert(startstep >= 0);
+  int stopstep  = stepnum(0., _fstep, _fstop );
+  assert(stopstep < _timesteps);
   plclose();
   plclear();
+  incomplete();
   int ii = 0;
-  for (PROBELIST::const_iterator
-	 p=printlist().begin();  p!=printlist().end();  ++p) { untested();
-    fohead(*p);
+  for (OUTPUT::const_iterator
+	 p=OUTPUT::begin();  p!=OUTPUT::end();  ++p) { untested();
     fft(_fdata[ii], _timesteps-1,  0);
     foprint(_fdata[ii]);
     ++ii;
+    p->_type = pCOMPLEX;
   }
-}
-/*--------------------------------------------------------------------------*/
-/* fo_head: print output header
- * arg is index into probe array, to select probe name
- */
-void FOURIER::fohead(const PROBE& Prob)
-{ untested();
-  _out.form("# %-10s", Prob.label().c_str())
-    << "--------- actual ---------  -------- relative --------\n"
-    << "#freq       "
-    << "value        dB      phase  value        dB      phase\n";
+  head(_fstart, _fstop, "Freq");
+  for (int ii = startstep;  ii <= stopstep;  ++ii) {
+    double frequency = _fstep * ii;
+    unsigned jj = 0;
+    for (OUTPUT::const_iterator
+	p=OUTPUT::begin();  p!=OUTPUT::end();  ++p) { untested();
+      p->_hack = _fdata[jj++][ii] * COMPLEX(0.,2.);
+    }
+    SIM::outdata(frequency, ofPRINT);
+  }
+  for (OUTPUT::const_iterator
+	 p=OUTPUT::begin();  p!=OUTPUT::end();  ++p) { untested();
+    p->_type = pREAL;
+  }
 }
 /*--------------------------------------------------------------------------*/
 /* fo_print: print results of fourier analysis
  * for all points at single probe
  */
 void FOURIER::foprint(COMPLEX *Data)
-{ untested();
+{
   int startstep = stepnum(0., _fstep, _fstart);
   assert(startstep >= 0);
   int stopstep  = stepnum(0., _fstep, _fstop );
@@ -172,50 +185,54 @@ void FOURIER::foprint(COMPLEX *Data)
   COMPLEX maxvalue = find_max(Data, std::max(1,startstep), stopstep);
   if (maxvalue == 0.) {untested();
     maxvalue = 1.;
-  }else{ untested();
+  }else{
   }
   Data[0] /= 2;
-  for (int ii = startstep;  ii <= stopstep;  ++ii) { untested();
+  for (int ii = startstep;  ii <= stopstep;  ++ii) {
     double frequency = _fstep * ii;
     assert(ii >= 0);
     assert(ii < _timesteps);
     COMPLEX unscaled = Data[ii];
     COMPLEX scaled = unscaled / maxvalue;
     unscaled *= 2;
-    _out.form("%s%s%7.2f %8.3f %s%7.2f %8.3f\n",
-	     ftos(frequency,    11,5,_out.format()),
-        ftos(std::abs(unscaled),11,5,_out.format()),
+#if OLD
+    out().form("%s%s%7.2f %8.3f %s%7.2f %8.3f\n",
+	     ftos(frequency,    11,5,out().format()),
+        ftos(std::abs(unscaled),11,5,out().format()),
 	     db(unscaled),
 	     phase(unscaled*COMPLEX(0.,1)),
-        ftos(std::abs(scaled),  11,5,_out.format()),
+        ftos(std::abs(scaled),  11,5,out().format()),
 	     db(scaled),
 	     phase(scaled) ) ;
+#else
+    incomplete(); //how to implement "scaled" here?
+#endif
   }
 }
 /*--------------------------------------------------------------------------*/
 /* stepnum: return step number given its frequency or time
  */
 static int stepnum(double Start, double Step, double Here)
-{ untested();
+{
   return int((Here-Start)/Step + .5);
 }
 /*--------------------------------------------------------------------------*/
 /* find_max: find the max magnitude in a COMPLEX array
  */
 static COMPLEX find_max(COMPLEX *Data, int Start, int Stop)
-{ untested();
+{
   COMPLEX maxvalue = 0.;
-  for (int ii = Start;  ii <= Stop;  ++ii) { untested();
-    if (std::abs(Data[ii]) > std::abs(maxvalue)) { untested();
+  for (int ii = Start;  ii <= Stop;  ++ii) {
+    if (std::abs(Data[ii]) > std::abs(maxvalue)) {
       maxvalue = Data[ii];
-    }else{ untested();
+    }else{
     }
   }
   return maxvalue;
 }
 /*--------------------------------------------------------------------------*/
 static double db(COMPLEX Value)
-{ untested();
+{
   return  20. * log10(std::max(std::abs(Value),VOLTMIN));
 }
 /*--------------------------------------------------------------------------*/
@@ -224,16 +241,16 @@ static double db(COMPLEX Value)
  * 	(options set by call to TRANSIENT::options)
  */
 void FOURIER::setup(CS& Cmd)
-{ untested();
+{
   _cont = true;
-  if (Cmd.match1("'\"({") || Cmd.is_pfloat()) { untested();
+  if (Cmd.match1("'\"({") || Cmd.is_pfloat()) {
     PARAMETER<double> arg1, arg2, arg3;
     Cmd >> arg1;
-    if (Cmd.match1("'\"({") || Cmd.is_float()) { untested();
+    if (Cmd.match1("'\"({") || Cmd.is_float()) {
       Cmd >> arg2;
     }else{untested();
     }
-    if (Cmd.match1("'\"({") || Cmd.is_float()) { untested();
+    if (Cmd.match1("'\"({") || Cmd.is_float()) {
       Cmd >> arg3;
     }else{untested();
     }
@@ -282,18 +299,18 @@ void FOURIER::setup(CS& Cmd)
   
   if (_fstep == 0.) {untested();
     throw Exception("frequency step = 0");
-  }else{ untested();
+  }else{
   }
   if (_fstop == 0.) {untested();
     _fstop = OPT::harmonics * _fstep;
-  }else{ untested();
+  }else{
   }
 
   _timesteps = to_pow_of_2(_fstop*2 / _fstep) + 1;
-  if (_cold  ||  _sim->_last_time <= 0.) { untested();
+  if (_cold  ||  _sim->_last_time <= 0.) {
     _cont = false;
     _tstart = 0.;
-  }else{ untested();
+  }else{
     _cont = true;
     _tstart = _sim->_last_time;
   }
@@ -308,7 +325,7 @@ void FOURIER::setup(CS& Cmd)
     _sim->_dtmin = _dtmin_in;
   }else if (_dtratio_in.has_hard_value()) {untested();
     _sim->_dtmin = _dtmax / _dtratio_in;
-  }else{ untested();
+  }else{
     // use smaller of soft values
     _sim->_dtmin = std::min(double(_dtmin_in), _dtmax/_dtratio_in);
   }
@@ -317,10 +334,11 @@ void FOURIER::setup(CS& Cmd)
 /* allocate:  allocate space for fft
  */
 void FOURIER::fftallocate()
-{ untested();
-  int probes = printlist().size();
+{
+  int probes = OUTPUT::how_many();
+  trace1("fftaclloc", probes);
   _fdata = new COMPLEX*[probes];
-  for (int ii = 0;  ii < probes;  ++ii) { untested();
+  for (int ii = 0;  ii < probes;  ++ii) {
     _fdata[ii] = new COMPLEX[_timesteps+100];
   }
 }
@@ -328,9 +346,9 @@ void FOURIER::fftallocate()
 /* unallocate:  unallocate space for fft
  */
 void FOURIER::fftunallocate()
-{ untested();
-  if (_fdata) { untested();
-    for (int ii = 0;  ii < printlist().size();  ++ii) { untested();
+{
+  if (_fdata) {
+    for (int ii = 0;  ii < OUTPUT::how_many(); ++ii) {
       delete [] _fdata[ii];
     }
     delete [] _fdata;
@@ -343,10 +361,10 @@ void FOURIER::fftunallocate()
  * example: z=92 returns 128
  */
 static int to_pow_of_2(double Z)
-{ untested();
+{
   int x = static_cast<int>(floor(Z));
   int y;
-  for (y = 1; x > 0; x >>= 1) { untested();
+  for (y = 1; x > 0; x >>= 1) {
     y <<= 1;
   }
   return y;
