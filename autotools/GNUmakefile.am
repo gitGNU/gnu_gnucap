@@ -5,7 +5,7 @@ ACLOCAL_AMFLAGS = -Im4
 
 SUBDIRS=	include lib modelgen main apps tests autotools
 
-EXTRA_DIST = Makefile.template configure
+EXTRA_DIST = Makefile.template configure.gnu
 
 # perhaps need more of these
 # EXTRA_DIST += lib/Make123 ...

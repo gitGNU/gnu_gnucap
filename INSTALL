@@ -6,7 +6,7 @@ that provides a subset with a similar interface.
 
 In most cases, you can do:
 =======
-./configure.static
+./configure
 make
 sudo make install
 =======
