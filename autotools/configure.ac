@@ -29,6 +29,7 @@ AC_INIT([gnucap], [20160724])
 AM_INIT_AUTOMAKE([-Wno-portability -Wall silent-rules])
 AC_CONFIG_MACRO_DIR([autotools/m4])
 AM_CONFIG_HEADER([config.h])
+AM_CONFIG_HEADER([main/config.h])
 AM_SILENT_RULES([yes])
 
 AM_PROG_AR
