@@ -38,7 +38,7 @@ double XPROBE::operator()(mod_t m, bool db)const
       unreachable();
       break;
     case mtMAG:
-      rv = std::abs(_value);
+      rv = abs(_value);
       break;
     case mtPHASE:
       rv = phase(_value);

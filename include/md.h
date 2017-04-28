@@ -47,7 +47,6 @@
 #include <iostream>
 #include <ctime>
 // types
-#include <complex>
 #include <string>
 // containers
 #include <list>
@@ -92,7 +91,6 @@ enum {
 #endif
 /*--------------------------------------------------------------------------*/
 /* some convenient names */
-typedef std::complex<double> COMPLEX;
 typedef std::pair<double,double> DPAIR;
 /*--------------------------------------------------------------------------*/
 // dynamic cast kluge.

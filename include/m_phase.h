@@ -24,6 +24,7 @@
 #define M_PHASE_H
 #include "constant.h"
 #include "u_opt.h"
+#include "m_complex.h"
 /*--------------------------------------------------------------------------*/
 /* phase: extract phase (degrees) from COMPLEX number
  * rotates 90 degrees!  (ref to sine instead of cosine)

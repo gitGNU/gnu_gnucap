@@ -26,6 +26,7 @@
 #ifndef U_XPROBE_H
 #define U_XPROBE_H
 #include "constant.h"
+#include "m_complex.h"
 /*--------------------------------------------------------------------------*/
 enum mod_t {mtNONE, mtMAG, mtPHASE, mtREAL, mtIMAG};
 /*--------------------------------------------------------------------------*/

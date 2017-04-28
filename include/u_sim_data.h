@@ -27,6 +27,7 @@
 #include "constant.h"
 #include "l_compar.h"
 #include "u_opt.h"
+#include "m_complex.h"
 #include "m_matrix.h"
 /*--------------------------------------------------------------------------*/
 // external

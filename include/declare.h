@@ -26,6 +26,7 @@
 #ifndef DECLARE_H
 #define DECLARE_H
 #include "md.h"
+class COMPLEX;
 class PROBELIST;
 /*--------------------------------------------------------------------------*/
 /* fft     */ INTERFACE	void	fft(COMPLEX*,int,int);

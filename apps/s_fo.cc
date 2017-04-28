@@ -184,10 +184,10 @@ void FOURIER::foprint(COMPLEX *Data)
     unscaled *= 2;
     _out.form("%s%s%7.2f %8.3f %s%7.2f %8.3f\n",
 	     ftos(frequency,    11,5,_out.format()),
-        ftos(std::abs(unscaled),11,5,_out.format()),
+        ftos(abs(unscaled),11,5,_out.format()),
 	     db(unscaled),
 	     phase(unscaled*COMPLEX(0.,1)),
-        ftos(std::abs(scaled),  11,5,_out.format()),
+        ftos(abs(scaled),  11,5,_out.format()),
 	     db(scaled),
 	     phase(scaled) ) ;
   }
@@ -206,7 +206,7 @@ static COMPLEX find_max(COMPLEX *Data, int Start, int Stop)
 {
   COMPLEX maxvalue = 0.;
   for (int ii = Start;  ii <= Stop;  ++ii) {
-    if (std::abs(Data[ii]) > std::abs(maxvalue)) {
+    if (abs(Data[ii]) > abs(maxvalue)) {
       maxvalue = Data[ii];
     }else{
     }
@@ -216,7 +216,7 @@ static COMPLEX find_max(COMPLEX *Data, int Start, int Stop)
 /*--------------------------------------------------------------------------*/
 static double db(COMPLEX Value)
 {
-  return  20. * log10(std::max(std::abs(Value),VOLTMIN));
+  return  20. * log10(std::max(abs(Value),VOLTMIN));
 }
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

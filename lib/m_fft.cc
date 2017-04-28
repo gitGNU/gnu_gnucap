@@ -24,6 +24,7 @@
 //testing=script 2006.07.13
 #include "constant.h"
 #include "declare.h"	/* self */
+#include "m_complex.h"
 /*--------------------------------------------------------------------------*/
 void fft(COMPLEX* x, int n, int inv)
 {
